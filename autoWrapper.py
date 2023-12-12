@@ -2,19 +2,27 @@ import pyautogui
 
 class Cursor:
     def __init__(self):
-        print('a')
         pass
 
-    @staticmethod
-    def moveToCoords(coords=(None, None), interval=0):
+    def _processCoords(self, coords=(None, None)) -> (int, int):
+        '''
+        Method for normalizing coords. They are converted into string, checked if they are numeric and converted into int values. 
+        Method returns None for non numeric coordinate, for example '10', 'a' -> 10, None
+            coords= x, y sequence
+        '''
+        x, y = coords
+        x = int(x) if str(x).isnumeric() else None
+        y = int(y) if str(y).isnumeric() else None
+        return x, y
+
+    
+    def moveToCoords(self, coords=(None, None), interval=0):
         '''
         Moves cursor to absolute position x, y.
             coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
             interval - duration of movement
         '''
-        x, y = coords
-        x = int(x) if str(x).isnumeric() else None
-        y = int(y) if str(y).isnumeric() else None
+        x, y = self._processCoords(coords)
         pyautogui.moveTo(x, y, interval)
 
     def moveRelative(self):
@@ -48,5 +56,6 @@ class Cursor:
         pass
 
 if __name__ == '__main__':
+    cursor = Cursor()
     coords = '100', 600
-    Cursor.moveToCoords(coords)
+    cursor.moveToCoords(coords)
