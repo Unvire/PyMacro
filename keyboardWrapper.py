@@ -1,4 +1,5 @@
 import pyautogui
+import time
 
 class Keyboard():
     '''
@@ -40,15 +41,19 @@ class Keyboard():
         '''
         pyautogui.press(key)
 
-    def pressAndHold(self):
+    def pressAndHold(self, key):
         '''
+        Presses and holds key. DO NOT FORGET TO UNPRESS IT WITH unpress(key) method.
+        NOTE: For some reason, this does not seem to cause key repeats like would
+        happen if a keyboard key was held down on a text field.
         '''
-        pass
+        pyautogui.keyDown(key)
     
-    def unpress(self):
+    def unpress(self, key):
         '''
+        Unpresses key
         '''
-        pass
+        pyautogui.keyUp(key)
 
     def pressKeyCombination(self):
         '''
@@ -59,3 +64,8 @@ if __name__ == '__main__':
     kb = Keyboard()
     kb.writeString('Test')
     kb.pressOnce('a')
+    kb.pressAndHold('b')
+    time.sleep(5)
+    kb.unpress('b')
+
+
