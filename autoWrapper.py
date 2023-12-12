@@ -36,7 +36,7 @@ class Cursor:
 
     def dragToCoords(self, coords=(None, None), interval=0, button='left'):
         '''
-        Drags (click and hold) cursor to x, y
+        Drags (clicks and holds) cursor to x, y
             coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
             interval - duration of movement
             button - string name of the button ('left', 'right', 'middle')
@@ -44,17 +44,24 @@ class Cursor:
         x, y = self._processCoords(coords)
         pyautogui.dragTo(x, y, interval, button)
 
-    def dragRelative(self):
+    def dragRelative(self, coords=(None, None), interval=0, button='left'):
         '''
         Drags cursor (clicks and holds) x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates
+            coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
+            interval - duration of movement
+            button - string name of the button ('left', 'right', 'middle')
         '''
-        pass
+        x, y = self._processCoords(coords)
+        pyautogui.drag(x, y, interval, button)
 
-    def click(self):
+    def click(self, button='left', numOfClicks=1, interval=0.1):
         '''
-        Clicks Cursor button
+        Clicks cursor button.
+            button - string name of the button ('left', 'right', 'middle')
+            numOfClicks - amount of clicked
+            interval -  time between clicks
         '''
-        pass
+        pyautogui.click(button=button, clicks=numOfClicks, interval=interval)
 
     def scroll(self):
         '''
@@ -66,6 +73,8 @@ if __name__ == '__main__':
     cursor = Cursor()
     coords1 = '100', 300
     coords2 = 10, 100
-    cursor.moveToCoords(coords1)
-    cursor.moveRelative(coords2, interval=2)
-    cursor.dragToCoords(coords1, button='left')
+    #cursor.moveToCoords(coords1)
+    #cursor.moveRelative(coords2, interval=2)
+    #cursor.dragToCoords(coords1, button='left')
+    #cursor.dragRelative(coords2, button='left')
+    cursor.click(numOfClicks=2)
