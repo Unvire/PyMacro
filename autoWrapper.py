@@ -32,7 +32,7 @@ class Cursor:
             interval - duration of movement
         '''
         x, y = self._processCoords(coords)
-        pyautogui.moveRel(x, y, interval)
+        pyautogui.move(x, y, interval)
 
     def dragToCoords(self, coords=(None, None), interval=0, button='left'):
         '''
