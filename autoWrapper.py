@@ -27,7 +27,9 @@ class Cursor:
 
     def moveRelative(self, coords=(None, None), interval=0):
         '''
-        Moves cursor to x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates
+        Moves cursor to x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates.
+            coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
+            interval - duration of movement
         '''
         x, y = self._processCoords(coords)
         pyautogui.moveRel(x, y, interval)
