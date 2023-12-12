@@ -1,10 +1,13 @@
 import pyautogui
 
 class Keyboard():
-    def writeText(self):
+    def writeString(self, text, interval=0):
         '''
+        Converts given text to keypresses, which result in emulating of writing.
+            text - str
+            interval - float -> delay between characters
         '''
-        pass
+        pyautogui.write(text, interval)
 
     def pressAndUnpressKey(self):
         '''
@@ -27,4 +30,5 @@ class Keyboard():
         pass
 
 if __name__ == '__main__':
-    pass
+    kb = Keyboard()
+    kb.writeString('Test\n')
