@@ -63,18 +63,21 @@ class Cursor:
         '''
         pyautogui.click(button=button, clicks=numOfClicks, interval=interval)
 
-    def scroll(self):
+    def scroll(self, units=10):
         '''
-        Scrolls horizontally or vertically
+        Scrolls horizontally by amount of units.
+            units - int
         '''
-        pass
+        pyautogui.scroll(units)
+        
 
 if __name__ == '__main__':
     cursor = Cursor()
     coords1 = '100', 300
     coords2 = 10, 100
-    #cursor.moveToCoords(coords1)
-    #cursor.moveRelative(coords2, interval=2)
-    #cursor.dragToCoords(coords1, button='left')
-    #cursor.dragRelative(coords2, button='left')
+    cursor.moveToCoords(coords1)
+    cursor.moveRelative(coords2, interval=2)
+    cursor.dragToCoords(coords1, button='left')
+    cursor.dragRelative(coords2, button='left')
     cursor.click(numOfClicks=2)
+    cursor.scroll(20)
