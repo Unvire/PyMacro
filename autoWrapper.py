@@ -25,11 +25,12 @@ class Cursor:
         x, y = self._processCoords(coords)
         pyautogui.moveTo(x, y, interval)
 
-    def moveRelative(self):
+    def moveRelative(self, coords=(None, None), interval=0):
         '''
         Moves cursor to x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates
         '''
-        pass
+        x, y = self._processCoords(coords)
+        pyautogui.moveRel(x, y, interval)
 
     def dragToCoords(self):
         '''
@@ -57,5 +58,7 @@ class Cursor:
 
 if __name__ == '__main__':
     cursor = Cursor()
-    coords = '100', 600
-    cursor.moveToCoords(coords)
+    coords1 = '100', 300
+    coords2 = 10, 100
+    cursor.moveToCoords(coords1)
+    cursor.moveRelative(coords2, interval=2)
