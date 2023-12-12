@@ -55,10 +55,12 @@ class Keyboard():
         '''
         pyautogui.keyUp(key)
 
-    def pressKeyCombination(self):
+    def keyCombination(self, keysList):
         '''
+        Presses combination of keys
+            keysList - sequence of keys, for example ['ctrl', 'shift', 'esc']
         '''
-        pass
+        pyautogui.hotkey(keysList)
 
 if __name__ == '__main__':
     kb = Keyboard()
@@ -66,5 +68,4 @@ if __name__ == '__main__':
     kb.press('a', numOfPresses=10)
     kb.pressAndHold('b')
     kb.unpress('b')
-
-
+    kb.keyCombination(['ctrl', 'shift', 'esc'])
