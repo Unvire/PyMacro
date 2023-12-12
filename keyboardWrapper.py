@@ -35,11 +35,11 @@ class Keyboard():
         '''
         pyautogui.write(text, interval)
 
-    def pressOnce(self, key):
+    def press(self, key, numOfPresses=1):
         '''
         Presses and unpresses key
         '''
-        pyautogui.press(key)
+        pyautogui.press(key, presses=numOfPresses)
 
     def pressAndHold(self, key):
         '''
@@ -63,9 +63,8 @@ class Keyboard():
 if __name__ == '__main__':
     kb = Keyboard()
     kb.writeString('Test')
-    kb.pressOnce('a')
+    kb.press('a', numOfPresses=10)
     kb.pressAndHold('b')
-    time.sleep(5)
     kb.unpress('b')
 
 
