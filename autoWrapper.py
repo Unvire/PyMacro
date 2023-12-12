@@ -34,11 +34,15 @@ class Cursor:
         x, y = self._processCoords(coords)
         pyautogui.moveRel(x, y, interval)
 
-    def dragToCoords(self):
+    def dragToCoords(self, coords=(None, None), interval=0, button='left'):
         '''
-        Drags cursor (clicks and holds) until x, y position is reached
+        Drags (click and hold) cursor to x, y
+            coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
+            interval - duration of movement
+            button - string name of the button ('left', 'right', 'middle')
         '''
-        pass
+        x, y = self._processCoords(coords)
+        pyautogui.dragTo(x, y, interval, button)
 
     def dragRelative(self):
         '''
@@ -64,3 +68,4 @@ if __name__ == '__main__':
     coords2 = 10, 100
     cursor.moveToCoords(coords1)
     cursor.moveRelative(coords2, interval=2)
+    cursor.dragToCoords(coords1, button='left')
