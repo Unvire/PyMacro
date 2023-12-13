@@ -18,3 +18,4 @@ This program is portable macro editor. Used libraries:
 - coords: label;x;y;
 - colors: label;RGB;
 - user_varibles: label;value 
+- custom python script execution
