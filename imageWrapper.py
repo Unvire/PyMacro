@@ -20,7 +20,7 @@ def screenshot(fileName=None, region=None):
         fileName - str
         region - left, top, width, height - sequence of 4 ints
     '''
-    region = self._processCoords(coords=region)
+    region = _processCoords(coords=region)
     return pyautogui.screenshot(fileName, region)
 
 def locateImage(searchType='any', image=None, region=None, grayscale=False):
