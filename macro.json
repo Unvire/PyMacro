@@ -1,0 +1,25 @@
+{
+  "0": {
+    "name": "Move mouse",
+    "enabled": true,
+    "function": "cursorWrapper.moveToCoords",
+    "parameters": {
+      "coords": [
+        300,
+        400
+      ],
+      "interval": 3
+    }
+  },
+  "1": {
+    "name": "Move mouse",
+    "enabled": true,
+    "function": "cursorWrapper.moveToCoords",
+    "parameters": {
+      "coords": [
+        500,
+        600
+      ]
+    }
+  }
+}
