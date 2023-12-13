@@ -69,6 +69,13 @@ class Cursor:
             units - int
         '''
         pyautogui.scroll(units)
+    
+    def colorUnderCursor(self) -> (int, int, int):
+        '''
+        Returns color (R, G, B) of pixel pointed by cursor.
+        '''
+        x, y = pyautogui.position()
+        return pyautogui.pixel(x, y)
         
 
 if __name__ == '__main__':
@@ -81,3 +88,5 @@ if __name__ == '__main__':
     cursor.dragRelative(coords2, button='left')
     cursor.click(numOfClicks=2)
     cursor.scroll(20)
+    rgb = cursor.colorUnderCursor()
+    print(rgb)
