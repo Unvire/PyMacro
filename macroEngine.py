@@ -62,6 +62,7 @@ class MacroEngine:
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
+            self.numOfTasksGetSet()
 
     def saveJSON(self):
         pass
@@ -81,9 +82,15 @@ class MacroEngine:
         '''
         Runs macro by iterating over self.taskList and executing task
         '''
-        for task in self.taskList:
+        self.numOfTasksGetSet()
+        currentTaskID = 0
+        
+        ## while loop allows to change currentTaskID programatically (loop back and forward)
+        while currentTaskID < self.numOfTasks:
+            task = self.taskList[currentTaskID]
             elapsedTime = self.executeTask(task)
             print(elapsedTime)
+            currentTaskID += 1
 
 
 if __name__ == '__main__':
