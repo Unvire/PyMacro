@@ -67,7 +67,7 @@ class MacroEngine:
         if task.isEnabled:
             task.executeFunction(**task.parameters)
         timerEnd = timer()
-        return timerStart - timerEnd
+        return timerEnd - timerStart
     
     def runProgram(self):
         '''
