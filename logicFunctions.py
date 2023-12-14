@@ -20,6 +20,9 @@ def checkCondition(evalationFunctionName='equal', vals=[1, 2], resultTrue='2', r
     result = evalationFunction(*vals)
     return resultTrue if result else resultFalse
 
+def negate(val):
+    return not bool(val)
+
 def equal(val1, val2):
     return val1 == val2
 
@@ -48,6 +51,7 @@ def regex(string='', pattern='$'):
     return bool(re.fullmatch(pattern, string))
 
 if __name__ == '__main__':
+    print(negate(1))
     print(equal(1, 1), equal(2, 1))
     print(notEqual('a', 'b'), notEqual(2, 1))
     print(greater(1, -1), greater(0, '10'))
