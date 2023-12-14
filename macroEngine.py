@@ -1,9 +1,7 @@
 import json
 from timeit import default_timer as timer
 
-import keyboardFunctions
-import cursorFunctions
-import imageFunctions
+import keyboardFunctions, cursorFunctions, imageFunctions, logicFunctions
 
 class Task:
     def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None):
