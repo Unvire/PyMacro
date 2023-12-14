@@ -12,13 +12,24 @@ class MacroEngine:
     def __init__(self):
         self.taskList = []
 
-    def _createTasks(self):
-        pass
+    def _createTask(self, taskDict=None):
+        name = taskDict['name']
+        isEnabled = taskDict['enabled']
+        packageName, taskName = taskDict['function'].split('.')  
+        taskPackage = globals()[packageName]
+        taskFunction = getattr(taskPackage, taskName)
+        parameters = taskDict['parameters']
+
+        taskInstance = Task()
+        return taskInstance
+        
 
     def loadJSON(self, filePath):
         with open(filePath, 'r') as file:
             taskDict = json.load(file)
-        print(taskDict)
+
+        for taskID in taskDict:
+            self._createTask(taskDict=taskDict[taskID])
 
     def saveJSON(self):
         pass
