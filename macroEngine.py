@@ -18,6 +18,12 @@ class Task:
         self.executeFunction = executeFunction
         self.parameters =  parameters
 
+    def __str__(self):
+        nameString = f'Task:{self.name}| state:{self.isEnabled}| '
+        functionString = f'function:{self.executeFunction.__name__}, package:{self.executeFunction.__globals__["__name__"]}| '
+        parametersString = f'parameters:{self.parameters}'
+        return nameString + functionString + parametersString
+
 class MacroEngine:
     def __init__(self):
         self.taskList = []
@@ -47,6 +53,7 @@ class MacroEngine:
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
+            print(task)
 
     def saveJSON(self):
         pass
