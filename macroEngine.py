@@ -24,6 +24,13 @@ class Task:
         parametersString = f'parameters:{self.parameters}'
         return nameString + functionString + parametersString
 
+    def convertToDict(self):
+        '''
+        Returns dictionary representation
+        '''
+        functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
+        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'parameters':self.parameters}
+
 class MacroEngine:
     def __init__(self):
         self.taskList = []
