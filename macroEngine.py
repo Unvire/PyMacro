@@ -10,13 +10,15 @@ class Task:
 
 class MacroEngine:
     def __init__(self):
-        pass
+        self.taskList = []
 
     def _createTasks(self):
         pass
 
-    def loadJSON(self):
-        pass
+    def loadJSON(self, filePath):
+        with open(filePath, 'r') as file:
+            taskDict = json.load(file)
+        print(taskDict)
 
     def saveJSON(self):
         pass
@@ -25,4 +27,5 @@ class MacroEngine:
         pass
 
 if __name__ == '__main__':
-    pass
+    engine = MacroEngine()
+    engine.loadJSON('macro.json')
