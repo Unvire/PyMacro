@@ -3,8 +3,6 @@ from timeit import default_timer as timer
 
 import keyboardFunctions, cursorFunctions, imageFunctions, logicFunctions, clipboardFunctions
 
-variables = {}
-
 class Task:
     def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=None):
         '''
@@ -121,6 +119,7 @@ class MacroEngine:
 
 
 if __name__ == '__main__':
+    variables = {}
     engine = MacroEngine()
     engine.loadJSON('macro.json')
     engine.runProgram()
