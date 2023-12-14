@@ -32,10 +32,11 @@ class Task:
         return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
                 'parameters':self.parameters, 'saveResultToVariable':{self.variableName}}
 
-class MacroEngine:
-    def __init__(self):
+class MacroEngine():
+    def __init__(self, variablesDict={}):
         self.taskList = []
         self.numOfTasks = 0
+        self.variables = variablesDict
 
     def numOfTasksGetSet(self):
         '''
@@ -95,7 +96,7 @@ class MacroEngine:
         if task.isEnabled:
             result = task.executeFunction(**task.parameters)
             if task.variableName:
-                variables[task.variableName] = result
+                self.variables[task.variableName] = result
         timerEnd = timer()
         return timerEnd - timerStart, result
     
@@ -120,7 +121,7 @@ class MacroEngine:
 
 if __name__ == '__main__':
     variables = {}
-    engine = MacroEngine()
+    engine = MacroEngine(variablesDict = variables)
     engine.loadJSON('macro.json')
     engine.runProgram()
     #engine.saveJSON('saveTest.json')
