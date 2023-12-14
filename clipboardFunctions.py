@@ -2,13 +2,18 @@ import pyautogui
 import pyperclip
 
 def copyTextToClipboard(text=''):
-    pass
+    pyperclip.copy(text)
 
 def copySelectedTextToClipboard():
-    pass
+    ''' Copies selected text by emulating ctrl-c hotkey '''
+    pyautogui.hotkey(['ctrl', 'c'])
 
 def getFromClipboard():
-    pass
+    text = pyperclip.paste()
+    return text
 
 if __name__ == '__main__':
-    pass
+    copySelectedTextToClipboard()
+    print(getFromClipboard())
+    copyTextToClipboard('Hello world')    
+    print(getFromClipboard())
