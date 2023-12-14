@@ -3,8 +3,10 @@ from timeit import default_timer as timer
 
 import keyboardFunctions, cursorFunctions, imageFunctions, logicFunctions, clipboardFunctions
 
+variables = {}
+
 class Task:
-    def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False):
+    def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=None):
         '''
         name: str -> name of the task
         isEnabled: bool -> disabled task are not executed
@@ -16,11 +18,12 @@ class Task:
         self.executeFunction = executeFunction
         self.parameters =  parameters
         self.isJump = isJump
+        self.variableName = variableName
 
     def __str__(self):
         nameString = f'Task:{self.name}| state:{self.isEnabled}| '
         functionString = f'function:{self.executeFunction.__name__}, package:{self.executeFunction.__globals__["__name__"]}| '
-        parametersString = f'parameters:{self.parameters}, isJump:{self.isJump}'
+        parametersString = f'parameters:{self.parameters}, isJump:{self.isJump}, variableName:{self.variableName}'
         return nameString + functionString + parametersString
 
     def convertToDict(self):
@@ -28,7 +31,8 @@ class Task:
         Returns dictionary representation
         '''
         functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
-        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 'parameters':self.parameters}
+        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
+                'parameters':self.parameters, 'saveResultToVariable':{self.variableName}}
 
 class MacroEngine:
     def __init__(self):
@@ -53,8 +57,9 @@ class MacroEngine:
         taskFunction = getattr(taskPackage, taskName)
         isJump = taskDict['isJump']
         parameters = taskDict['parameters']
+        variableName = taskDict['saveResultToVariable']
 
-        taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump)
+        taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
         
 
@@ -91,6 +96,8 @@ class MacroEngine:
         timerStart = timer()
         if task.isEnabled:
             result = task.executeFunction(**task.parameters)
+            if task.variableName:
+                variables[task.variableName] = result
         timerEnd = timer()
         return timerEnd - timerStart, result
     
@@ -118,3 +125,4 @@ if __name__ == '__main__':
     engine.loadJSON('macro.json')
     engine.runProgram()
     #engine.saveJSON('saveTest.json')
+    print(variables)

@@ -10,7 +10,8 @@
         400
       ],
       "interval": 3
-    }
+    },
+	"saveResultToVariable": ""
   },
   "1": {
     "name": "Move mouse again",
@@ -22,7 +23,8 @@
         500,
         600
       ]
-    }
+    },
+	"saveResultToVariable": ""
   },
 	"2": {
     "name": "Condition test",
@@ -34,7 +36,8 @@
 		"vals": [2, 2],
 		"resultTrue": "4",
 		"resultFalse": "3"
-    }
+    },
+	"saveResultToVariable": "step"
   },
 	"3": {
     "name": "Write text",
@@ -43,7 +46,8 @@
 	"isJump": false,
     "parameters": {
       "text": "Hello World"
-    }
+    },
+	"saveResultToVariable": ""
   },
 	"4": {
     "name": "Move mouse ",
@@ -55,6 +59,7 @@
         1000,
         50
       ]
-    }
+    },
+	"saveResultToVariable": ""
   }
 }
