@@ -31,7 +31,7 @@
 	"isJump": true,
     "parameters": {
 		"evalationFunctionName": "equal",
-		"vals": [1, 2],
+		"vals": [2, 2],
 		"resultTrue": "4",
 		"resultFalse": "3"
     }
