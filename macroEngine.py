@@ -68,8 +68,17 @@ class MacroEngine:
             task.executeFunction(**task.parameters)
         timerEnd = timer()
         return timerStart - timerEnd
+    
+    def runProgram(self):
+        '''
+        Runs macro by iterating over self.taskList and executing task
+        '''
+        for task in self.taskList:
+            elapsedTime = self.executeTask(task)
+            print(elapsedTime)
 
 
 if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadJSON('macro.json')
+    engine.runProgram()
