@@ -53,13 +53,17 @@ class MacroEngine:
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
-            print(task)
 
     def saveJSON(self):
         pass
 
-    def executeTask(self):
-        pass
+    def executeTask(self, task):
+        timerStart = timer()
+        if task.isEnabled:
+            task.executeFunction(**task.parameters)
+        timerEnd = timer()
+        return timerStart - timerEnd
+
 
 if __name__ == '__main__':
     engine = MacroEngine()
