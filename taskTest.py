@@ -1,22 +1,22 @@
 import json
 from timeit import default_timer as timer
-import cursorWrapper
+import cursorFunctions
 
 if __name__ == '__main__':
     ## example task execution
     macro = {
-        0:{                                       # id: int
-        'name': 'Move mouse',                     # task name: str
-        'enabled': True,                          # enable: bool
-        'function': "cursorWrapper.moveToCoords", # function name from module
-        'parameters':{                            # parameters dictionary; must be the same as in the calling function, can be less
+        0:{                                         # id: int
+        'name': 'Move mouse',                       # task name: str
+        'enabled': True,                            # enable: bool
+        'function': "cursorFunctions.moveToCoords", # function name from module
+        'parameters':{                              # parameters dictionary; must be the same as in the calling function, can be less
             'coords': [300, 400],
             'interval': 3}
         },
         1:{                                     
         'name': 'Move mouse',                   
         'enabled': True,                        
-        'function': "cursorWrapper.moveToCoords", 
+        'function': "cursorFunctions.moveToCoords", 
         'parameters':{                          
             'coords': [500, 600]
             }
