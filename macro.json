@@ -2,7 +2,7 @@
   "0": {
     "name": "Move mouse",
     "enabled": true,
-    "function": "cursorWrapper.moveToCoords",
+    "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": [
         300,
@@ -12,9 +12,9 @@
     }
   },
   "1": {
-    "name": "Move mouse",
+    "name": "Move mouse again",
     "enabled": true,
-    "function": "cursorWrapper.moveToCoords",
+    "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": [
         500,
