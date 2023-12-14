@@ -6,7 +6,11 @@ import cursorFunctions
 import imageFunctions
 
 class Task:
-    pass
+    def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None):
+        self.name = name
+        self.isEnabled = isEnabled
+        self.executeFunction = executeFunction
+        self.parameters =  parameters
 
 class MacroEngine:
     def __init__(self):
@@ -20,7 +24,7 @@ class MacroEngine:
         taskFunction = getattr(taskPackage, taskName)
         parameters = taskDict['parameters']
 
-        taskInstance = Task()
+        taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters)
         return taskInstance
         
 
@@ -30,7 +34,7 @@ class MacroEngine:
 
         for taskID in taskDict:
             self._createTask(taskDict=taskDict[taskID])
-
+            
     def saveJSON(self):
         pass
 
