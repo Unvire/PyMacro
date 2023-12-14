@@ -27,6 +27,14 @@ class Task:
 class MacroEngine:
     def __init__(self):
         self.taskList = []
+        self.numOfTasks = 0
+
+    def numOfTasksGetSet(self):
+        '''
+        Getter and setter of self.numOfTasks
+        '''
+        self.numOfTasks = len(self.taskList)
+        return self.numOfTasks
 
     def _createTask(self, taskDict=None):
         '''
