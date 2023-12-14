@@ -25,14 +25,17 @@ if __name__ == '__main__':
 
     with open('macro.json', 'w') as file:
         json.dump(macro, file, indent=2)
-        
+    
+    with open('macro.json', 'r') as file:
+        macro = json.load(file)
+
     for i in range(2):
         timeStart = timer()
-        if macro[i]['enabled']:
-            package, taskName = macro[i]['function'].split('.')            
-            print(package, taskName)
-            task = getattr(cursorWrapper, taskName)
-            print(task)
-            task(**macro[i]['parameters'])
+        if macro[str(i)]['enabled']:
+            packageName, taskName = macro[str(i)]['function'].split('.')              
+            parameters = macro[str(i)]['parameters']
+            package = globals()[packageName]
+            task = getattr(package, taskName)
+            task(**parameters)
         timeEnd = timer()
         print(f'Elapsed time: {timeEnd - timeStart}')
