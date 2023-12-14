@@ -45,7 +45,8 @@ class MacroEngine:
             taskDict = json.load(file)
 
         for taskID in taskDict:
-            self._createTask(taskDict=taskDict[taskID])
+            task = self._createTask(taskDict=taskDict[taskID])
+            self.taskList.append(task)
 
     def saveJSON(self):
         pass
