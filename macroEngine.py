@@ -45,7 +45,8 @@ class MacroEngine:
 
     def loadJSON(self, filePath):
         '''
-        Opens json file, converts data from dictionary to Task instances and appends them to self.taskList
+        Opens json file, converts data from dictionary to Task instances and appends them to self.taskList.
+            filePath - path to JSON file
         '''
         with open(filePath, 'r') as file:
             taskDict = json.load(file)
@@ -58,6 +59,10 @@ class MacroEngine:
         pass
 
     def executeTask(self, task):
+        '''
+        Executes task by calling function in task.executeFunction with keyword arguments given in task.parameters. Returns time of execution
+            task: instance of Task class
+        '''
         timerStart = timer()
         if task.isEnabled:
             task.executeFunction(**task.parameters)
