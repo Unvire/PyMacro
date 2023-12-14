@@ -71,8 +71,17 @@ class MacroEngine:
             self.taskList.append(task)
             self.numOfTasksGetSet()
 
-    def saveJSON(self):
-        pass
+    def saveJSON(self, filePath):
+        '''
+        Saves self.taskList to file.
+            filePath - path where program will save JSON. Must inlcude file name
+        '''
+        taskDict = {}
+        for i, task in enumerate(self.taskList):
+            taskDict[str(i)] = task.convertToDict()
+        
+        with open(filePath, 'w') as file:
+            json.dump(taskDict, file, indent=2)
 
     def executeTask(self, task):
         '''
@@ -104,3 +113,4 @@ if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadJSON('macro.json')
     engine.runProgram()
+    engine.saveJSON('saveTest.json')
