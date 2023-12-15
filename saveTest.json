@@ -1,0 +1,68 @@
+{
+  "0": {
+    "name": "Move mouse",
+    "enabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "isJump": false,
+    "parameters": {
+      "coords": [
+        300,
+        400
+      ],
+      "interval": 3
+    },
+    "saveResultToVariable": ""
+  },
+  "1": {
+    "name": "Move mouse again",
+    "enabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "isJump": false,
+    "parameters": {
+      "coords": [
+        500,
+        600
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "2": {
+    "name": "Condition test",
+    "enabled": true,
+    "function": "logicFunctions.checkCondition",
+    "isJump": true,
+    "parameters": {
+      "evalationFunctionName": "equal",
+      "vals": [
+        2,
+        2
+      ],
+      "resultTrue": "4",
+      "resultFalse": "3"
+    },
+    "saveResultToVariable": "step"
+  },
+  "3": {
+    "name": "Write text",
+    "enabled": true,
+    "function": "keyboardFunctions.writeString",
+    "isJump": false,
+    "parameters": {
+      "text": "Hello World"
+    },
+    "saveResultToVariable": ""
+  },
+  "4": {
+    "name": "Move mouse ",
+    "enabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "isJump": false,
+    "parameters": {
+      "coords": [
+        1000,
+        50
+      ]
+    },
+    "saveResultToVariable": ""
+  }
+}

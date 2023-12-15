@@ -4,7 +4,7 @@ from timeit import default_timer as timer
 import keyboardFunctions, cursorFunctions, imageFunctions, logicFunctions, clipboardFunctions
 
 class Task:
-    def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=None):
+    def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=''):
         '''
         name: str -> name of the task
         isEnabled: bool -> disabled task are not executed
@@ -30,7 +30,7 @@ class Task:
         '''
         functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
         return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
-                'parameters':self.parameters, 'saveResultToVariable':{self.variableName}}
+                'parameters':self.parameters, 'saveResultToVariable':self.variableName}
 
 class MacroEngine():
     def __init__(self, variablesDict={}):
