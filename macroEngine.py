@@ -54,9 +54,14 @@ class MacroEngine():
         packageName, taskName = taskDict['function'].split('.')  
         taskPackage = globals()[packageName]
         taskFunction = getattr(taskPackage, taskName)
-        isJump = taskDict['isJump']
-        parameters = taskDict['parameters']
+        parameters = taskDict['parameters']        
         variableName = taskDict['saveResultToVariable']
+
+        if taskName == 'checkCondition' and 'isJump' in parameters:
+            isJump = parameters['isJump']
+            parameters.pop('isJump')
+        else:            
+            isJump = False
 
         taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
