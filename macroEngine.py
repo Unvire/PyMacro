@@ -110,6 +110,13 @@ class MacroEngine():
         '''
         with open(filePath, 'r') as file:
             self.variables = json.load(file)
+    
+    def saveVariablesToFile(self, filePath):
+        '''
+        Loads variables from JSON file
+        '''
+        with open(filePath, 'w') as file:
+            json.dump(self.variables, file, indent=2)
 
     def executeTask(self, task):
         '''
@@ -149,3 +156,4 @@ if __name__ == '__main__':
     engine.loadMacroFile('macro.json')
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
+    engine.saveVariablesToFile('variableSaveTest.json')
