@@ -78,7 +78,7 @@ class MacroEngine():
         return taskInstance
         
 
-    def loadJSON(self, filePath):
+    def loadMacroFile(self, filePath):
         '''
         Opens json file, converts data from dictionary to Task instances and appends them to self.taskList.
             filePath - path to JSON file
@@ -92,7 +92,7 @@ class MacroEngine():
             self.taskList.append(task)
             self.numOfTasksGetSet()
 
-    def saveJSON(self, filePath):
+    def saveMacroToFile(self, filePath):
         '''
         Saves self.taskList to file.
             filePath - path where program will save JSON. Must inlcude file name
@@ -139,7 +139,7 @@ class MacroEngine():
 if __name__ == '__main__':
     variables = {'position1': [300, 400]}
     engine = MacroEngine(variablesDict = variables)
-    engine.loadJSON('macro.json')
+    engine.loadMacroFile('macro.json')
     engine.runProgram()
-    engine.saveJSON('saveTest.json')
+    engine.saveMacroToFile('saveTest.json')
     print(variables)
