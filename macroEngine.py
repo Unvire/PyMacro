@@ -47,22 +47,26 @@ class MacroEngine():
 
     def _createTask(self, taskDict=None):
         '''
-        Converts taskDict to instance of Task class. Reuturns that instance
+        Converts taskDict to instance of Task class. Reuturns instance of Task class
         '''
         name = taskDict['name']
         isEnabled = taskDict['enabled']
-        packageName, taskName = taskDict['function'].split('.')  
-        taskPackage = globals()[packageName]
-        taskFunction = getattr(taskPackage, taskName)
         parameters = taskDict['parameters']        
         variableName = taskDict['saveResultToVariable']
 
+        ## get module and function by their string name
+        packageName, taskName = taskDict['function'].split('.')  
+        taskPackage = globals()[packageName]
+        taskFunction = getattr(taskPackage, taskName)
+
+        ## check if task is a conditional jump
         if taskName == 'checkCondition' and 'isJump' in parameters:
             isJump = parameters['isJump']
             parameters.pop('isJump')
         else:            
             isJump = False
 
+        ## load parameters from self.variables dict
         for parameterName in parameters:
             variable = parameters[parameterName]
             if isinstance(variable, str) and variable in self.variables:
@@ -80,6 +84,7 @@ class MacroEngine():
         with open(filePath, 'r') as file:
             taskDict = json.load(file)
 
+        ## convert json to task list
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
@@ -134,5 +139,5 @@ if __name__ == '__main__':
     engine = MacroEngine(variablesDict = variables)
     engine.loadJSON('macro.json')
     engine.runProgram()
-    #engine.saveJSON('saveTest.json')
+    engine.saveJSON('saveTest.json')
     print(variables)
