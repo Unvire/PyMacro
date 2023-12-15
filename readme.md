@@ -14,5 +14,5 @@ This program is portable macro editor. Used libraries:
 - idiotproof creating (dropdown menus, type hinting)
 - ~~checking image pattern~~ more or less done
 - ~~checking string values -> regex, normal matching~~
-- ~~3 variable files:, coords: label;x;y;,  colors: label;RGB;, user_varibles: label;value~~ -> one will be enough, but with possibility of dumping variables to file
+- ~~3 variable files:, coords: label;x;y;,  colors: label;RGB;, user_varibles: label;value~~ -> ~~one will be enough, but with possibility of dumping variables to file~~
 - custom python script execution
