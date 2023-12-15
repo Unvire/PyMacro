@@ -4,10 +4,7 @@
     "enabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
-      "coords": [
-        300,
-        400
-      ],
+      "coords": "position1",
       "interval": 3
     },
 	"saveResultToVariable": ""

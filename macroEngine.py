@@ -63,6 +63,11 @@ class MacroEngine():
         else:            
             isJump = False
 
+        for parameterName in parameters:
+            variable = parameters[parameterName]
+            if isinstance(variable, str) and variable in self.variables:
+                parameters[parameterName] = self.variables[variable]
+
         taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
         
@@ -125,7 +130,7 @@ class MacroEngine():
 
 
 if __name__ == '__main__':
-    variables = {}
+    variables = {'position1': [300, 400]}
     engine = MacroEngine(variablesDict = variables)
     engine.loadJSON('macro.json')
     engine.runProgram()
