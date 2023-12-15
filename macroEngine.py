@@ -35,10 +35,10 @@ class Task:
                 'parameters':self.parameters, 'saveResultToVariable':self.variableName}
 
 class MacroEngine():
-    def __init__(self, variablesDict={}):
+    def __init__(self):
         self.taskList = []
         self.numOfTasks = 0
-        self.variables = variablesDict
+        self.variables = {}
 
     def numOfTasksGetSet(self):
         '''
@@ -103,6 +103,13 @@ class MacroEngine():
         
         with open(filePath, 'w') as file:
             json.dump(taskDict, file, indent=2)
+    
+    def loadVariablesFile(self, filePath):
+        '''
+        Loads variables from JSON file
+        '''
+        with open(filePath, 'r') as file:
+            self.variables = json.load(file)
 
     def executeTask(self, task):
         '''
@@ -137,9 +144,8 @@ class MacroEngine():
 
 
 if __name__ == '__main__':
-    variables = {'position1': [300, 400]}
-    engine = MacroEngine(variablesDict = variables)
+    engine = MacroEngine()
+    engine.loadVariablesFile('variables.json')
     engine.loadMacroFile('macro.json')
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
-    print(variables)
