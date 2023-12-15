@@ -25,6 +25,7 @@ KEYS:
 'up', 'volumedown', 'volumemute', 'volumeup', 'win', 'winleft', 'winright', 'yen',
 'command', 'option', 'optionleft', 'optionright']
 '''
+
 def writeString(text='', interval=0):
     '''
     Converts given text to keypresses, which result in emulating of writing.

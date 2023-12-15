@@ -1,7 +1,7 @@
 import pyautogui
 
 
-def _processCoords(coords=(None, None, None, None)) -> (int, int):
+def _processCoords(coords=(None, None, None, None)) -> (int, int, int, int):
     '''
     Method for normalizing coords. They are converted into string, checked if they are numeric and converted into int values. 
     Method returns None for non numeric coordinate, for example '10', 'a', 0, 2 -> 10, None, 0, 2
@@ -16,7 +16,7 @@ def _processCoords(coords=(None, None, None, None)) -> (int, int):
 
 def screenshot(fileName=None, region=None):
     '''
-    Makes a screenshot of requested area. If fileName is passed then it will save it to a file.
+    Makes a screenshot of requested area and returns it. If fileName is passed then it will save it to a file.
         fileName - str
         region - left, top, width, height - sequence of 4 ints
     '''

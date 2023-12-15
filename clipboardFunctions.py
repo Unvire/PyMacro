@@ -8,7 +8,7 @@ def copySelectedTextToClipboard():
     ''' Copies selected text by emulating ctrl-c hotkey '''
     pyautogui.hotkey(['ctrl', 'c'])
 
-def getFromClipboard():
+def getFromClipboard() -> str:
     text = pyperclip.paste()
     return text
 

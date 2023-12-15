@@ -11,7 +11,7 @@ def _processCoords(coords=(None, None)) -> (int, int):
     y = int(y) if str(y).isnumeric() else None
     return x, y
 
-def moveToCoords(coords=(None, None), interval=0,):
+def moveToCoords(coords=(None, None), interval=0):
     '''
     Moves cursor to absolute position x, y.
         coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
