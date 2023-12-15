@@ -112,7 +112,7 @@ class MacroEngine():
         timerStart = timer()
         if task.isEnabled:
             result = task.executeFunction(**task.parameters)
-            if task.variableName:
+            if task.variableName and result:
                 self.variables[task.variableName] = result
         timerEnd = timer()
         return timerEnd - timerStart, result
