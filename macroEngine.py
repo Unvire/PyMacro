@@ -10,6 +10,8 @@ class Task:
         isEnabled: bool -> disabled task are not executed
         executeFunction -> reference for function to be executed
         parameters: dict -> dictionary of parameters, that are passed as keyword arguments to executeFunction 
+        isJump: bool -> parameter of "logicFunctions.checkCondition". Program will jump to taskID=resultTrue or taskID=resultFalse after evaluating condition
+        variableName:str -> name of the variable that will store output of function. Function must return something (bool(result)==True) and variable name must be any string
         '''
         self.name = name
         self.isEnabled = isEnabled
