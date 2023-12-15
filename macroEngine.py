@@ -49,7 +49,7 @@ class MacroEngine():
 
     def _createTask(self, taskDict=None):
         '''
-        Converts taskDict to instance of Task class. Reuturns instance of Task class
+        Converts taskDict to instance of Task class. Returns instance of Task class
         '''
         name = taskDict['name']
         isEnabled = taskDict['enabled']
