@@ -4,15 +4,16 @@ def checkCondition(evalationFunctionName='equal', vals=[1, 2], resultTrue='2', r
     '''
     If statement that can be called as task function. Returns either resultTrue or resultFalse - based on the evaulation.
         evalationFunctionName: str -> name of the evaulation function declared in this script. Evaulation functions with arguments are listed below:
-            equal(val1, val2)
-            notEqual(val1, val2)
-            greater(val1, val2)
-            greaterEqual(val1, val2)
-            less(val1, val2)
-            lessEqual(val1, val2)
-            inRange(val, lowerLimit, upperLimit)
-            notInRange(val, lowerLimit, upperLimit)
-            regex(string='', pattern='$')           
+            negate(val) -> not bool(val)
+            equal(val1, val2) -> val1 == val2
+            notEqual(val1, val2) -> val1 != val2
+            greater(val1, val2) -> val1 > val2
+            greaterEqual(val1, val2)  -> val1 >= val2
+            less(val1, val2)  -> val1 < val2
+            lessEqual(val1, val2) -> val1 <= val2
+            inRange(val, lowerLimit, upperLimit) -> lowerLimit <= val <=upperLimit
+            notInRange(val, lowerLimit, upperLimit) -> not(lowerLimit <= val <=upperLimit)
+            regex(string='', pattern='$') 
         vals:list -> list of arguments for evaluation function. Order is important
         resultTrue, resultFalse - retured values based on the evaluation
     '''
