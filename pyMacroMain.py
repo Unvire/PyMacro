@@ -32,7 +32,7 @@ class pyMacro(tk.Tk):
         self.settingsButton = ttk.Button(self.controlButtonsFrame, text='Settings', command=...)
 
         # run buttons
-        self.runButton = ttk.Button(self.runButtonsFrame, text='Run', command=...)
+        self.runButton = ttk.Button(self.runButtonsFrame, text='Run', command=self.runMacro)
         self.killButton = ttk.Button(self.runButtonsFrame, text='Kill', command=...)
 
         # utility buttons
@@ -104,10 +104,11 @@ class pyMacro(tk.Tk):
         if macroFile:
             self.filePath = macroFile
             self.variablesPath = os.path.join(path, 'variables.json') # variables must be names variables.json and has to be in the same folder as macro file
-            self.macroEngine.loadMacroFile(self.filePath)
             self.macroEngine.loadVariablesFile(self.variablesPath)
+            self.macroEngine.loadMacroFile(self.filePath)
 
             self.generateTasksTable()
+            print(self.macroEngine.variables)
     
     def generateTasksTable(self):
         self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
@@ -121,6 +122,8 @@ class pyMacro(tk.Tk):
         for ID, taskName in taskNames:
             self.tasksTableTree.insert('', tk.END, values=(ID, taskName))
 
+    def runMacro(self):
+        self.macroEngine.runProgram()
 
 if __name__ == '__main__':
     app = pyMacro()
