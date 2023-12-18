@@ -47,10 +47,14 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=...)
 
         # tasks table
-        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name'), show='headings')
+        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name'), show='headings')        
+        self.tasksTableTree.heading('ID', text='ID')
+        self.tasksTableTree.heading('Task name', text='Task name')
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
+        self.taskParametersTableTree.heading('Value', text='Value')
 
         ## position
         # control buttons
@@ -102,6 +106,21 @@ class pyMacro(tk.Tk):
             self.variablesPath = os.path.join(path, 'variables.json') # variables must be names variables.json and has to be in the same folder as macro file
             self.macroEngine.loadMacroFile(self.filePath)
             self.macroEngine.loadVariablesFile(self.variablesPath)
+
+            self.generateTasksTable()
+    
+    def generateTasksTable(self):
+        self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
+        taskNames = [(i, task.name) for i, task in enumerate(self.tasksList)]
+
+        ## clear table
+        for item in self.tasksTableTree.get_children():
+            self.tasksTableTree.delete(item)
+
+        ## add items
+        for ID, taskName in taskNames:
+            self.tasksTableTree.insert('', tk.END, values=(ID, taskName))
+
 
 if __name__ == '__main__':
     app = pyMacro()
