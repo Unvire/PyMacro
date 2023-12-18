@@ -10,9 +10,10 @@ class pyMacro(tk.Tk):
 
         ## frames
         self.mainFrame = ttk.Frame()
-        self.controlButtonsFrame = ttk.Frame(self.mainFrame)
-        self.runButtonsFrame = ttk.Frame(self.mainFrame)
-        self.utilityButtonsFrame = ttk.Frame(self.mainFrame)
+        self.rowOneButtonsFrame = ttk.Frame(self.mainFrame)
+        self.controlButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
+        self.runButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
+        self.utilityButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.tasksFrame = ttk.Frame(self.mainFrame)
         self.taskParametersFrame = ttk.Frame(self.mainFrame)
         self.taskEditButtonsFrame = ttk.Frame(self.mainFrame)
@@ -77,6 +78,8 @@ class pyMacro(tk.Tk):
         self.controlButtonsFrame.grid(row=0, column=0)
         self.runButtonsFrame.grid(row=0, column=1)
         self.utilityButtonsFrame.grid(row=0, column=2)
+        self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3)
+
         self.tasksFrame.grid(row=1, column=0)
         self.taskParametersFrame.grid(row=1, column=1)
         self.taskEditButtonsFrame.grid(row=1, column=2)
