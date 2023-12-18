@@ -1,5 +1,6 @@
+import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 import macroEngine
 
 class pyMacro(tk.Tk):
@@ -7,6 +8,11 @@ class pyMacro(tk.Tk):
         super().__init__()
 
         ## variables
+        self.tasksList = []
+        self.variables = {}
+        self.filePath = None
+        self.variablesPath = None
+        self.macroEngine = macroEngine.MacroEngine()
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -21,7 +27,7 @@ class pyMacro(tk.Tk):
         ## widgets
         # control buttons
         self.newMacroButton = ttk.Button(self.controlButtonsFrame, text='New Macro', command=...)
-        self.openMacroButton = ttk.Button(self.controlButtonsFrame, text='Open Macro', command=...)
+        self.openMacroButton = ttk.Button(self.controlButtonsFrame, text='Open Macro', command=self.openMacroFile)
         self.saveMacroButton = ttk.Button(self.controlButtonsFrame, text='Save Macro', command=...)
         self.settingsButton = ttk.Button(self.controlButtonsFrame, text='Settings', command=...)
 
@@ -85,7 +91,17 @@ class pyMacro(tk.Tk):
         self.taskEditButtonsFrame.grid(row=1, column=2)
         
         self.mainFrame.grid(row=0, column=0)
+    
+    def openMacroFile(self):
+        path = os.path.join(os.getcwd(), '')
+        macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
 
+        ## CREATE PROJECT-FOLDER
+        if macroFile:
+            self.filePath = macroFile
+            self.variablesPath = os.path.join(path, 'variables.json') # variables must be names variables.json and has to be in the same folder as macro file
+            self.macroEngine.loadMacroFile(self.filePath)
+            self.macroEngine.loadVariablesFile(self.variablesPath)
 
 if __name__ == '__main__':
     app = pyMacro()
