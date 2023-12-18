@@ -1,7 +1,6 @@
 import json
 from timeit import default_timer as timer
-
-from functions import keyboardFunctions, cursorFunctions, imageFunctions, logicFunctions, clipboardFunctions
+import importlib
 
 class Task:
     def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=''):
@@ -39,6 +38,7 @@ class MacroEngine():
         self.taskList = []
         self.numOfTasks = 0
         self.variables = {}
+        self.modules = {}
 
     def numOfTasksGetSet(self):
         '''
@@ -58,8 +58,14 @@ class MacroEngine():
 
         ## get module and function by their string name
         packageName, taskName = taskDict['function'].split('.')  
-        taskPackage = globals()[packageName]
-        taskFunction = getattr(taskPackage, taskName)
+        packageName = '.' + packageName
+
+        ## import package from functions folder
+        if packageName not in self.modules:
+            self.modules[packageName] = importlib.import_module(packageName, package='functions')
+        
+        ## get requested function from that package
+        taskFunction = getattr(self.modules[packageName], taskName)
 
         ## check if task is a conditional jump
         if taskName == 'checkCondition' and 'isJump' in parameters:
