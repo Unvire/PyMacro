@@ -35,6 +35,12 @@ class Task:
 
 class MacroEngine():
     def __init__(self):
+        '''
+        self.taskList: list[tasks] -> list of tasks to be executed in order from 0 to last item
+        self.numOfTasks: int -> length of self.taskList
+        self.variables: dict -> variables dictionary for program and user
+        self.modules: dict -> dictionary with dynamically imported modules when creating tasks
+        '''
         self.taskList = []
         self.numOfTasks = 0
         self.variables = {}
