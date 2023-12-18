@@ -17,6 +17,8 @@ This program is portable macro editor. Used libraries:
 - ~~3 variable files:, coords: label;x;y;,  colors: label;RGB;, user_varibles: label;value~~ -> ~~one will be enough, but with possibility of dumping variables to file~~
 - custom python script execution
 - misc functions(nothing, save variables, load variables...)
+- **macro-project -> program and variables in separate folder**
+- current satus of running tasks must be observing engine (OBSERVER PATTERN)
 
 ## GUI
 looks like FWK, left(table with tasks), right(task edition), task operations(move, delete, add new, copy, copy from another macro). get cursor position, variables subwindow, new/open/save macro, run program/kill (as button and shortcut), settings(), mark jumps(?) 
