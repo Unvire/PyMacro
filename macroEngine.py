@@ -1,3 +1,4 @@
+import os
 import json
 from timeit import default_timer as timer
 import importlib
@@ -151,6 +152,17 @@ class MacroEngine():
         '''
         with open(filePath, 'w') as file:
             json.dump(self.variables, file, indent=2)
+    
+    def loadVariablesMacro(self, dirPath:str, fileName:str):
+        '''
+        Loads variables from json and then macro. Both of the files must be in the same directory.
+            dirPath -> path to macro directory
+            fileName -> name of the macro program
+        '''
+        variablesPath = os.path.join(dirPath, 'variables.json')
+        self.loadVariablesFile(variablesPath)
+        macroPath = os.path.join(dirPath, fileName)
+        self.loadMacroFile(macroPath)
 
     def executeTask(self, task):
         '''
@@ -186,8 +198,7 @@ class MacroEngine():
 
 if __name__ == '__main__':
     engine = MacroEngine()
-    engine.loadVariablesFile('variables.json')
-    engine.loadMacroFile('macro.json')
+    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
     engine.saveVariablesToFile('variableSaveTest.json')
