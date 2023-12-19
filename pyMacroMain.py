@@ -101,6 +101,32 @@ class pyMacro(tk.Tk):
         
         self.mainFrame.grid(row=0, column=0)
     
+    def _clearTable(self, table):
+        ''' 
+        Clears ttk.Treeview. 
+            table -> ttk.Treeview
+        '''
+        for item in table.get_children():
+            table.delete(item)
+    
+    def _generateTable(self, table, data):
+        ''' 
+        Fills ttk.Treeview with data. 
+            table -> ttk.Treeview
+            data -> list of tuples that are a row in the table
+        '''
+        for row in data:
+            table.insert('', tk.END, values=row)
+    
+    def _clearGenerateTable(self, table, data):
+        '''
+        Calls self._clearTable and self._generateTable - Clears and fills ttk.Treeview with data. 
+            table -> ttk.Treeview
+            data -> list of tuples that are a row in the table
+        '''
+        self._clearTable(table)
+        self._generateTable(table, data)
+    
     def openMacroFile(self):
         path = os.path.join(os.getcwd(), '')
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
@@ -118,39 +144,18 @@ class pyMacro(tk.Tk):
         self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
         taskNames = [(i, task.name) for i, task in enumerate(self.tasksList)]
 
-        ## clear table
-        for item in self.tasksTableTree.get_children():
-            self.tasksTableTree.delete(item)
-
-        ## add items
-        for ID, taskName in taskNames:
-            self.tasksTableTree.insert('', tk.END, values=(ID, taskName))
+        self._clearGenerateTable(self.tasksTableTree, taskNames)
 
     def runMacro(self):
         self.macroEngine.runProgram()
 
-    def generateparametersTable(self, taskID=None):
+    def generateParametersTable(self, taskID=None):
         task = self.tasksList[taskID]
         parameters = task.taskParameters()
         arguments = task.functionParameters()
 
-        ## clear table
-        for item in self.taskParametersTableTree.get_children():
-            self.taskParametersTableTree.delete(item)
-        for item in self.taskFunctionParametersTableTree.get_children():
-            self.taskFunctionParametersTableTree.delete(item)
-
-        ## add items
-        for parameterName, parameterValue in parameters:
-            self.taskParametersTableTree.insert('', tk.END, values=(parameterName, parameterValue))
-        for argumentName, argumentValue in arguments:
-            self.taskFunctionParametersTableTree.insert('', tk.END, values=(argumentName, argumentValue))
-
-
-        ## display parameters in table
-        ## display parameters of parameters in table
-        ## generate task on c
-        pass
+        self._clearGenerateTable(self.taskParametersTableTree, parameters)
+        self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
 
 if __name__ == '__main__':
     app = pyMacro()
