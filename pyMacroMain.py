@@ -55,6 +55,10 @@ class pyMacro(tk.Tk):
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
         self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
         self.taskParametersTableTree.heading('Value', text='Value')
+        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Argument name', 'Value'), show='headings')
+        self.taskFunctionParametersTableTree.heading('Argument name', text='Argument name')
+        self.taskFunctionParametersTableTree.heading('Value', text='Value')
+
 
         ## position
         # control buttons
@@ -83,6 +87,7 @@ class pyMacro(tk.Tk):
 
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
+        self.taskFunctionParametersTableTree.grid(row=1, column=0)
 
         # frames
         self.controlButtonsFrame.grid(row=0, column=0)
@@ -108,7 +113,6 @@ class pyMacro(tk.Tk):
             self.macroEngine.loadMacroFile(self.filePath)
 
             self.generateTasksTable()
-            print(self.macroEngine.variables)
     
     def generateTasksTable(self):
         self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
@@ -124,8 +128,29 @@ class pyMacro(tk.Tk):
 
     def runMacro(self):
         self.macroEngine.runProgram()
-    
-    def 
+
+    def generateparametersTable(self, taskID=None):
+        task = self.tasksList[taskID]
+        parameters = task.taskParameters()
+        arguments = task.functionParameters()
+
+        ## clear table
+        for item in self.taskParametersTableTree.get_children():
+            self.taskParametersTableTree.delete(item)
+        for item in self.taskFunctionParametersTableTree.get_children():
+            self.taskFunctionParametersTableTree.delete(item)
+
+        ## add items
+        for parameterName, parameterValue in parameters:
+            self.taskParametersTableTree.insert('', tk.END, values=(parameterName, parameterValue))
+        for argumentName, argumentValue in arguments:
+            self.taskFunctionParametersTableTree.insert('', tk.END, values=(argumentName, argumentValue))
+
+
+        ## display parameters in table
+        ## display parameters of parameters in table
+        ## generate task on c
+        pass
 
 if __name__ == '__main__':
     app = pyMacro()

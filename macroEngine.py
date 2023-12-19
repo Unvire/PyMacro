@@ -32,6 +32,28 @@ class Task:
         functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
         return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
                 'parameters':self.parameters, 'saveResultToVariable':self.variableName}
+    
+    def taskParameters(self):
+        '''
+        Returns list of tuples (parameter, parameterValue). 'name' and 'parameters' are skipped. 'parameters' are handled in self.functionArguments
+        '''
+        taskDict = self.convertToDict()
+        return [(name, taskDict[name]) for name in taskDict if name not in ('name', 'parameters')]
+    
+    def functionParameters(self):
+        '''
+        Returns list of tuples (argument, argumentValue).
+        '''
+        result = []
+        for argument in self.parameters:
+            value = self.parameters[argument]
+            if isinstance(value, list):
+                valueString = '; '.join([str(val) for val in value])
+            else:
+                valueString = str(value)
+            result.append((argument, valueString))
+        return result
+
 
 class MacroEngine():
     def __init__(self):
