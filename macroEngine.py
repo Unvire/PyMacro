@@ -9,7 +9,7 @@ class Task:
         name: str -> name of the task
         isEnabled: bool -> disabled task are not executed
         executeFunction -> reference for function to be executed
-        parameters: dict -> dictionary of parameters, that are passed as keyword arguments to executeFunction 
+        parameters: dict -> dictionary of parameters, that are passed as keyword arguments to executeFunction. Each parameter is a tuple: (value, variableName)
         isJump: bool -> parameter of "logicFunctions.checkCondition". Program will jump to taskID=resultTrue or taskID=resultFalse after evaluating condition
         variableName:str -> name of the variable that will store output of function. Function must return something (bool(result)==True) and variable name must be any string
         '''
@@ -22,38 +22,61 @@ class Task:
 
     def __str__(self):
         nameString = f'Task:{self.name}| state:{self.isEnabled}| '
-        functionString = f'function:{self.executeFunction.__name__}, package:{self.executeFunction.__globals__["__name__"]}| '
+        try:
+            functionString = f'function:{self.executeFunction.__name__}, package:{self.executeFunction.__globals__["__name__"]}| '
+        except AttributeError:
+            functionString = f'{self.executeFunction}(not imported)| '
         parametersString = f'parameters:{self.parameters}, isJump:{self.isJump}, variableName:{self.variableName}'
         return nameString + functionString + parametersString
 
     def convertToDict(self):
         '''
-        Returns dictionary representation
+        Returns dictionary representation. Used to saving task list into json file
         '''
-        functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
+        try:
+            functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
+        except AttributeError:
+            functionString = f'{self.executeFunction}(not imported)'
+
+        parametersDict = {}
+        ## get parameter:variableName if variableName exists else parameter:value
+        for parameter in self.parameters:
+            parameterValue = self.parameters[parameter][1] if self.parameters[parameter][1] else self.parameters[parameter][0]
+            parametersDict[parameter] = parameterValue
+        
         return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
-                'parameters':self.parameters, 'saveResultToVariable':self.variableName}
+                'parameters':parametersDict, 'saveResultToVariable':self.variableName}
     
-    def taskParameters(self):
+    def taskParametersList(self):
         '''
-        Returns list of tuples (parameter, parameterValue). 'name' and 'parameters' are skipped. 'parameters' are handled in self.functionArguments
+        Returns list of tuples (parameter, parameterValue). 'name' and 'parameters' are skipped. 'parameters' are handled in self.functionArguments.
+        Used to display task parameters in table
         '''
         taskDict = self.convertToDict()
         return [(name, taskDict[name]) for name in taskDict if name not in ('name', 'parameters')]
     
-    def functionParameters(self):
+    def functionParametersList(self):
         '''
-        Returns list of tuples (argument, argumentValue).
+        Returns list of tuples (argument, argumentValue). If argument value is obtained from variables file then argumentValue=variableName
+        Used to display function parameters(arguments) in table
         '''
         result = []
         for argument in self.parameters:
-            value = self.parameters[argument]
-            if isinstance(value, list):
+            value, variableName = self.parameters[argument]
+            if variableName:
+                valueString = variableName
+            elif isinstance(value, list):
                 valueString = '; '.join([str(val) for val in value])
             else:
                 valueString = str(value)
             result.append((argument, valueString))
         return result
+    
+    def functionKwargs(self):
+        '''
+        Returns dictionary of function parameters (arguments) key:value. Returns **kwargs that are passed to the function
+        '''
+        return {parameter:self.parameters[parameter][0] for parameter in self.parameters}
 
 
 class MacroEngine():
@@ -103,12 +126,17 @@ class MacroEngine():
         else:            
             isJump = False
 
-        ## load parameters from self.variables dict
-        for parameterName in parameters:
-            variable = parameters[parameterName]
-            if isinstance(variable, str) and variable in self.variables:
-                parameters[parameterName] = self.variables[variable]
+        ## load parameters from self.variables dict. (key:(parameterValue, parameterName))
+        for parameter in parameters:
+            parameterValue = parameters[parameter]
+            parameterName = None
+            if isinstance(parameterValue, str) and parameterValue in self.variables:
+                parameterName = parameterValue
+                parameterValue = self.variables[parameterValue]
+            parameters[parameter] = parameterValue, parameterName
 
+        
+        print(variableName)
         taskInstance = Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
         
@@ -171,7 +199,8 @@ class MacroEngine():
         '''
         timerStart = timer()
         if task.isEnabled:
-            result = task.executeFunction(**task.parameters)
+            kwargs = task.functionKwargs()
+            result = task.executeFunction(**kwargs)
             if task.variableName and result:
                 self.variables[task.variableName] = result
         timerEnd = timer()
@@ -189,7 +218,6 @@ class MacroEngine():
             task = self.taskList[currentTaskID]
             elapsedTime, result = self.executeTask(task)
             
-            print(elapsedTime)
             if result and task.isJump:
                 currentTaskID = int(result)
             else:
@@ -197,6 +225,13 @@ class MacroEngine():
 
 
 if __name__ == '__main__':
+    task = Task(name='Task test', isEnabled=True, executeFunction='cursorFunctions.moveToCoords', 
+                parameters={'coords':((300, 500), 'variable1')}, isJump=False, variableName='')
+    print(task.convertToDict())
+    print(task.taskParametersList())
+    print(task.functionParametersList())
+    print(task.functionKwargs())
+
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
     engine.runProgram()
