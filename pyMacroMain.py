@@ -132,12 +132,11 @@ class pyMacro(tk.Tk):
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
 
         ## CREATE PROJECT-FOLDER
-        if macroFile:
+        if macroFile:            
             self.filePath = macroFile
-            self.variablesPath = os.path.join(path, 'variables.json') # variables must be names variables.json and has to be in the same folder as macro file
-            self.macroEngine.loadVariablesFile(self.variablesPath)
-            self.macroEngine.loadMacroFile(self.filePath)
-
+            *dirPath, macroName = [val for val in macroFile.split('/')]
+            dirPath = '/'.join(item for item in dirPath)
+            self.macroEngine.loadVariablesMacro(dirPath, macroName)
             self.generateTasksTable()
     
     def generateTasksTable(self):
