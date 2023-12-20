@@ -13,6 +13,7 @@ class pyMacro(tk.Tk):
         self.filePath = None
         self.variablesPath = None
         self.macroEngine = macroEngine.MacroEngine()
+        self.macroEngine.registerSubscriber(self)
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -156,6 +157,9 @@ class pyMacro(tk.Tk):
 
         self._clearGenerateTable(self.taskParametersTableTree, parameters)
         self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
+    
+    def update(self, message):
+        print(message)
 
 if __name__ == '__main__':
     app = pyMacro()

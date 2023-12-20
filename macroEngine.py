@@ -11,18 +11,13 @@ class MacroEngine():
         self.numOfTasks: int -> length of self.taskList
         self.variables: dict -> variables dictionary for program and user
         self.modules: dict -> dictionary with dynamically imported modules when creating tasks
+        self.subscribers: list => list with objects that observe this engine
         '''
         self.taskList = []
         self.numOfTasks = 0
         self.variables = {}
         self.modules = {}
-
-    def numOfTasksGetSet(self):
-        '''
-        Getter and setter of self.numOfTasks
-        '''
-        self.numOfTasks = len(self.taskList)
-        return self.numOfTasks
+        self.subscribers = [] 
 
     def _createTask(self, taskDict=None):
         '''
@@ -59,10 +54,30 @@ class MacroEngine():
                 parameterName = parameterValue
                 parameterValue = self.variables[parameterValue]
             parameters[parameter] = parameterValue, parameterName
-            
+
         taskInstance = task.Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
-        
+    
+    def numOfTasksGetSet(self):
+        '''
+        Getter and setter of self.numOfTasks
+        '''
+        self.numOfTasks = len(self.taskList)
+        return self.numOfTasks
+
+    def registerSubscriber(self, subscriber):
+        '''
+        Add subscriber(object) to the list. Object must implement 'update' interface
+        '''
+        self.subscribers.append(subscriber)
+    
+    def notify(self, message:str):
+        '''
+        Broadcast status to all subscribers
+        '''
+        for subscriber in self.subscribers:
+            subscriber.update(message)
+    
 
     def loadMacroFile(self, filePath):
         '''
@@ -122,11 +137,14 @@ class MacroEngine():
         '''
         timerStart = timer()
         if task.isEnabled:
+            self.notify(f'Current step: {task.name}')
             kwargs = task.functionKwargs()
             result = task.executeFunction(**kwargs)
             if task.variableName and result:
                 self.variables[task.variableName] = result
         timerEnd = timer()
+        elapsedTime = timerEnd - timerStart
+        self.notify(f'ElapsedTime: {elapsedTime:.3f}')
         return timerEnd - timerStart, result
     
     def runProgram(self):
