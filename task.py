@@ -29,7 +29,7 @@ class Task:
         Returns dictionary representation. Used to saving task list into json file
         '''
         try:
-            functionString = f'{self.executeFunction.__globals__["__name__"]}.{self.executeFunction.__name__}'
+            functionString = f'{self.executeFunction.__globals__["__name__"].split(".")[1]}.{self.executeFunction.__name__}'
         except AttributeError:
             functionString = f'{self.executeFunction}(not imported)'
 
