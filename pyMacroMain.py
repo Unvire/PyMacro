@@ -146,12 +146,13 @@ class pyMacro(tk.Tk):
         self._clearGenerateTable(self.tasksTableTree, taskNames)
 
     def runMacro(self):
+        self.generateParametersTable(0)
         self.macroEngine.runProgram()
 
     def generateParametersTable(self, taskID=None):
         task = self.tasksList[taskID]
-        parameters = task.taskParameters()
-        arguments = task.functionParameters()
+        parameters = task.taskParametersList()
+        arguments = task.functionParametersList()
 
         self._clearGenerateTable(self.taskParametersTableTree, parameters)
         self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
