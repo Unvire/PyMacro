@@ -1,0 +1,13 @@
+- highligt executed task
+- showing parameters after clicking task
+- convert data from tables to task
+- kill macro functionality
+- cursor position, variables display
+- generate button -> push taskList to MacroEngine
+- add column for elapsed time in the tasks table
+- run mode and edit mode
+- possibility to reorder tasks (up, down)
+- add new, delete
+- copy task, copy from another run
+- volatile variables after reset (delete those that were added in run time)
+- dropdown menu to select arguments
