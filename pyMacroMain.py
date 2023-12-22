@@ -15,6 +15,7 @@ class pyMacro(tk.Tk):
         self.macroEngine = macroEngine.MacroEngine()
         self.macroEngine.registerSubscriber(self)
         self.tasksTableChildren = []
+        self.isRun = False
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -107,6 +108,14 @@ class pyMacro(tk.Tk):
         
         self.mainFrame.grid(row=0, column=0)
     
+    def _isRunSet(self, state=False):
+        if state:
+            self.isRun = state
+            self.tasksTableTree['style'] = 'selectionGreen.Treeview'
+        else:
+            self.isRun = False            
+            self.tasksTableTree['style'] = ''
+    
     def _clearTable(self, table):
         ''' 
         Clears ttk.Treeview. 
@@ -163,9 +172,9 @@ class pyMacro(tk.Tk):
         Executes program
         '''
         self.generateParametersTable(0)
-        self.tasksTableTree['style'] = 'selectionGreen.Treeview'
+        self._isRunSet(True)
         self.macroEngine.runProgram()
-        self.tasksTableTree['style'] = ''
+        self._isRunSet(False)
 
     def generateParametersTable(self, taskID=None):
         '''
