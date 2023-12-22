@@ -107,7 +107,10 @@ class pyMacro(tk.Tk):
         self.taskEditButtonsFrame.grid(row=1, column=2)
         
         self.mainFrame.grid(row=0, column=0)
-    
+
+        ## binds
+        self.tasksTableTree.bind('<ButtonRelease-1>', self.handleMouseClick)
+
     def _isRunSet(self, state=False):
         if state:
             self.isRun = state
@@ -142,6 +145,19 @@ class pyMacro(tk.Tk):
         self._clearTable(table)
         self._generateTable(table, data)
     
+    def handleMouseClick(self, event):
+        '''
+        Handles mouse clicked events
+        '''
+        ## program is not running and macro exists
+        if not self.isRun and self.tasksList:
+            widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
+            ## tasks list is clicked 
+            if widget == self.tasksTableTree:
+                currentItemID = int(self.tasksTableTree.focus()[1:]) - 1 #returns 'I'+'number'
+                if currentItemID < len(self.tasksList):
+                    self.generateParametersTable(currentItemID)
+    
     def openMacroFile(self):
         '''
         Opens macro file and loads variables from the same directory
@@ -171,7 +187,6 @@ class pyMacro(tk.Tk):
         '''
         Executes program
         '''
-        self.generateParametersTable(0)
         self._isRunSet(True)
         self.macroEngine.runProgram()
         self._isRunSet(False)
