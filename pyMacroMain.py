@@ -54,9 +54,10 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=...)
 
         # tasks table
-        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name'), show='headings')        
+        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings')        
         self.tasksTableTree.heading('ID', text='ID')
         self.tasksTableTree.heading('Task name', text='Task name')
+        self.tasksTableTree.heading('Time', text='Time')
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
@@ -178,7 +179,7 @@ class pyMacro(tk.Tk):
         Fills tasksTableTree with data
         '''
         self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
-        taskNames = [(i, task.name) for i, task in enumerate(self.tasksList)]
+        taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
         self.tasksTableChildren = self.tasksTableTree.get_children()
@@ -188,6 +189,7 @@ class pyMacro(tk.Tk):
         Executes program
         '''
         self._isRunSet(True)
+        self.generateTasksTable()
         self.macroEngine.runProgram()
         self._isRunSet(False)
 
@@ -202,20 +204,22 @@ class pyMacro(tk.Tk):
         self._clearGenerateTable(self.taskParametersTableTree, parameters)
         self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
     
-    def update(self, taskID=None, elapsedTime=None):
+    def updateWindow(self, taskID=None, elapsedTime=None):
         '''
         Method called by engine with runtime info about current task
         '''
-        if taskID is not None: # taskID=0 is edge case for "if taskID" 
-            print(f'Current task: {taskID}. {self.tasksList[taskID].name}')
-            currentTaskID = self.tasksTableChildren[taskID]
-            self.tasksTableTree.focus(currentTaskID)
-            self.tasksTableTree.selection_set(currentTaskID)
-            ## refresh window
-            self.update()
-            self.update_idletasks()
-        elif elapsedTime:
-            print(f'Elapsed time: {elapsedTime}')
+        # select row 
+        currentTaskID = self.tasksTableChildren[taskID]
+        self.tasksTableTree.focus(currentTaskID)
+        self.tasksTableTree.selection_set(currentTaskID)
+
+        ## display elapsed time
+        if elapsedTime:
+            self.tasksTableTree.set(currentTaskID, column='Time', value=f'{elapsedTime:5f}')
+        
+        ## refresh window
+        self.update()
+        self.update_idletasks()
 
 if __name__ == '__main__':
     app = pyMacro()

@@ -76,7 +76,7 @@ class MacroEngine():
         Broadcast status to all subscribers
         '''
         for subscriber in self.subscribers:
-            subscriber.update(taskID=taskID, elapsedTime=elapsedTime)
+            subscriber.updateWindow(taskID=taskID, elapsedTime=elapsedTime)
     
 
     def loadMacroFile(self, filePath):
@@ -144,8 +144,8 @@ class MacroEngine():
                 self.variables[task.variableName] = result
         timerEnd = timer()
         elapsedTime = timerEnd - timerStart
-        self.notify(elapsedTime=elapsedTime)
-        return timerEnd - timerStart, result
+        self.notify(taskID=taskID, elapsedTime=elapsedTime)
+        return result
     
     def runProgram(self):
         '''
@@ -157,7 +157,7 @@ class MacroEngine():
         ## while loop allows to change currentTaskID programatically (loop back and forward)
         while currentTaskID < self.numOfTasks:
             task = self.taskList[currentTaskID]
-            elapsedTime, result = self.executeTask(task, currentTaskID)
+            result = self.executeTask(task, currentTaskID)
             
             if result and task.isJump:
                 currentTaskID = int(result)
