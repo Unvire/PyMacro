@@ -134,6 +134,9 @@ class pyMacro(tk.Tk):
         self._generateTable(table, data)
     
     def openMacroFile(self):
+        '''
+        Opens macro file and loads variables from the same directory
+        '''
         path = os.path.join(os.getcwd(), '')
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
 
@@ -146,6 +149,9 @@ class pyMacro(tk.Tk):
             self.generateTasksTable()
     
     def generateTasksTable(self):
+        '''
+        Fills tasksTableTree with data
+        '''
         self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
         taskNames = [(i, task.name) for i, task in enumerate(self.tasksList)]
 
@@ -153,12 +159,18 @@ class pyMacro(tk.Tk):
         self.tasksTableChildren = self.tasksTableTree.get_children()
 
     def runMacro(self):
+        '''
+        Executes program
+        '''
         self.generateParametersTable(0)
         self.tasksTableTree['style'] = 'selectionGreen.Treeview'
         self.macroEngine.runProgram()
         self.tasksTableTree['style'] = ''
 
     def generateParametersTable(self, taskID=None):
+        '''
+        Fills taskParametersTableTree and taskFunctionParametersTableTree with data
+        '''
         task = self.tasksList[taskID]
         parameters = task.taskParametersList()
         arguments = task.functionParametersList()
