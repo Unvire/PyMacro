@@ -14,6 +14,7 @@ class pyMacro(tk.Tk):
         self.variablesPath = None
         self.macroEngine = macroEngine.MacroEngine()
         self.macroEngine.registerSubscriber(self)
+        self.tasksTableChildren = []
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -24,6 +25,10 @@ class pyMacro(tk.Tk):
         self.tasksFrame = ttk.Frame(self.mainFrame)
         self.taskParametersFrame = ttk.Frame(self.mainFrame)
         self.taskEditButtonsFrame = ttk.Frame(self.mainFrame)
+
+        ## custom style for selection in treeview
+        self.selectionGreenStyle = ttk.Style()
+        self.selectionGreenStyle.map('selectionGreen.Treeview', background=[('selected', 'green')])
 
         ## widgets
         # control buttons
@@ -145,10 +150,13 @@ class pyMacro(tk.Tk):
         taskNames = [(i, task.name) for i, task in enumerate(self.tasksList)]
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
+        self.tasksTableChildren = self.tasksTableTree.get_children()
 
     def runMacro(self):
         self.generateParametersTable(0)
+        self.tasksTableTree['style'] = 'selectionGreen.Treeview'
         self.macroEngine.runProgram()
+        self.tasksTableTree['style'] = ''
 
     def generateParametersTable(self, taskID=None):
         task = self.tasksList[taskID]
@@ -158,8 +166,20 @@ class pyMacro(tk.Tk):
         self._clearGenerateTable(self.taskParametersTableTree, parameters)
         self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
     
-    def update(self, message):
-        print(message)
+    def update(self, taskID=None, elapsedTime=None):
+        '''
+        Method called by engine with runtime info about current task
+        '''
+        if taskID is not None: # taskID=0 is edge case for "if taskID" 
+            print(f'Current task: {taskID}. {self.tasksList[taskID].name}')
+            currentTaskID = self.tasksTableChildren[taskID]
+            self.tasksTableTree.focus(currentTaskID)
+            self.tasksTableTree.selection_set(currentTaskID)
+            ## refresh window
+            self.update()
+            self.update_idletasks()
+        elif elapsedTime:
+            print(f'Elapsed time: {elapsedTime}')
 
 if __name__ == '__main__':
     app = pyMacro()

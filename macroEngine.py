@@ -71,12 +71,12 @@ class MacroEngine():
         '''
         self.subscribers.append(subscriber)
     
-    def notify(self, message:str):
+    def notify(self, taskID=None, elapsedTime=None):
         '''
         Broadcast status to all subscribers
         '''
         for subscriber in self.subscribers:
-            subscriber.update(message)
+            subscriber.update(taskID=taskID, elapsedTime=elapsedTime)
     
 
     def loadMacroFile(self, filePath):
@@ -130,21 +130,21 @@ class MacroEngine():
         macroPath = os.path.join(dirPath, fileName)
         self.loadMacroFile(macroPath)
 
-    def executeTask(self, task):
+    def executeTask(self, task, taskID):
         '''
         Executes task by calling function in task.executeFunction with keyword arguments given in task.parameters. Returns time of execution and result of task
             task: instance of Task class
         '''
         timerStart = timer()
+        self.notify(taskID=taskID)
         if task.isEnabled:
-            self.notify(f'Current step: {task.name}')
             kwargs = task.functionKwargs()
             result = task.executeFunction(**kwargs)
             if task.variableName and result:
                 self.variables[task.variableName] = result
         timerEnd = timer()
         elapsedTime = timerEnd - timerStart
-        self.notify(f'ElapsedTime: {elapsedTime:.3f}')
+        self.notify(elapsedTime=elapsedTime)
         return timerEnd - timerStart, result
     
     def runProgram(self):
@@ -157,7 +157,7 @@ class MacroEngine():
         ## while loop allows to change currentTaskID programatically (loop back and forward)
         while currentTaskID < self.numOfTasks:
             task = self.taskList[currentTaskID]
-            elapsedTime, result = self.executeTask(task)
+            elapsedTime, result = self.executeTask(task, currentTaskID)
             
             if result and task.isJump:
                 currentTaskID = int(result)
