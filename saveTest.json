@@ -3,7 +3,6 @@
     "name": "Move mouse",
     "enabled": true,
     "function": "cursorFunctions.moveToCoords",
-    "isJump": false,
     "parameters": {
       "coords": "position1",
       "interval": 3
@@ -14,7 +13,6 @@
     "name": "Move mouse again",
     "enabled": true,
     "function": "cursorFunctions.moveToCoords",
-    "isJump": false,
     "parameters": {
       "coords": [
         500,
@@ -27,8 +25,8 @@
     "name": "Condition test",
     "enabled": true,
     "function": "logicFunctions.checkCondition",
-    "isJump": true,
     "parameters": {
+      "isJump": true,
       "evalationFunctionName": "equal",
       "vals": [
         2,
@@ -43,7 +41,6 @@
     "name": "Write text",
     "enabled": true,
     "function": "keyboardFunctions.writeString",
-    "isJump": false,
     "parameters": {
       "text": "Hello World"
     },
@@ -53,7 +50,6 @@
     "name": "Move mouse ",
     "enabled": true,
     "function": "cursorFunctions.moveToCoords",
-    "isJump": false,
     "parameters": {
       "coords": [
         1000,

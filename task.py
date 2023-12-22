@@ -33,13 +33,13 @@ class Task:
         except AttributeError:
             functionString = f'{self.executeFunction}(not imported)'
 
-        parametersDict = {}
+        parametersDict = {'isJump':self.isJump} if self.isJump else {}
         ## get parameter:variableName if variableName exists else parameter:value
         for parameter in self.parameters:
             parameterValue = self.parameters[parameter][1] if self.parameters[parameter][1] else self.parameters[parameter][0]
             parametersDict[parameter] = parameterValue
-        
-        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 'isJump':self.isJump, 
+
+        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 
                 'parameters':parametersDict, 'saveResultToVariable':self.variableName}
     
     def taskParametersList(self):
@@ -75,7 +75,7 @@ class Task:
 
 if __name__ == '__main__':
     task = Task(name='Task test', isEnabled=True, executeFunction='cursorFunctions.moveToCoords', 
-                parameters={'coords':((300, 500), 'variable1')}, isJump=False, variableName='')
+                parameters={'coords':((300, 500), 'variable1')}, isJump=True, variableName='')
     print(task.convertToDict())
     print(task.taskParametersList())
     print(task.functionParametersList())
