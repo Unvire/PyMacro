@@ -155,9 +155,9 @@ class pyMacro(tk.Tk):
             widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
             ## tasks list is clicked 
             if widget == self.tasksTableTree:
-                currentItemID = int(self.tasksTableTree.focus()[1:]) - 1 #returns 'I'+'number'
-                if currentItemID < len(self.tasksList):
-                    self.generateParametersTable(currentItemID)
+                currentItemID = self.tasksTableTree.focus()
+                currentItemNumber = self.tasksTableChildren.index(currentItemID)
+                self.generateParametersTable(currentItemNumber)
     
     def openMacroFile(self):
         '''
