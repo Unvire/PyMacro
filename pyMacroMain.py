@@ -110,7 +110,7 @@ class pyMacro(tk.Tk):
         self.mainFrame.grid(row=0, column=0)
 
         ## binds
-        self.tasksTableTree.bind('<ButtonRelease-1>', self.handleMouseClick)
+        self.bind('<ButtonRelease-1>', self.handleMouseClick)
 
     def _isRunSet(self, state=False):
         if state:
@@ -154,10 +154,14 @@ class pyMacro(tk.Tk):
         if not self.isRun and self.tasksList:
             widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
             ## tasks list is clicked 
-            if widget == self.tasksTableTree:
+            if widget == self.tasksTableTree and self.tasksTableChildren:
                 currentItemID = self.tasksTableTree.focus()
                 currentItemNumber = self.tasksTableChildren.index(currentItemID)
                 self.generateParametersTable(currentItemNumber)
+            elif widget == self.taskParametersTableTree:
+                print('asd')
+            elif widget == self.taskFunctionParametersTableTree:
+                print('dsa')
     
     def openMacroFile(self):
         '''
