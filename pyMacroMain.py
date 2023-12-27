@@ -129,6 +129,10 @@ class pyMacro(tk.Tk):
         self.bind('<ButtonRelease-1>', self.handleMouseClick)
 
     def _isRunSet(self, state=False):
+        '''
+        Setter for self.isRun. Handles switching focus styles of self.tasksTableTree.
+            state: bool
+        '''
         if state:
             self.isRun = state
             self.tasksTableTree['style'] = 'selectionGreen.Treeview'
