@@ -136,6 +136,7 @@ class pyMacro(tk.Tk):
         '''
         for row in data:
             table.insert('', tk.END, values=row)
+        table.insert('', tk.END, values=[''] * len(row)) # add empty row in the end
     
     def _clearGenerateTable(self, table, data):
         '''
@@ -201,12 +202,15 @@ class pyMacro(tk.Tk):
         '''
         Fills taskParametersTableTree and taskFunctionParametersTableTree with data
         '''
-        task = self.tasksList[taskID]
-        parameters = task.taskParametersList()
-        arguments = task.functionParametersList()
+        try:
+            task = self.tasksList[taskID]
+            parameters = task.taskParametersList()
+            arguments = task.functionParametersList()
 
-        self._clearGenerateTable(self.taskParametersTableTree, parameters)
-        self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
+            self._clearGenerateTable(self.taskParametersTableTree, parameters)
+            self._clearGenerateTable(self.taskFunctionParametersTableTree, arguments)
+        except IndexError:
+            pass
     
     def updateWindow(self, taskID=None, elapsedTime=None):
         '''
