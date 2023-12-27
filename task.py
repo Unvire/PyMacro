@@ -73,6 +73,21 @@ class Task:
         '''
         return {parameter:self.parameters[parameter][0] for parameter in self.parameters}
 
+    def updateParameter(self, isArgument=False, newRecord=('', None)):
+        '''
+        Updates instance parameters by modifing __dict__. Preserves variableName that value is read from
+            isArgument:bool -> True edits self.__dict__['parameters'], False edits self.__dict__
+        '''
+        keyName, value = newRecord
+        if isArgument:
+            if keyName in self.__dict__['parameters']:
+                _, variableName = self.__dict__['parameters'][keyName]
+            else:
+                self.__dict__['parameters'][keyName] = None
+            self.__dict__['parameters'][keyName] = value, variableName
+        else:
+            self.__dict__[keyName] = value
+
 if __name__ == '__main__':
     task = Task(name='Task test', isEnabled=True, executeFunction='cursorFunctions.moveToCoords', 
                 parameters={'coords':((300, 500), 'variable1')}, isJump=True, variableName='')
@@ -80,3 +95,7 @@ if __name__ == '__main__':
     print(task.taskParametersList())
     print(task.functionParametersList())
     print(task.functionKwargs())
+    task.updateParameter(isArgument=True, newRecord=('coords', (0, 600)))
+    print(task.functionKwargs())    
+    task.updateParameter(isArgument=False, newRecord=('executeFunction', 'aaa'))
+    print(task.taskParametersList())
