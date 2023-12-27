@@ -88,6 +88,7 @@ class MacroEngine():
             taskDict = json.load(file)
 
         ## convert json to task list
+        self.taskList = []
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
