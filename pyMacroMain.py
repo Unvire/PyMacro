@@ -23,6 +23,7 @@ class pyMacro(tk.Tk):
         self.controlButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.runButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.utilityButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
+        self.parameterEditFrame = ttk.Frame(self.mainFrame)
         self.tasksFrame = ttk.Frame(self.mainFrame)
         self.taskParametersFrame = ttk.Frame(self.mainFrame)
         self.taskEditButtonsFrame = ttk.Frame(self.mainFrame)
@@ -59,6 +60,12 @@ class pyMacro(tk.Tk):
         self.tasksTableTree.heading('Task name', text='Task name')
         self.tasksTableTree.heading('Time', text='Time')
 
+        # parameter edit
+        self.parameterNameLabel = ttk.Label(self.parameterEditFrame, text='Name')
+        self.parameterNameEntry = ttk.Entry(self.parameterEditFrame)
+        self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
+        self.parametervalueEntry = ttk.Entry(self.parameterEditFrame)
+
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
         self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
@@ -93,19 +100,28 @@ class pyMacro(tk.Tk):
         # tasks table
         self.tasksTableTree.grid(row=0, column=0)
 
+        # parameter edit
+        self.parameterNameLabel.grid(row=0, column=0)
+        self.parameterNameEntry.grid(row=0, column=1)
+        self.parameterValueLabel.grid(row=0, column=2)
+        self.parametervalueEntry.grid(row=0, column=3)
+
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
         self.taskFunctionParametersTableTree.grid(row=1, column=0)
 
         # frames
+        # buttons inside first row
         self.controlButtonsFrame.grid(row=0, column=0)
         self.runButtonsFrame.grid(row=0, column=1)
         self.utilityButtonsFrame.grid(row=0, column=2)
+        
+        # main layout
         self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3)
-
-        self.tasksFrame.grid(row=1, column=0)
-        self.taskParametersFrame.grid(row=1, column=1)
-        self.taskEditButtonsFrame.grid(row=1, column=2)
+        self.tasksFrame.grid(row=1, column=0, rowspan=2)
+        self.parameterEditFrame.grid(row=1, column=1)
+        self.taskParametersFrame.grid(row=2, column=1)
+        self.taskEditButtonsFrame.grid(row=1, column=2, rowspan=2)
         
         self.mainFrame.grid(row=0, column=0)
 
