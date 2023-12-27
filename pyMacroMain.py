@@ -175,6 +175,19 @@ class pyMacro(tk.Tk):
             table.insert('', tk.END, values=row)
         table.insert('', tk.END, values=[''] * len(row)) # add empty row in the end
     
+    def _handleClickedParameterTreeview(self, treeview):
+        '''
+        Handles on-click action on parameter treeviews. Gets clicked rowID, updates last clicked treeview and prints focused row data in the Entries.
+            treeview: ttk.Treeview
+        '''
+        _, currentItemID = self._getTreeviewItemNumber(treeview)                           
+        self._clickedTableSet(treeview=treeview, focusedItem=currentItemID)
+        parametersDict = treeview.set(currentItemID)
+        try:
+            self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
+        except KeyError:
+            pass
+
     def _clearGenerateTable(self, table, data):
         '''
         Calls self._clearTable and self._generateTable - Clears and fills ttk.Treeview with data. 
@@ -221,21 +234,9 @@ class pyMacro(tk.Tk):
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
             elif widget == self.taskParametersTableTree:
-                _, currentItemID = self._getTreeviewItemNumber(self.taskParametersTableTree)                           
-                self._clickedTableSet(treeview=widget, focusedItem=currentItemID)
-                parametersDict = self.taskParametersTableTree.set(currentItemID)
-                try:
-                    self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
-                except KeyError:
-                    pass
+                self._handleClickedParameterTreeview(self.taskParametersTableTree)
             elif widget == self.taskFunctionParametersTableTree:
-                _, currentItemID = self._getTreeviewItemNumber(self.taskFunctionParametersTableTree)                          
-                self._clickedTableSet(treeview=widget, focusedItem=currentItemID)
-                parametersDict = self.taskFunctionParametersTableTree.set(currentItemID)
-                try: 
-                    self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
-                except KeyError:
-                    pass
+                self._handleClickedParameterTreeview(self.taskFunctionParametersTableTree)
     
     def openMacroFile(self):
         '''
@@ -318,6 +319,7 @@ class pyMacro(tk.Tk):
         numOfKeys = len(treeview.set(lastRow))
         if treeview.set(lastRow)['Parameter name']:
             treeview.insert('', tk.END, values=[''] * numOfKeys)
+
 
 if __name__ == '__main__':
     app = pyMacro()
