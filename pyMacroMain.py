@@ -173,8 +173,11 @@ class pyMacro(tk.Tk):
             ## tasks list is clicked 
             if widget == self.tasksTableTree and self.tasksTableChildren:
                 currentItemID = self.tasksTableTree.focus()
-                currentItemNumber = self.tasksTableChildren.index(currentItemID)
-                self.generateParametersTable(currentItemNumber)
+                try:
+                    currentItemNumber = self.tasksTableChildren.index(currentItemID)
+                    self.generateParametersTable(currentItemNumber)
+                except ValueError:
+                    pass
             elif widget == self.taskParametersTableTree:
                 print('asd')
             elif widget == self.taskFunctionParametersTableTree:
