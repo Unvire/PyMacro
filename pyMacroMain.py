@@ -151,6 +151,12 @@ class pyMacro(tk.Tk):
         '''
         self.clickedTable = treeview, focusedItem
 
+    def _updateTreeviewRow(self, treeview='', rowID='', columnName='', columnValue=''):
+        '''
+        Sets value of requested cell in treeview
+        '''
+        treeview.set(rowID, column=columnName, value=columnValue)
+
     def _clearTable(self, table):
         ''' 
         Clears ttk.Treeview. 
@@ -290,24 +296,18 @@ class pyMacro(tk.Tk):
 
         ## display elapsed time
         if elapsedTime:
-            self.updateTreeviewRow(treeview=self.tasksTableTree, rowID=currentTaskID, columnName='Time', columnValue=f'{elapsedTime:5f}')
+            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=currentTaskID, columnName='Time', columnValue=f'{elapsedTime:5f}')
         
         ## refresh window
         self.update()
         self.update_idletasks()
     
-    def updateTreeviewRow(self, treeview='', rowID='', columnName='', columnValue=''):
-        '''
-        Sets value of requested cell in treeview
-        '''
-        treeview.set(rowID, column=columnName, value=columnValue)
-    
     def updateTreeviewParameters(self):
         treeview, rowID = self.clickedTable
         parameter = self.parameterNameEntry.get()
         value = self.parameterValueEntry.get()
-        self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
-        self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
+        self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
+        self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
 
         ## delete empty row
         if not parameter and not value:
