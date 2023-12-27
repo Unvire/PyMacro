@@ -167,6 +167,18 @@ class pyMacro(tk.Tk):
         self._clearTable(table)
         self._generateTable(table, data)
     
+    def _getTreeviewItemNumber(self, treeview):
+        '''
+        Returns currentItemNumber:num, currentItemID:str of focused item in treeview.
+            treeview - ttk.Treeview widget
+        '''
+        currentItemID = treeview.focus()
+        try:
+            currentItemNumber = treeview.index(currentItemID)
+        except ValueError:
+            return None
+        return currentItemNumber, currentItemID
+    
     def handleMouseClick(self, event):
         '''
         Handles mouse clicked events
@@ -175,17 +187,19 @@ class pyMacro(tk.Tk):
         if not self.isRun and self.tasksList:
             widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
             ## tasks list is clicked 
-            if widget == self.tasksTableTree and self.tasksTableChildren:
-                currentItemID = self.tasksTableTree.focus()
-                try:
-                    currentItemNumber = self.tasksTableChildren.index(currentItemID)
+            if widget == self.tasksTableTree:
+                currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+                if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
-                except ValueError:
-                    pass
             elif widget == self.taskParametersTableTree:
-                print('asd')
+                _, currentItemID = self._getTreeviewItemNumber(self.taskParametersTableTree)
+                parametersDict = self.taskParametersTableTree.set(currentItemID)
+                parameterName, parameterValue = parametersDict['Parameter name'], parametersDict['Value']
+                
             elif widget == self.taskFunctionParametersTableTree:
-                print('dsa')
+                _, currentItemID = self._getTreeviewItemNumber(self.taskFunctionParametersTableTree)
+                parametersDict = self.taskFunctionParametersTableTree.set(currentItemID)
+                parameterName, parameterValue = parametersDict['Argument name'], parametersDict['Value']
     
     def openMacroFile(self):
         '''
