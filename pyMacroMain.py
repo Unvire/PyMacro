@@ -64,7 +64,7 @@ class pyMacro(tk.Tk):
         self.parameterNameLabel = ttk.Label(self.parameterEditFrame, text='Name')
         self.parameterNameEntry = ttk.Entry(self.parameterEditFrame)
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
-        self.parametervalueEntry = ttk.Entry(self.parameterEditFrame)
+        self.parameterValueEntry = ttk.Entry(self.parameterEditFrame)
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
@@ -104,7 +104,7 @@ class pyMacro(tk.Tk):
         self.parameterNameLabel.grid(row=0, column=0)
         self.parameterNameEntry.grid(row=0, column=1)
         self.parameterValueLabel.grid(row=0, column=2)
-        self.parametervalueEntry.grid(row=0, column=3)
+        self.parameterValueEntry.grid(row=0, column=3)
 
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
@@ -179,6 +179,17 @@ class pyMacro(tk.Tk):
             return None
         return currentItemNumber, currentItemID
     
+    def _updateParameterEntries(self, parameter='', value=''):
+        '''
+        Updates parameter Entries with focused values of Treeviews
+            parameter:str
+            value:str
+        '''
+        self.parameterNameEntry.delete(0, tk.END)
+        self.parameterValueEntry.delete(0, tk.END)
+        self.parameterNameEntry.insert(0, parameter)
+        self.parameterValueEntry.insert(0, value)
+    
     def handleMouseClick(self, event):
         '''
         Handles mouse clicked events
@@ -194,12 +205,19 @@ class pyMacro(tk.Tk):
             elif widget == self.taskParametersTableTree:
                 _, currentItemID = self._getTreeviewItemNumber(self.taskParametersTableTree)
                 parametersDict = self.taskParametersTableTree.set(currentItemID)
-                parameterName, parameterValue = parametersDict['Parameter name'], parametersDict['Value']
-                
+                try:
+                    parameterName, parameterValue = parametersDict['Parameter name'], parametersDict['Value']
+                    self._updateParameterEntries(parameter=parameterName, value=parameterValue)
+                except KeyError:
+                    pass
             elif widget == self.taskFunctionParametersTableTree:
                 _, currentItemID = self._getTreeviewItemNumber(self.taskFunctionParametersTableTree)
                 parametersDict = self.taskFunctionParametersTableTree.set(currentItemID)
-                parameterName, parameterValue = parametersDict['Argument name'], parametersDict['Value']
+                try:
+                    parameterName, parameterValue = parametersDict['Argument name'], parametersDict['Value']                
+                    self._updateParameterEntries(parameter=parameterName, value=parameterValue)
+                except KeyError:
+                    pass
     
     def openMacroFile(self):
         '''
