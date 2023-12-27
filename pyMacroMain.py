@@ -16,6 +16,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.registerSubscriber(self)
         self.tasksTableChildren = []
         self.isRun = False
+        self.clickedTable = None, None
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -65,13 +66,14 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry = ttk.Entry(self.parameterEditFrame)
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
         self.parameterValueEntry = ttk.Entry(self.parameterEditFrame)
+        self.updateTreeviewParametersButton = ttk.Button(self.parameterEditFrame, text='Update', command=self.updateTreeviewParameters)
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
         self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
         self.taskParametersTableTree.heading('Value', text='Value')
-        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Argument name', 'Value'), show='headings')
-        self.taskFunctionParametersTableTree.heading('Argument name', text='Argument name')
+        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.taskFunctionParametersTableTree.heading('Parameter name', text='Argument name')
         self.taskFunctionParametersTableTree.heading('Value', text='Value')
 
 
@@ -105,6 +107,7 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry.grid(row=0, column=1)
         self.parameterValueLabel.grid(row=0, column=2)
         self.parameterValueEntry.grid(row=0, column=3)
+        self.updateTreeviewParametersButton.grid(row=0, column=4)
 
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
@@ -140,6 +143,14 @@ class pyMacro(tk.Tk):
             self.isRun = False            
             self.tasksTableTree['style'] = ''
     
+    def _clickedTableSet(self, treeview=None, focusedItem=''):
+        '''
+        Setter for self.clickedTable. Used to verify table of which parameters should be updated.
+            treeview -> ttk.Treeview
+            focusedItem:str -> item ID returned by .focus()
+        '''
+        self.clickedTable = treeview, focusedItem
+
     def _clearTable(self, table):
         ''' 
         Clears ttk.Treeview. 
@@ -192,7 +203,7 @@ class pyMacro(tk.Tk):
     
     def handleMouseClick(self, event):
         '''
-        Handles mouse clicked events
+        Handles mouse clicked events. For Treeviews: 1. get clicked item data 2. generate tables or pass data to Entries
         '''
         ## program is not running and macro exists
         if not self.isRun and self.tasksList:
@@ -200,22 +211,23 @@ class pyMacro(tk.Tk):
             ## tasks list is clicked 
             if widget == self.tasksTableTree:
                 currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+                self._clickedTableSet(treeview=widget)
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
             elif widget == self.taskParametersTableTree:
-                _, currentItemID = self._getTreeviewItemNumber(self.taskParametersTableTree)
+                _, currentItemID = self._getTreeviewItemNumber(self.taskParametersTableTree)                           
+                self._clickedTableSet(treeview=widget, focusedItem=currentItemID)
                 parametersDict = self.taskParametersTableTree.set(currentItemID)
                 try:
-                    parameterName, parameterValue = parametersDict['Parameter name'], parametersDict['Value']
-                    self._updateParameterEntries(parameter=parameterName, value=parameterValue)
+                    self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
                 except KeyError:
                     pass
             elif widget == self.taskFunctionParametersTableTree:
-                _, currentItemID = self._getTreeviewItemNumber(self.taskFunctionParametersTableTree)
+                _, currentItemID = self._getTreeviewItemNumber(self.taskFunctionParametersTableTree)                          
+                self._clickedTableSet(treeview=widget, focusedItem=currentItemID)
                 parametersDict = self.taskFunctionParametersTableTree.set(currentItemID)
-                try:
-                    parameterName, parameterValue = parametersDict['Argument name'], parametersDict['Value']                
-                    self._updateParameterEntries(parameter=parameterName, value=parameterValue)
+                try: 
+                    self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
                 except KeyError:
                     pass
     
@@ -278,11 +290,24 @@ class pyMacro(tk.Tk):
 
         ## display elapsed time
         if elapsedTime:
-            self.tasksTableTree.set(currentTaskID, column='Time', value=f'{elapsedTime:5f}')
+            self.updateTreeviewRow(treeview=self.tasksTableTree, rowID=currentTaskID, columnName='Time', columnValue=f'{elapsedTime:5f}')
         
         ## refresh window
         self.update()
         self.update_idletasks()
+    
+    def updateTreeviewRow(self, treeview='', rowID='', columnName='', columnValue=''):
+        '''
+        Sets value of requested cell in treeview
+        '''
+        treeview.set(rowID, column=columnName, value=columnValue)
+    
+    def updateTreeviewParameters(self):
+        treeview, rowID = self.clickedTable
+        parameter = self.parameterNameEntry.get()
+        value = self.parameterValueEntry.get()
+        self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
+        self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
 
 if __name__ == '__main__':
     app = pyMacro()
