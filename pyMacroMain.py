@@ -309,6 +309,16 @@ class pyMacro(tk.Tk):
         self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
         self.updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
 
+        ## delete empty row
+        if not parameter and not value:
+            treeview.delete(rowID)
+
+        ## add empty row as last row, in case that above if-statement cleared last empty row
+        lastRow = treeview.get_children()[-1]
+        numOfKeys = len(treeview.set(lastRow))
+        if treeview.set(lastRow)['Parameter name']:
+            treeview.insert('', tk.END, values=[''] * numOfKeys)
+
 if __name__ == '__main__':
     app = pyMacro()
     app.mainloop()
