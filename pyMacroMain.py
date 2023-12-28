@@ -310,6 +310,7 @@ class pyMacro(tk.Tk):
         self.update_idletasks()
     
     def updateTreeviewParameters(self):
+        typeDict = {'false': False, 'true':True}
         treeview, rowID = self.clickedTable
         isArgument = treeview == self.taskFunctionParametersTableTree
         parameter = self.parameterNameEntry.get()
@@ -329,6 +330,7 @@ class pyMacro(tk.Tk):
 
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+        value = typeDict[value.lower()]        
         isArgument = treeview == self.taskFunctionParametersTableTree
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
