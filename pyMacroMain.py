@@ -220,6 +220,9 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry.insert(0, parameter)
         self.parameterValueEntry.insert(0, value)
     
+    def getEngineVariables(self):
+        self.variables = self.macroEngine.getVariables()
+
     def handleMouseClick(self, event):
         '''
         Handles mouse clicked events. For Treeviews: 1. get clicked item data 2. generate tables or pass data to Entries
@@ -251,6 +254,7 @@ class pyMacro(tk.Tk):
             *dirPath, macroName = [val for val in macroFile.split('/')]
             dirPath = '/'.join(item for item in dirPath)
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
+            self.getEngineVariables()
             self.generateTasksTable()
     
     def _updateTaskList(self):
@@ -330,9 +334,14 @@ class pyMacro(tk.Tk):
 
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
-        value = typeDict[value.lower()]        
+        if value in self.variables:     
+            variableName = value       
+            value = self.variables[value]
+        else:
+            variableName = ''
+            value = typeDict[value.lower()] if value in typeDict else value
         isArgument = treeview == self.taskFunctionParametersTableTree
-        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
+        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
         self._updateTaskList()
 
 if __name__ == '__main__':
