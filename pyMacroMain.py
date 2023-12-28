@@ -283,9 +283,6 @@ class pyMacro(tk.Tk):
         self._isRunSet(False)
 
     def generateParametersTable(self, taskID=None):
-        '''
-        Fills taskParametersTableTree and taskFunctionParametersTableTree with data
-        '''
         try:
             task = self.tasksList[taskID]
             parameters = task.taskParametersList()
@@ -314,6 +311,10 @@ class pyMacro(tk.Tk):
         self.update_idletasks()
     
     def updateTreeviewParameters(self):
+        '''
+        Updates task with parameters gained from Entries. 
+        1. 
+        '''
         typeDict = {'false': False, 'true':True}
         treeview, rowID = self.clickedTable
         isArgument = treeview == self.taskFunctionParametersTableTree
@@ -346,7 +347,6 @@ class pyMacro(tk.Tk):
                 value = [int(val) for val in value.split(';')]
             except ValueError:
                 value = typeDict[value.lower()] if value in typeDict else value
-        isArgument = treeview == self.taskFunctionParametersTableTree
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
         self._updateTaskList()
 
