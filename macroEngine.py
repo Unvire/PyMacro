@@ -166,6 +166,12 @@ class MacroEngine():
                 currentTaskID += 1
     
     def editTaskParameter(self, taskID=0, taskParameters=(None, None), isArgument=False):
+        '''
+        Updates selected task from self.taskList.
+            taskID: int -> index of item in self.taskList to be edited
+            taskParameters:(parameterName:str, val:str) -> parameterName. value is key:val pair of Task class instance
+            isArgument: bool -> True edits taskInstance.__dict__['parameters'], False edits taskInstance.__dict__
+        '''
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
 
 
