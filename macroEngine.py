@@ -64,6 +64,12 @@ class MacroEngine():
         '''
         return [task for task in self.taskList]
     
+    def getVariables(self):
+        '''
+        Getter for self.variables. Returns shallow copy
+        '''
+        return self.variables.copy()
+    
     def numOfTasksGetSet(self):
         '''
         Getter and setter of self.numOfTasks
@@ -172,15 +178,14 @@ class MacroEngine():
             else:
                 currentTaskID += 1
     
-    def editTaskParameter(self, taskID=0, taskParameters=(None, None), isArgument=False):
+    def editTaskParameter(self, taskID=0, taskParameters=(None, None, None), isArgument=False):
         '''
         Updates selected task from self.taskList.
             taskID: int -> index of item in self.taskList to be edited
-            taskParameters:(parameterName:str, val:str) -> parameterName. value is key:val pair of Task class instance
+            taskParameters:(parameterName:str, val:str, variableName:str) -> parameterName and value is a key:val pair of Task class instance, variableName is key from self.variables
             isArgument: bool -> True edits taskInstance.__dict__['parameters'], False edits taskInstance.__dict__
         '''
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
-
 
 if __name__ == '__main__':
     engine = MacroEngine()
