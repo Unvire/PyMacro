@@ -144,7 +144,7 @@ class MacroEngine():
         '''
         timerStart = timer()
         self.notify(taskID=taskID)
-        if task.isEnabled:
+        if task.isEnabled and str(task.isEnabled).lower() != 'false': # workaround with handling both bool and str values
             kwargs = task.functionKwargs()
             result = task.executeFunction(**kwargs)
             if task.variableName and result:
