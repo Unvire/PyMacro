@@ -319,6 +319,8 @@ class pyMacro(tk.Tk):
         isArgument = treeview == self.taskFunctionParametersTableTree
         parameter = self.parameterNameEntry.get()
         value = self.parameterValueEntry.get()
+
+        ## update tables
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
 
@@ -339,7 +341,11 @@ class pyMacro(tk.Tk):
             value = self.variables[value]
         else:
             variableName = ''
-            value = typeDict[value.lower()] if value in typeDict else value
+            ## check if value can be converted to list of ints
+            try:
+                value = [int(val) for val in value.split(';')]
+            except ValueError:
+                value = typeDict[value.lower()] if value in typeDict else value
         isArgument = treeview == self.taskFunctionParametersTableTree
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
         self._updateTaskList()
