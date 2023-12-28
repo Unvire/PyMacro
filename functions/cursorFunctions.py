@@ -18,7 +18,7 @@ def moveToCoords(coords=(None, None), interval=0):
         interval - duration of movement
     '''
     x, y = _processCoords(coords=coords)
-    pyautogui.moveTo(x, y, interval)
+    pyautogui.moveTo(x, y, int(interval))
 
 def moveRelative(coords=(None, None), interval=0):
     '''
@@ -27,7 +27,7 @@ def moveRelative(coords=(None, None), interval=0):
         interval - duration of movement
     '''
     x, y = _processCoords(coords)
-    pyautogui.move(x, y, interval)
+    pyautogui.move(x, y, int(interval))
 
 def dragToCoords(coords=(None, None), interval=0, button='left'):
     '''
@@ -37,7 +37,7 @@ def dragToCoords(coords=(None, None), interval=0, button='left'):
         button - string name of the button ('left', 'right', 'middle')
     '''
     x, y = _processCoords(coords)
-    pyautogui.dragTo(x, y, interval, button)
+    pyautogui.dragTo(x, y, int(interval), button)
 
 def dragRelative(coords=(None, None), interval=0, button='left'):
     '''
@@ -47,7 +47,7 @@ def dragRelative(coords=(None, None), interval=0, button='left'):
         button - string name of the button ('left', 'right', 'middle')
     '''
     x, y = _processCoords(coords)
-    pyautogui.drag(x, y, interval, button)
+    pyautogui.drag(x, y, int(interval), button)
 
 def click(button='left', numOfClicks=1, interval=0.1):
     '''
@@ -56,14 +56,14 @@ def click(button='left', numOfClicks=1, interval=0.1):
         numOfClicks - amount of clicked
         interval -  time between clicks
     '''
-    pyautogui.click(button=button, clicks=numOfClicks, interval=interval)
+    pyautogui.click(button=button, clicks=numOfClicks, interval=int(interval))
 
 def scroll(units=10):
     '''
     Scrolls horizontally by amount of units.
         units - int
     '''
-    pyautogui.scroll(units)
+    pyautogui.scroll(int(units))
 
 def colorUnderCursor()-> (int, int, int):
     '''
