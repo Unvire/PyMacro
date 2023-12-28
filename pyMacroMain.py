@@ -305,6 +305,7 @@ class pyMacro(tk.Tk):
     
     def updateTreeviewParameters(self):
         treeview, rowID = self.clickedTable
+        isArgument = treeview == self.taskFunctionParametersTableTree
         parameter = self.parameterNameEntry.get()
         value = self.parameterValueEntry.get()
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
@@ -320,6 +321,11 @@ class pyMacro(tk.Tk):
         if treeview.set(lastRow)['Parameter name']:
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
+        ## update Task instance
+        currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+        isArgument = treeview == self.taskFunctionParametersTableTree
+        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
+        ################################## ^^^^^^^^^^^^^^^^^^^ ##########################
 
 if __name__ == '__main__':
     app = pyMacro()

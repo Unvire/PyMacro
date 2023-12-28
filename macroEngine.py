@@ -164,6 +164,9 @@ class MacroEngine():
                 currentTaskID = int(result)
             else:
                 currentTaskID += 1
+    
+    def editTaskParameter(self, taskID=0, taskParameters=(None, None), isArgument=False):
+        self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)      
 
 
 if __name__ == '__main__':
