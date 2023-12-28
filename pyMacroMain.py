@@ -351,7 +351,7 @@ class pyMacro(tk.Tk):
             try:
                 value = [int(val) for val in value.split(';')]
             except ValueError:
-                value = typeDict[value.lower()] if value in typeDict else value
+                value = typeDict[value.lower()] if value.lower() in typeDict else value
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
         self._updateTaskList()
 
