@@ -253,11 +253,17 @@ class pyMacro(tk.Tk):
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
             self.generateTasksTable()
     
+    def _updateTaskList(self):
+        '''
+        Updates self.taskist
+        '''
+        self.tasksList = self.macroEngine.getTaskList() # copy tasklist
+
     def generateTasksTable(self):
         '''
         Fills tasksTableTree with data
         '''
-        self.tasksList = [task for task in self.macroEngine.taskList] # copy tasklist
+        self._updateTaskList()
         taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
@@ -321,11 +327,11 @@ class pyMacro(tk.Tk):
         if treeview.set(lastRow)['Parameter name']:
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
-        ## update Task instance
+        ## update Task instance, update local taskList
         currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
         isArgument = treeview == self.taskFunctionParametersTableTree
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
-        ################################## ^^^^^^^^^^^^^^^^^^^ ##########################
+        self._updateTaskList()
 
 if __name__ == '__main__':
     app = pyMacro()
