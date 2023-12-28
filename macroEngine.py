@@ -58,6 +58,12 @@ class MacroEngine():
         taskInstance = task.Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
     
+    def getTaskList(self):
+        '''
+        Getter for self.taskList. Returns shallow copy of self.taskList
+        '''
+        return [task for task in self.taskList]
+    
     def numOfTasksGetSet(self):
         '''
         Getter and setter of self.numOfTasks
