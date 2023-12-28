@@ -16,7 +16,7 @@ class Task:
         self.variableName = variableName
 
     def __str__(self):
-        nameString = f'Task:{self.name}| state:{self.isEnabled}| '
+        nameString = f'Task:{self.name}| isEnabled:{self.isEnabled}| '
         try:
             functionString = f'function:{self.executeFunction.__name__}, package:{self.executeFunction.__globals__["__name__"]}| '
         except AttributeError:
@@ -39,7 +39,7 @@ class Task:
             parameterValue = self.parameters[parameter][1] if self.parameters[parameter][1] else self.parameters[parameter][0]
             parametersDict[parameter] = parameterValue
 
-        return {'name':self.name, 'enabled':self.isEnabled, 'function':functionString, 
+        return {'name':self.name, 'isEnabled':self.isEnabled, 'function':functionString, 
                 'parameters':parametersDict, 'saveResultToVariable':self.variableName}
     
     def taskParametersList(self):

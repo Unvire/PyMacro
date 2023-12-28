@@ -24,7 +24,7 @@ class MacroEngine():
         Converts taskDict to instance of Task class. Returns instance of Task class
         '''
         name = taskDict['name']
-        isEnabled = taskDict['enabled']
+        isEnabled = taskDict['isEnabled']
         parameters = taskDict['parameters']        
         variableName = taskDict['saveResultToVariable']
 
@@ -166,7 +166,7 @@ class MacroEngine():
                 currentTaskID += 1
     
     def editTaskParameter(self, taskID=0, taskParameters=(None, None), isArgument=False):
-        self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)      
+        self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
 
 
 if __name__ == '__main__':

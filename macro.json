@@ -1,7 +1,7 @@
 {
   "0": {
     "name": "Move mouse",
-    "enabled": true,
+    "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": "position1",
@@ -11,7 +11,7 @@
   },
   "1": {
     "name": "Move mouse again",
-    "enabled": true,
+    "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": [
@@ -23,7 +23,7 @@
   },
 	"2": {
     "name": "Condition test",
-    "enabled": true,
+    "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {      
 	    "isJump": true,
@@ -36,7 +36,7 @@
   },
 	"3": {
     "name": "Write text",
-    "enabled": true,
+    "isEnabled": true,
     "function": "keyboardFunctions.writeString",
     "parameters": {
       "text": "Hello World"
@@ -45,7 +45,7 @@
   },
 	"4": {
     "name": "Move mouse ",
-    "enabled": true,
+    "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": [
