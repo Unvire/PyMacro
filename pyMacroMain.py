@@ -283,6 +283,9 @@ class pyMacro(tk.Tk):
         self._isRunSet(False)
 
     def generateParametersTable(self, taskID=None):
+        '''
+        Fills taskParametersTableTree and taskFunctionParametersTableTree with data
+        '''
         try:
             task = self.tasksList[taskID]
             parameters = task.taskParametersList()
@@ -313,7 +316,9 @@ class pyMacro(tk.Tk):
     def updateTreeviewParameters(self):
         '''
         Updates task with parameters gained from Entries. 
-        1. 
+        1. Get data from Entries
+        2. Update Treeviews (update row, clear empty row in the middle, insert empty row)
+        3. Convert value to proper type/) to proper type
         '''
         typeDict = {'false': False, 'true':True}
         treeview, rowID = self.clickedTable
