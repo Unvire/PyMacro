@@ -144,13 +144,14 @@ class MacroEngine():
         '''
         timerStart = timer()
         self.notify(taskID=taskID)
-        if task.isEnabled and str(task.isEnabled).lower() != 'false': # workaround with handling both bool and str values
+        result, elapsedTime = None, -1
+        if task.isEnabled:
             kwargs = task.functionKwargs()
             result = task.executeFunction(**kwargs)
             if task.variableName and result:
                 self.variables[task.variableName] = result
-        timerEnd = timer()
-        elapsedTime = timerEnd - timerStart
+            timerEnd = timer()
+            elapsedTime = timerEnd - timerStart
         self.notify(taskID=taskID, elapsedTime=elapsedTime)
         return result
     
