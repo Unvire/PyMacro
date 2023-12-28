@@ -1,16 +1,18 @@
-- convert data from tables to task
 - kill macro functionality
 - cursor position, variables display
 - generate button -> push taskList to MacroEngine
-- run mode and edit mode
 - possibility to reorder tasks (up, down)
 - add new, delete
 - copy task, copy from another run
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - jump to labels instead of directly steps
 - dropdown menu to select arguments
+- assign variables to task parameters (currenntly only function parameters can be assigned to variable)
+- make it look not like a shit
 
 DONE:
 - highligt executed task
 - showing parameters after clicking task
 - add column for elapsed time in the tasks table and fill it in runtime
+- run mode and edit mode
+- convert data from tables to task, edit parameters of task
