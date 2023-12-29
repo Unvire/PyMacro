@@ -221,9 +221,9 @@ class MacroEngine():
             groups.append([stack[0], len(stack)])
         return groups
     
-    def swapTasks(self, groups, moveUp=True):
+    def swapTasks(self, groups, moveUp=True) -> bool:
         '''
-        Swaps tasks in place.
+        Swaps tasks in place. Returns if end of the table is reached.
             groups -> result of self.findGroups
             moveUp: bool -> if True then task 2 will be swapped with 1, if False then task 2 will be swapped with 3
         '''
@@ -231,16 +231,20 @@ class MacroEngine():
             return
         if not moveUp and groups[-1][0] + groups[-1][1] > len(self.taskList) - 1:
             return
-            
-        sign = -1 if moveUp else 1
+        
+        ## swap in place items (smaller index first for move up, bigger index first for move down)
+        signedOne = -1 if moveUp else 1
         for group in groups:
             initialIndex, groupLength = group
-            for i in range(groupLength):
-                iOrigin = initialIndex + i
-                iTarget = initialIndex + sign * groupLength + i
+            indexesRange = range(initialIndex, initialIndex + groupLength) if moveUp else range(initialIndex + groupLength - 1, initialIndex - 1, -1)
+            for i in indexesRange:
+                iOrigin = i
+                iTarget = i + signedOne
                 self.taskList[iOrigin],  self.taskList[iTarget] = self.taskList[iTarget],  self.taskList[iOrigin]
+        return False
 
 if __name__ == '__main__':
+    exit()
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
     groups = engine.findGroups([0])

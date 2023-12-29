@@ -49,8 +49,8 @@ class pyMacro(tk.Tk):
         self.variablesButton = ttk.Button(self.utilityButtonsFrame, text='Variables', command=...)
 
         # task edit buttons
-        self.moveTaskUpButton = ttk.Button(self.taskEditButtonsFrame, text='Up', command=...)
-        self.moveTaskDownButton = ttk.Button(self.taskEditButtonsFrame, text='Down', command=...)
+        self.moveTaskUpButton = ttk.Button(self.taskEditButtonsFrame, text='Up', command=lambda: self.moveTask(moveUp=True))
+        self.moveTaskDownButton = ttk.Button(self.taskEditButtonsFrame, text='Down', command=lambda: self.moveTask(moveUp=False))
         self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=self.newTask)
         self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=...)
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
@@ -373,7 +373,25 @@ class pyMacro(tk.Tk):
         '''
         self.macroEngine.newTask()
         self.generateTasksTable()
-
+    
+    def moveTask(self, moveUp:bool):
+        '''
+        Moves selected tasks (rows) in place up or down.
+            moveUp: bool -> True = tasks will be moved to the top of the table, False = tasks will be moved to the bottom of the table
+        '''
+        ## modify self.tasksList in place
+        rowIDs = [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
+        groups = self.macroEngine.findGroups(rowIDs)
+        isTableEnd = self.macroEngine.swapTasks(groups, moveUp=moveUp)
+        self.generateTasksTable()
+        
+        ## preserve selection
+        if not isTableEnd:
+            sign = -1 if moveUp else 1
+            nameIDs = [self.tasksTableChildren[i + sign] for i in rowIDs]
+        else:
+            nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
+        self.tasksTableTree.selection_set(nameIDs)
 
 if __name__ == '__main__':
     app = pyMacro()
