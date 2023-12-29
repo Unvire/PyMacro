@@ -65,17 +65,28 @@ def scroll(units=10):
     '''
     pyautogui.scroll(int(units))
 
-def colorUnderCursor()-> (int, int, int):
+def colorUnderCursor(coords:(int, int)=()) -> (int, int, int):
     '''
     Returns color (R, G, B) of pixel pointed by cursor.
+        coords=(x, y) -> optional tuple of coords that specify pixel. If no value is passed then cursor coords will be used
+    '''
+    if coords:
+        x, y = _processCoords(coords)
+    else:
+        x, y = getCoords()
+    return pyautogui.pixel(x, y)
+
+def getCoords() -> (int, int):
+    '''
+    Returns coords (x, y) of pixel pointed by cursor.
     '''
     x, y = pyautogui.position()
-    return pyautogui.pixel(x, y)
-        
+    return x, y
 
 if __name__ == '__main__':
     coords1 = '100', 300
-    coords2 = 10, 100
+    coords2 = 10, 100    
+    print(getCoords())
     moveToCoords(coords1)
     moveRelative(coords2, interval=2)
     dragToCoords(coords1, button='left')
@@ -84,3 +95,4 @@ if __name__ == '__main__':
     scroll(20)
     rgb = colorUnderCursor()
     print(rgb)
+    print(colorUnderCursor((-219, 548)))
