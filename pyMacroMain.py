@@ -123,10 +123,10 @@ class pyMacro(tk.Tk):
         
         # main layout
         self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3)
-        self.tasksFrame.grid(row=1, column=0, rowspan=2)
-        self.parameterEditFrame.grid(row=1, column=1)
-        self.taskParametersFrame.grid(row=2, column=1)
-        self.taskEditButtonsFrame.grid(row=1, column=2, rowspan=2)
+        self.tasksFrame.grid(row=1, column=1, rowspan=2)
+        self.parameterEditFrame.grid(row=1, column=2)
+        self.taskParametersFrame.grid(row=2, column=2)
+        self.taskEditButtonsFrame.grid(row=1, column=0, rowspan=2)
         
         self.mainFrame.grid(row=0, column=0)
 
