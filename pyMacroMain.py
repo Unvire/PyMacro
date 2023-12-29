@@ -182,7 +182,7 @@ class pyMacro(tk.Tk):
         Handles on-click action on parameter treeviews. Gets clicked rowID, updates last clicked treeview and prints focused row data in the Entries.
             treeview: ttk.Treeview
         '''
-        _, currentItemID = self._getTreeviewItemNumber(treeview)                           
+        _, currentItemID = set(treeview)                           
         self._clickedTableSet(treeview=treeview, focusedItem=currentItemID)
         parametersDict = treeview.set(currentItemID)
         try:
@@ -199,7 +199,7 @@ class pyMacro(tk.Tk):
         self._clearTable(table)
         self._generateTable(table, data)
     
-    def _getTreeviewItemNumber(self, treeview):
+    def _treeviewItemNumber(self, treeview):
         '''
         Returns currentItemNumber:num, currentItemID:str of focused item in treeview.
             treeview - ttk.Treeview widget
@@ -234,7 +234,7 @@ class pyMacro(tk.Tk):
             widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
             ## tasks list is clicked 
             if widget == self.tasksTableTree:
-                currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+                currentItemNumber, _ = set(self.tasksTableTree)
                 self._clickedTableSet(treeview=widget)
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
@@ -345,7 +345,7 @@ class pyMacro(tk.Tk):
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
         ## update Task instance, update local taskList
-        currentItemNumber, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+        currentItemNumber, _ = set(self.tasksTableTree)
         if value in self.variables:     
             variableName = value       
             value = self.variables[value]
@@ -363,7 +363,7 @@ class pyMacro(tk.Tk):
         '''
         Delete selected task
         '''
-        currentID, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+        currentID, _ = set(self.tasksTableTree)
         self.macroEngine.deleteTask(currentID)
         self.generateTasksTable()
 
