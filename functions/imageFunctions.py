@@ -8,8 +8,14 @@ def _processCoords(coords=(None, None, None, None)) -> (int, int, int, int):
         coords= top, left, width, height sequence
     '''
     top, left, width, height = coords
-    top = int(top) if str(top).isnumeric() else None
-    left = int(left) if str(left).isnumeric() else None
+    try:
+        top = int(top)
+    except ValueError:
+        top = None
+    try:
+        left = int(left)
+    except ValueError:
+        left = None
     width = int(width) if str(width).isnumeric() else None
     height = int(height) if str(height).isnumeric() else None
     return top, left, width, height
