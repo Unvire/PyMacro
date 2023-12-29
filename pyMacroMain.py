@@ -1,6 +1,8 @@
+import time
 import os
 import tkinter as tk
 from tkinter import ttk, filedialog
+import pyautogui
 import macroEngine
 
 class pyMacro(tk.Tk):
@@ -45,7 +47,7 @@ class pyMacro(tk.Tk):
         self.killButton = ttk.Button(self.runButtonsFrame, text='Kill', command=...)
 
         # utility buttons
-        self.cursorPositionButton = ttk.Button(self.utilityButtonsFrame, text='Cursor position', command=...)
+        self.cursorPositionButton = ttk.Button(self.utilityButtonsFrame, text='Cursor position', command=self.getCursorCoords)
         self.variablesButton = ttk.Button(self.utilityButtonsFrame, text='Variables', command=...)
 
         # task edit buttons
@@ -391,7 +393,17 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i + sign] for i in rowIDs]
         else:
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
-        self.tasksTableTree.selection_set(nameIDs) 
+        self.tasksTableTree.selection_set(nameIDs)
+    
+    def getCursorCoords(self):
+        '''
+        Get cursor coords and pixel color
+        '''
+        print('You have 5 seconds to move cursor')
+        time.sleep(5)
+        x, y = pyautogui.position()
+        pixelColor = pyautogui.pixel(x, y)
+        print(f'coords: ({x}, {y})| RGB:{pixelColor}')
 
 if __name__ == '__main__':
     app = pyMacro()
