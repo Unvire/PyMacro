@@ -1,6 +1,6 @@
 - kill macro functionality
 - cursor position, variables display
-- copy task, copy from another run
+- copy from another run
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - jump to labels instead of directly steps
 - dropdown menu to select arguments
@@ -16,3 +16,4 @@ DONE:
 - generate button -> push taskList to MacroEngine
 - possibility to reorder tasks (up, down)
 - add new, delete
+- copy task (duplicate)
