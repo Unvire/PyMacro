@@ -234,7 +234,7 @@ class pyMacro(tk.Tk):
             widget = self.winfo_containing(self.winfo_pointerx(), self.winfo_pointery())
             ## tasks list is clicked 
             if widget == self.tasksTableTree:
-                currentItemNumber, _ = set(self.tasksTableTree)
+                currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
                 self._clickedTableSet(treeview=widget)
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
@@ -345,7 +345,7 @@ class pyMacro(tk.Tk):
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
         ## update Task instance, update local taskList
-        currentItemNumber, _ = set(self.tasksTableTree)
+        currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
         if value in self.variables:     
             variableName = value       
             value = self.variables[value]
@@ -363,7 +363,7 @@ class pyMacro(tk.Tk):
         '''
         Delete selected task
         '''
-        currentID, _ = set(self.tasksTableTree)
+        currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
         self.macroEngine.deleteTask(currentID)
         self.generateTasksTable()
 
