@@ -7,8 +7,14 @@ def _processCoords(coords=(None, None)) -> (int, int):
         coords= x, y sequence
     '''
     x, y = coords
-    x = int(x) if str(x).isnumeric() else None
-    y = int(y) if str(y).isnumeric() else None
+    try:
+        x = int(x)
+    except ValueError:
+        x = None
+    try:
+        y = int(y)
+    except ValueError:
+        y = None
     return x, y
 
 def moveToCoords(coords=(None, None), interval=0):
