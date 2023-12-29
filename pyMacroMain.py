@@ -53,7 +53,7 @@ class pyMacro(tk.Tk):
         self.moveTaskDownButton = ttk.Button(self.taskEditButtonsFrame, text='Down', command=...)
         self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=...)
         self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=...)
-        self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=...)
+        self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
         # tasks table
         self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings')        
@@ -222,7 +222,7 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry.insert(0, parameter)
         self.parameterValueEntry.insert(0, value)
     
-    def getEngineVariables(self):
+    def setEngineVariables(self):
         self.variables = self.macroEngine.getVariables()
 
     def handleMouseClick(self, event):
@@ -256,7 +256,7 @@ class pyMacro(tk.Tk):
             *dirPath, macroName = [val for val in macroFile.split('/')]
             dirPath = '/'.join(item for item in dirPath)
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
-            self.getEngineVariables()
+            self.setEngineVariables()
             self.generateTasksTable()
     
     def _updateTaskList(self):
@@ -358,6 +358,15 @@ class pyMacro(tk.Tk):
                 value = typeDict[value.lower()] if value.lower() in typeDict else value
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
         self._updateTaskList()
+
+    def deleteTask(self):
+        '''
+        Delete selected task
+        '''
+        currentID, _ = self._getTreeviewItemNumber(self.tasksTableTree)
+        self.macroEngine.deleteTask(currentID)
+        self.generateTasksTable()
+
 
 if __name__ == '__main__':
     app = pyMacro()

@@ -187,6 +187,12 @@ class MacroEngine():
         '''
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
 
+    def deleteTask(self, taskID:int):
+        '''
+        Remove task given by ID from self.taskList
+        '''
+        self.taskList.pop(taskID)
+
 if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
