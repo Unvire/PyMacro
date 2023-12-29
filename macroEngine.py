@@ -227,10 +227,14 @@ class MacroEngine():
             groups -> result of self.findGroups
             moveUp: bool -> if True then task 2 will be swapped with 1, if False then task 2 will be swapped with 3
         '''
-        if moveUp and groups[0][0] - groups[0][1] < 0:
-            return
-        if not moveUp and groups[-1][0] + groups[-1][1] > len(self.taskList) - 1:
-            return
+        ## check if last item + group length will be outside the table (index < 0)
+        if moveUp and groups[0][0] - 1 < 0:
+            return True
+        
+        ## check if last item + group length will be outside the table (index > len(self.taskList). 
+        # (index + length - 1) + 1 > len(self.taskList) - 1 ---> index + length + 1 > len(self.taskList)
+        if not moveUp and groups[-1][0] + groups[-1][1] + 1 > len(self.taskList):
+            return True
         
         ## swap in place items (smaller index first for move up, bigger index first for move down)
         signedOne = -1 if moveUp else 1
