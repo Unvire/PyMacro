@@ -48,7 +48,7 @@ class Task:
         Used to display task parameters in table
         '''
         taskDict = self.convertToDict()
-        return [(name, taskDict[name]) for name in taskDict if name not in ('name', 'parameters')]
+        return [(name, taskDict[name]) for name in taskDict if name not in ('parameters',)]
     
     def functionParametersList(self):
         '''

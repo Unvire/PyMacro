@@ -173,7 +173,9 @@ class pyMacro(tk.Tk):
         '''
         for row in data:
             table.insert('', tk.END, values=row)
-        table.insert('', tk.END, values=[''] * len(row)) # add empty row in the end
+
+        if table is not self.tasksTableTree:
+            table.insert('', tk.END, values=[''] * len(row)) # add empty row in the end
     
     def _handleClickedParameterTreeview(self, treeview):
         '''
@@ -329,6 +331,8 @@ class pyMacro(tk.Tk):
         ## update tables
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
+        if parameter.lower() == 'name' and not isArgument:            
+            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=rowID, columnName='Task name', columnValue=value)
 
         ## delete empty row
         if not parameter and not value:
