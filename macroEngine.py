@@ -247,6 +247,16 @@ class MacroEngine():
                 self.taskList[iOrigin],  self.taskList[iTarget] = self.taskList[iTarget],  self.taskList[iOrigin]
         return False
 
+    def duplicateTasks(self, rowIDs):
+        '''
+        Duplicates selected tasks in place. New task will be inserted after their original
+        '''
+        rowIDs = sorted(rowIDs)
+        for i, rowID in enumerate(rowIDs):
+            currentTask = self.taskList[rowID + i]
+            self.taskList.insert(rowID + i, currentTask)
+
+
 if __name__ == '__main__':
     exit()
     engine = MacroEngine()

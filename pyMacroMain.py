@@ -54,7 +54,7 @@ class pyMacro(tk.Tk):
         self.moveTaskUpButton = ttk.Button(self.taskEditButtonsFrame, text='Up', command=lambda: self.moveTask(moveUp=True))
         self.moveTaskDownButton = ttk.Button(self.taskEditButtonsFrame, text='Down', command=lambda: self.moveTask(moveUp=False))
         self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=self.newTask)
-        self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=...)
+        self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=self.duplicateSelectedTasks)
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
         # tasks table
@@ -395,6 +395,14 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
         self.tasksTableTree.selection_set(nameIDs)
     
+    def duplicateSelectedTasks(self):
+        '''
+        Duplicates selected tasks in place. New task will be inserted after their original
+        '''
+        rowIDs = [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
+        self.macroEngine.duplicateTasks(rowIDs)
+        self.generateTasksTable()
+
     def getCursorCoords(self):
         '''
         Get cursor coords and pixel color
