@@ -258,7 +258,6 @@ class MacroEngine():
 
 
 if __name__ == '__main__':
-    exit()
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
     groups = engine.findGroups([0])
