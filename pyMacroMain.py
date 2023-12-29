@@ -51,7 +51,7 @@ class pyMacro(tk.Tk):
         # task edit buttons
         self.moveTaskUpButton = ttk.Button(self.taskEditButtonsFrame, text='Up', command=...)
         self.moveTaskDownButton = ttk.Button(self.taskEditButtonsFrame, text='Down', command=...)
-        self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=...)
+        self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=self.newTask)
         self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=...)
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
@@ -365,6 +365,10 @@ class pyMacro(tk.Tk):
         '''
         currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
         self.macroEngine.deleteTask(currentID)
+        self.generateTasksTable()
+    
+    def newTask(self):
+        self.macroEngine.newTask()
         self.generateTasksTable()
 
 

@@ -193,6 +193,15 @@ class MacroEngine():
         '''
         self.taskList.pop(taskID)
 
+    def newTask(self):
+        '''
+        Appends new default task to the list
+        '''
+        taskDict = {'name': 'New task', 'isEnabled': True, 'function': 'cursorFunctions.moveToCoords' , 'parameters': {}, 'saveResultToVariable': ''}
+        task = self._createTask(taskDict)
+        self.taskList.append(task)
+
+
 if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
