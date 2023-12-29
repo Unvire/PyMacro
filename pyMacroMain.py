@@ -385,13 +385,13 @@ class pyMacro(tk.Tk):
         isTableEnd = self.macroEngine.swapTasks(groups, moveUp=moveUp)
         self.generateTasksTable()
         
-        ## preserve selection
+        ## move selection if tasks were changed, preserve selection if tasks weren't moved
         if not isTableEnd:
             sign = -1 if moveUp else 1
             nameIDs = [self.tasksTableChildren[i + sign] for i in rowIDs]
         else:
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
-        self.tasksTableTree.selection_set(nameIDs)
+        self.tasksTableTree.selection_set(nameIDs) 
 
 if __name__ == '__main__':
     app = pyMacro()
