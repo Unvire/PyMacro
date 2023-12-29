@@ -368,6 +368,9 @@ class pyMacro(tk.Tk):
         self.generateTasksTable()
     
     def newTask(self):
+        '''
+        Creates new task
+        '''
         self.macroEngine.newTask()
         self.generateTasksTable()
 
