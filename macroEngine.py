@@ -200,10 +200,31 @@ class MacroEngine():
         taskDict = {'name': 'New task', 'isEnabled': True, 'function': 'cursorFunctions.moveToCoords' , 'parameters': {}, 'saveResultToVariable': ''}
         task = self._createTask(taskDict)
         self.taskList.append(task)
+    
+    def findGroups(self, rowIDs=[]):
+        '''
+        Helper function for rearranging tasks. Converts list of selected rowIDs to groups -> list of [firstID, numOfConsecutiveElements] lists.
+        Example [1,2,3, 6,7, 10,11, 20] -> [[1,3], [6,2], [10,2], 20]
+            rowIDs -> list of rowIDs. Can be unsorted.
+        '''
+        rowIDs = sorted(rowIDs)
+        stack = [rowIDs.pop(0)]
+        groups = []
+        while rowIDs:            
+            currentID = rowIDs.pop(0)
+            if currentID == stack[-1] + 1:
+                stack.append(currentID)
+            else:
+                groups.append([stack[0], len(stack)])
+                stack = [currentID]
+        if stack:
+            groups.append([stack[0], len(stack)])
+        return groups
 
 
 if __name__ == '__main__':
     engine = MacroEngine()
+    engine.findGroups([1,2,3, 6,7, 10,11, 20])
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
