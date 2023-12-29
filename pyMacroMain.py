@@ -182,7 +182,7 @@ class pyMacro(tk.Tk):
         Handles on-click action on parameter treeviews. Gets clicked rowID, updates last clicked treeview and prints focused row data in the Entries.
             treeview: ttk.Treeview
         '''
-        _, currentItemID = set(treeview)                           
+        _, currentItemID = self._treeviewItemNumber(treeview)                           
         self._clickedTableSet(treeview=treeview, focusedItem=currentItemID)
         parametersDict = treeview.set(currentItemID)
         try:
