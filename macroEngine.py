@@ -201,7 +201,7 @@ class MacroEngine():
         task = self._createTask(taskDict)
         self.taskList.append(task)
     
-    def findGroups(self, rowIDs=[]):
+    def findGroups(self, rowIDs=[]) -> [[int, int]]:
         '''
         Helper function for rearranging tasks. Converts list of selected rowIDs to groups -> list of [firstID, numOfConsecutiveElements] lists.
         Example [1,2,3, 6,7, 10,11, 20] -> [[1,3], [6,2], [10,2], 20]
@@ -220,12 +220,32 @@ class MacroEngine():
         if stack:
             groups.append([stack[0], len(stack)])
         return groups
-
+    
+    def swapTasks(self, groups, moveUp=True):
+        '''
+        Swaps tasks in place.
+            groups -> result of self.findGroups
+            moveUp: bool -> if True then task 2 will be swapped with 1, if False then task 2 will be swapped with 3
+        '''
+        if moveUp and groups[0][0] - groups[0][1] < 0:
+            return
+        if not moveUp and groups[-1][0] + groups[-1][1] > len(self.taskList) - 1:
+            return
+            
+        sign = -1 if moveUp else 1
+        for group in groups:
+            initialIndex, groupLength = group
+            for i in range(groupLength):
+                iOrigin = initialIndex + i
+                iTarget = initialIndex + sign * groupLength + i
+                self.taskList[iOrigin],  self.taskList[iTarget] = self.taskList[iTarget],  self.taskList[iOrigin]
 
 if __name__ == '__main__':
     engine = MacroEngine()
-    engine.findGroups([1,2,3, 6,7, 10,11, 20])
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
+    groups = engine.findGroups([0])
+    print(groups)
+    engine.swapTasks(groups, False)
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
     engine.saveVariablesToFile('variableSaveTest.json')

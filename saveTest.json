@@ -1,15 +1,5 @@
 {
   "0": {
-    "name": "Move mouse",
-    "isEnabled": true,
-    "function": "cursorFunctions.moveToCoords",
-    "parameters": {
-      "coords": "position1",
-      "interval": 3
-    },
-    "saveResultToVariable": ""
-  },
-  "1": {
     "name": "Move mouse again",
     "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
@@ -18,6 +8,16 @@
         500,
         600
       ]
+    },
+    "saveResultToVariable": ""
+  },
+  "1": {
+    "name": "Move mouse",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": "position1",
+      "interval": 3
     },
     "saveResultToVariable": ""
   },
