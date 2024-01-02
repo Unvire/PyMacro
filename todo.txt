@@ -1,6 +1,6 @@
 - kill macro functionality
 - cursor position, variables display
-- undo edition
+- undo edition 
 - copy from another run
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - dropdown menu to select arguments
