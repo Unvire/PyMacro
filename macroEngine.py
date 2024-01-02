@@ -12,12 +12,14 @@ class MacroEngine():
         self.variables: dict -> variables dictionary for program and user
         self.modules: dict -> dictionary with dynamically imported modules when creating tasks
         self.subscribers: list => list with objects that observe this engine
+        self.jumpLabels: dict -> {taskName: ID in self.taskList} used for conditional jumps
         '''
         self.taskList = []
         self.numOfTasks = 0
         self.variables = {}
         self.modules = {}
-        self.subscribers = [] 
+        self.subscribers = []
+        self.jumpLabels = {}
 
     def _dynamicImportModule(self, packageString:str):
         '''
@@ -64,6 +66,12 @@ class MacroEngine():
 
         taskInstance = task.Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
+    
+    def _updateJumpLabels(self):
+        '''
+        Updates self.jumpLabels {taskName:ID in self.taskList} in place
+        '''
+        self.jumpLabels = {task.name:i for i, task in enumerate(self.taskList)}
     
     def getTaskList(self):
         '''
@@ -173,6 +181,7 @@ class MacroEngine():
         Runs macro by iterating over self.taskList and executing task
         '''
         self.numOfTasksGetSet()
+        self._updateJumpLabels()
         currentTaskID = 0
         
         ## while loop allows to change currentTaskID programatically (loop back and forward)
@@ -181,7 +190,7 @@ class MacroEngine():
             result = self.executeTask(task, currentTaskID)
             
             if result and task.isJump:
-                currentTaskID = int(result)
+                currentTaskID = self.jumpLabels[result]
             else:
                 currentTaskID += 1
     
