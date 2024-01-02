@@ -333,8 +333,9 @@ class pyMacro(tk.Tk):
         ## update tables
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
-        if parameter.lower() == 'name' and not isArgument:            
-            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=rowID, columnName='Task name', columnValue=value)
+        if parameter.lower() == 'name' and not isArgument:
+            selectedTaskID = self.tasksTableTree.selection()[0]            
+            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=selectedTaskID, columnName='Task name', columnValue=value)
 
         ## delete empty row
         if not parameter and not value:
