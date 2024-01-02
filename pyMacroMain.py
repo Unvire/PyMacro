@@ -180,7 +180,8 @@ class pyMacro(tk.Tk):
             table.insert('', tk.END, values=row)
 
         if table is not self.tasksTableTree:
-            table.insert('', tk.END, values=[''] * len(data[0])) # add empty row in the end
+            rowLength = len(data[0]) if data else 2
+            table.insert('', tk.END, values=[''] * rowLength) # add empty row in the end
     
     def _handleClickedParameterTreeview(self, treeview):
         '''
