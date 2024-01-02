@@ -1,8 +1,8 @@
 - kill macro functionality
 - cursor position, variables display
+- undo edition
 - copy from another run
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
-- jump to labels instead of directly steps
 - dropdown menu to select arguments
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
 - make it look not like a shit
@@ -17,3 +17,4 @@ DONE:
 - possibility to reorder tasks (up, down)
 - add new, delete
 - copy task (duplicate)
+- jump to labels instead of directly steps

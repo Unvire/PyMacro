@@ -147,11 +147,14 @@ class pyMacro(tk.Tk):
     
     def _clickedTableSet(self, treeview=None, focusedItem=''):
         '''
-        Setter for self.clickedTable. Used to verify table of which parameters should be updated.
+        Setter for self.clickedTable. Used to verify table of which parameters should be updated. self.clickedTable is reseted (None, None) if self.tasksTableTree is clicked.
             treeview -> ttk.Treeview
             focusedItem:str -> item ID returned by .focus()
         '''
-        self.clickedTable = treeview, focusedItem
+        if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
+            self.clickedTable = treeview, focusedItem
+        else:
+            self.clickedTable = None, None
 
     def _updateTreeviewRow(self, treeview='', rowID='', columnName='', columnValue=''):
         '''
@@ -329,6 +332,10 @@ class pyMacro(tk.Tk):
         isArgument = treeview == self.taskFunctionParametersTableTree
         parameter = self.parameterNameEntry.get()
         value = self.parameterValueEntry.get()
+
+        ## no item selected
+        if not treeview:
+            return
 
         ## update tables
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)

@@ -29,7 +29,7 @@
 	    "isJump": true,
 		  "evalationFunctionName": "equal",
 		  "vals": [2, 2],
-		  "resultTrue": "Move mouse",
+		  "resultTrue": "Move mouse 3",
 		  "resultFalse": "Write text"
     },
 	"saveResultToVariable": "step"
@@ -44,7 +44,7 @@
 	"saveResultToVariable": ""
   },
 	"4": {
-    "name": "Move mouse",
+    "name": "Move mouse 3",
     "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
