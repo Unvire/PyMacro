@@ -284,9 +284,10 @@ class pyMacro(tk.Tk):
         '''
         Executes program
         '''
-        self._isRunSet(True)
-        self.generateTasksTable()
-        self.macroEngine.runProgram()
+        if not self.isRun:
+            self._isRunSet(True)
+            self.generateTasksTable()
+            self.macroEngine.runProgram()
         self._isRunSet(False)
 
     def generateParametersTable(self, taskID=None):
