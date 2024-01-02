@@ -19,17 +19,13 @@ class MacroEngine():
         self.modules = {}
         self.subscribers = [] 
 
-    def _createTask(self, taskDict=None):
+    def _dynamicImportModule(self, packageString:str):
         '''
-        Converts taskDict to instance of Task class. Returns instance of Task class
+        Import dynamically function from module inside 'functions' package. Returns reference to that function
+            packageString:str -> moduleName.functionName, for example: "cursorFunctions.moveToCoords" 
         '''
-        name = taskDict['name']
-        isEnabled = taskDict['isEnabled']
-        parameters = taskDict['parameters']        
-        variableName = taskDict['saveResultToVariable']
-
         ## get module and function by their string name
-        packageName, taskName = taskDict['function'].split('.')  
+        packageName, taskName = packageString.split('.')  
         packageName = '.' + packageName
 
         ## import package from functions folder
@@ -38,9 +34,20 @@ class MacroEngine():
         
         ## get requested function from that package
         taskFunction = getattr(self.modules[packageName], taskName)
+        return taskFunction
 
+    def _createTask(self, taskDict=None):
+        '''
+        Converts taskDict to instance of Task class. Returns instance of Task class
+        '''
+        name = taskDict['name']
+        isEnabled = taskDict['isEnabled']
+        parameters = taskDict['parameters']        
+        variableName = taskDict['saveResultToVariable']
+        taskFunction = self._dynamicImportModule(taskDict['function'])
+        
         ## check if task is a conditional jump
-        if taskName == 'checkCondition' and 'isJump' in parameters:
+        if 'checkCondition' in taskDict['function'] and 'isJump' in parameters:
             isJump = parameters['isJump']
             parameters.pop('isJump')
         else:            
