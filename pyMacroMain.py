@@ -242,6 +242,7 @@ class pyMacro(tk.Tk):
             if widget == self.tasksTableTree:
                 currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
                 self._clickedTableSet(treeview=widget)
+                self._updateParameterEntries() # clear entries
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
             elif widget == self.taskParametersTableTree:
