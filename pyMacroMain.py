@@ -254,7 +254,7 @@ class pyMacro(tk.Tk):
         '''
         Opens macro file and loads variables from the same directory
         '''
-        path = os.path.join(os.getcwd(), '')
+        path = os.path.join(os.getcwd(), 'Macros')
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
 
         ## CREATE PROJECT-FOLDER

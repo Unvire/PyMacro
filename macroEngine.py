@@ -153,7 +153,7 @@ class MacroEngine():
             dirPath -> path to macro directory
             fileName -> name of the macro program
         '''
-        variablesPath = os.path.join(dirPath, 'variables.json')
+        variablesPath = os.path.join(dirPath, 'variables')
         self.loadVariablesFile(variablesPath)
         macroPath = os.path.join(dirPath, fileName)
         self.loadMacroFile(macroPath)
@@ -280,10 +280,10 @@ class MacroEngine():
 
 if __name__ == '__main__':
     engine = MacroEngine()
-    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro', 'macro.json')
+    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug', 'macro.json')
     groups = engine.findGroups([0])
     print(groups)
     engine.swapTasks(groups, False)
     engine.runProgram()
     engine.saveMacroToFile('saveTest.json')
-    engine.saveVariablesToFile('variableSaveTest.json')
+    engine.saveVariablesToFile('variableSaveTest')
