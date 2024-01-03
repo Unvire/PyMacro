@@ -1,0 +1,85 @@
+{
+  "0": {
+    "name": "Init counter",
+    "isEnabled": true,
+    "function": "mathFunctions.add",
+    "parameters": {
+      "val1": [
+        0
+      ],
+      "val2": [
+        0
+      ]
+    },
+    "saveResultToVariable": "i"
+  },
+  "1": {
+    "name": "Label: loop",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "2": {
+    "name": "Move Cursor",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": [
+        1518,
+        342
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "3": {
+    "name": "Click on notepad",
+    "isEnabled": true,
+    "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "4": {
+    "name": "write A",
+    "isEnabled": true,
+    "function": "keyboardFunctions.writeString",
+    "parameters": {
+      "text": "A"
+    },
+    "saveResultToVariable": ""
+  },
+  "5": {
+    "name": "i++",
+    "isEnabled": true,
+    "function": "mathFunctions.add",
+    "parameters": {
+      "val1": "i",
+      "val2": [
+        1
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "6": {
+    "name": "counter <10?",
+    "isEnabled": true,
+    "function": "logicFunctions.checkCondition",
+    "parameters": {
+      "evalationFunctionName": "less",
+      "val1": "i",
+      "val2": [
+        10
+      ],
+      "resultTrue": "Label: loop",
+      "resultFalse": "Label: end"
+    },
+    "saveResultToVariable": ""
+  },
+  "7": {
+    "name": "Label: end",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
+    "parameters": {},
+    "saveResultToVariable": ""
+  }
+}
