@@ -163,6 +163,15 @@ class MacroEngine():
         self.loadVariablesFile(variablesPath)
         macroPath = os.path.join(dirPath, fileName)
         self.loadMacroFile(macroPath)
+    
+    def calculateKwargs(self, kwargs:dict):
+        '''
+        Replaces variables declared in run time with value from self.variables
+        '''
+        for parameterName in kwargs:
+            if parameterName in self.variables:
+                kwargs[parameterName] = self.variables[parameterName]
+        return kwargs
 
     def executeTask(self, task, taskID):
         '''
@@ -173,12 +182,13 @@ class MacroEngine():
         self.notify(taskID=taskID)
         result, elapsedTime = None, -1
         if task.isEnabled:
-            kwargs = task.functionKwargs()
+            kwargs = self.calculateKwargs(task.functionKwargs())
             result = task.executeFunction(**kwargs)
             if task.variableName and result:
                 self.variables[task.variableName] = result
             timerEnd = timer()
-            elapsedTime = timerEnd - timerStart
+            elapsedTime = timerEnd - timerStart        
+        print(self.variables)
         self.notify(taskID=taskID, elapsedTime=elapsedTime)
         return result
     
@@ -210,7 +220,9 @@ class MacroEngine():
         parameterName, parameterValue, parameterVariable = taskParameters
         if parameterName == 'function':
             newFunction = self._dynamicImportModule(parameterValue)
-            taskParameters = ('executeFunction', newFunction, None)
+            taskParameters = 'executeFunction', newFunction, None
+        elif parameterName == 'saveResultToVariable':
+            taskParameters = 'variableName', parameterValue, None
 
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
 
