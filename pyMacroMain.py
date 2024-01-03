@@ -256,7 +256,7 @@ class pyMacro(tk.Tk):
         '''
         path = os.path.join(os.getcwd(), 'Macros')
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
-        
+
         if macroFile:            
             self.filePath = macroFile
             *dirPath, macroName = [val for val in macroFile.split('/')]
@@ -274,11 +274,11 @@ class pyMacro(tk.Tk):
         
         if macroFile:
             *dirPath, projectFolder, macroName = [val for val in macroFile.split('/')]
-            *_, currentProjectFolder, _ = [val for val in self.filePath.split('/')]
             
-            ## check if project folder is the same
+            ## check if there is .json file in project folder
             dirPath = os.sep.join(item for item in dirPath)
-            if projectFolder == currentProjectFolder:
+            filesInProjectFolder = [fileName for fileName in os.listdir(os.path.join(dirPath, projectFolder)) if fileName[-5:] != '.json']
+            if filesInProjectFolder:
                 projectFolder = os.path.join(projectFolder, 'New')
                 os.mkdir(os.path.join(dirPath, projectFolder))
 
