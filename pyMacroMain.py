@@ -1,7 +1,7 @@
 import time
 import os
 import tkinter as tk
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, messagebox
 import pyautogui
 import macroEngine
 
@@ -37,7 +37,7 @@ class pyMacro(tk.Tk):
 
         ## widgets
         # control buttons
-        self.newMacroButton = ttk.Button(self.controlButtonsFrame, text='New Macro', command=...)
+        self.newMacroButton = ttk.Button(self.controlButtonsFrame, text='New Macro', command=self.newMacro)
         self.openMacroButton = ttk.Button(self.controlButtonsFrame, text='Open Macro', command=self.openMacroFile)
         self.saveMacroButton = ttk.Button(self.controlButtonsFrame, text='Save Macro', command=self.saveProject)
         self.settingsButton = ttk.Button(self.controlButtonsFrame, text='Settings', command=...)
@@ -249,6 +249,16 @@ class pyMacro(tk.Tk):
                 self._handleClickedParameterTreeview(self.taskParametersTableTree)
             elif widget == self.taskFunctionParametersTableTree:
                 self._handleClickedParameterTreeview(self.taskFunctionParametersTableTree)
+    
+    def newMacro(self):
+        '''
+        Creates new Macro - clears taskList and calls self.newTask()
+        '''
+        if self.tasksList:
+            if not messagebox.askyesno(title='Warning', message='Do you want to create new Macro? Current Macro will be deleted'):
+                return
+        self.macroEngine.clearTaskList()
+        self.newTask()
     
     def openMacroFile(self):
         '''

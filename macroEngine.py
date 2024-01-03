@@ -78,6 +78,12 @@ class MacroEngine():
         Getter for self.taskList. Returns shallow copy of self.taskList
         '''
         return [task for task in self.taskList]
+
+    def clearTaskList(self):
+        '''
+        Clears self.taskList
+        '''
+        self.taskList = []
     
     def getVariables(self):
         '''
