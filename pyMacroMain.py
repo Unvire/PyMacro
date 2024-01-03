@@ -39,7 +39,7 @@ class pyMacro(tk.Tk):
         # control buttons
         self.newMacroButton = ttk.Button(self.controlButtonsFrame, text='New Macro', command=...)
         self.openMacroButton = ttk.Button(self.controlButtonsFrame, text='Open Macro', command=self.openMacroFile)
-        self.saveMacroButton = ttk.Button(self.controlButtonsFrame, text='Save Macro', command=...)
+        self.saveMacroButton = ttk.Button(self.controlButtonsFrame, text='Save Macro', command=self.saveProject)
         self.settingsButton = ttk.Button(self.controlButtonsFrame, text='Settings', command=...)
 
         # run buttons
@@ -266,6 +266,28 @@ class pyMacro(tk.Tk):
             self.setEngineVariables()
             self.generateTasksTable()
     
+    def saveProject(self):
+        '''
+        Saves current project to chosen folder
+        '''
+        path = os.path.join(os.getcwd(), 'Macros')
+        macroFile = filedialog.asksaveasfilename(title='Save macro', initialdir=path, filetypes=(('Macro file','*.json'),))
+        
+        if macroFile:
+            *dirPath, projectFolder, macroName = [val for val in macroFile.split('/')]
+            *_, currentProjectFolder, _ = [val for val in self.filePath.split('/')]
+            
+            ## check if project folder is the same
+            dirPath = os.sep.join(item for item in dirPath)
+            if projectFolder == currentProjectFolder:
+                projectFolder = os.path.join(projectFolder, 'New')
+                os.mkdir(os.path.join(dirPath, projectFolder))
+
+            if macroName[-5:] != '.json':
+                macroName += '.json'
+            self.macroEngine.saveMacroToFile(os.path.join(dirPath, projectFolder, macroName))
+            self.macroEngine.saveVariablesToFile(os.path.join(dirPath, projectFolder, 'variables'))
+
     def _updateTaskList(self):
         '''
         Updates self.taskist
