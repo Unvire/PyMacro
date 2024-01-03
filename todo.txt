@@ -20,3 +20,4 @@ DONE:
 - copy task (duplicate)
 - jump to labels instead of directly steps
 - save project
+- create new Macro from scratch
