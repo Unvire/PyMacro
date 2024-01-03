@@ -256,8 +256,7 @@ class pyMacro(tk.Tk):
         '''
         path = os.path.join(os.getcwd(), 'Macros')
         macroFile = filedialog.askopenfilename(title='Open macro', initialdir=path, filetypes=(('Macro file','*.json'),))
-
-        ## CREATE PROJECT-FOLDER
+        
         if macroFile:            
             self.filePath = macroFile
             *dirPath, macroName = [val for val in macroFile.split('/')]
