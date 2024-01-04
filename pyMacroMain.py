@@ -387,7 +387,7 @@ class pyMacro(tk.Tk):
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
         
-        ## convert every single item in list to float or int (if it is possible)A
+        ## convert every single item in list to float or int (if it is possible)
         if ';' in value:
             value = self.macroEngine.strToNumList(value)
         else:

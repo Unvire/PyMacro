@@ -10,13 +10,6 @@
     "saveResultToVariable": "i"
   },
   "1": {
-    "name": "Label: loop",
-    "isEnabled": true,
-    "function": "synchroFunctions.nothing",
-    "parameters": {},
-    "saveResultToVariable": ""
-  },
-  "2": {
     "name": "Move Cursor",
     "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
@@ -28,10 +21,17 @@
     },
     "saveResultToVariable": ""
   },
-  "3": {
+  "2": {
     "name": "Click on notepad",
     "isEnabled": true,
     "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "3": {
+    "name": "Label: loop",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
     "parameters": {},
     "saveResultToVariable": ""
   },
@@ -59,6 +59,7 @@
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {
+      "isJump": true,
       "evalationFunctionName": "less",
       "vals": [
         "i",
