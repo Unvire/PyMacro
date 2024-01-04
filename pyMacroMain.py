@@ -386,19 +386,15 @@ class pyMacro(tk.Tk):
 
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
-        if value in self.variables:     
-            variableName = value       
-            value = self.variables[value]
-        else:
-            variableName = ''
-            ## check if value can be converted to list of ints
-            try:
-                value = [int(val) for val in value.split(';')]
-                if len(value) == 1:
-                    value = value[0]
-            except ValueError:
-                value = typeDict[value.lower()] if value.lower() in typeDict else value
-        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
+        
+        ## check if value can be converted to list of ints
+        try:
+            value = [int(val) for val in value.split(';')]
+            if len(value) == 1:
+                value = value[0]
+        except ValueError:
+            value = typeDict[value.lower()] if value.lower() in typeDict else value
+        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
 
     def deleteTask(self):

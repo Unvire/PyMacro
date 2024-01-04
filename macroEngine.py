@@ -208,7 +208,7 @@ class MacroEngine():
             else:
                 currentTaskID += 1
     
-    def editTaskParameter(self, taskID=0, taskParameters=(None, None, None), isArgument=False):
+    def editTaskParameter(self, taskID=0, taskParameters=(None, None), isArgument=False):
         '''
         Updates selected task from self.taskList.
             taskID: int -> index of item in self.taskList to be edited
@@ -218,9 +218,9 @@ class MacroEngine():
         parameterName, parameterValue, parameterVariable = taskParameters
         if parameterName == 'function':
             newFunction = self._dynamicImportModule(parameterValue)
-            taskParameters = 'executeFunction', newFunction, None
+            taskParameters = 'executeFunction', newFunction
         elif parameterName == 'saveResultToVariable':
-            taskParameters = 'variableName', parameterValue, None
+            taskParameters = 'variableName', parameterValue
 
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
 
