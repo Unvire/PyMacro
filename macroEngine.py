@@ -150,8 +150,7 @@ class MacroEngine():
         Loads variables from JSON file
         '''
         with open(filePath, 'r') as file:
-            self.variables = json.load(file)
-        self.loadedVariables = copy.deepcopy(self.variables)
+            self.loadedVariables = json.load(file)
     
     def saveVariablesToFile(self, filePath):
         '''
@@ -213,6 +212,7 @@ class MacroEngine():
         '''
         self.numOfTasksGetSet()
         self._updateJumpLabels()
+        self.variables = copy.deepcopy(self.loadedVariables)
         currentTaskID = 0
         
         ## while loop allows to change currentTaskID programatically (loop back and forward)
