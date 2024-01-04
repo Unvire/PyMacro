@@ -69,6 +69,7 @@ class pyMacro(tk.Tk):
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
         self.parameterValueEntry = ttk.Entry(self.parameterEditFrame)
         self.updateTreeviewParametersButton = ttk.Button(self.parameterEditFrame, text='Update', command=self.updateTreeviewParameters)
+        self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete parameter', command=self.deleteArgument)
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
@@ -108,8 +109,9 @@ class pyMacro(tk.Tk):
         self.parameterNameLabel.grid(row=0, column=0)
         self.parameterNameEntry.grid(row=0, column=1)
         self.parameterValueLabel.grid(row=0, column=2)
-        self.parameterValueEntry.grid(row=0, column=3)
-        self.updateTreeviewParametersButton.grid(row=0, column=4)
+        self.parameterValueEntry.grid(row=0, column=3)        
+        self.deleteArgumentButton.grid(row=1, column=0, columnspan=2)
+        self.updateTreeviewParametersButton.grid(row=1, column=2, columnspan=2)
 
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
@@ -447,6 +449,27 @@ class pyMacro(tk.Tk):
         pixelColor = pyautogui.pixel(x, y)
         print(f'coords: ({x}, {y})| RGB:{pixelColor}')
 
+    def deleteArgument(self):
+        '''
+        Removes chosen function argument
+        '''
+        argumentName = self.parameterNameEntry.get()
+        treeview, rowID = self.clickedTable
+
+        ## verify that clicked treeview is the one with function arguments
+        if treeview != self.taskFunctionParametersTableTree:
+            return
+        
+        ## delete row unless it is the last one
+        lastRow = treeview.get_children()[-1]
+        if rowID != lastRow:
+            treeview.delete(rowID)
+        
+        ## remove parameter
+        currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+        self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
+        self._updateTaskList()
+         
 if __name__ == '__main__':
     app = pyMacro()
     app.mainloop()

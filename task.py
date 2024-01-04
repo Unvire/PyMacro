@@ -83,6 +83,14 @@ class Task:
                 self.parameters[keyName] = value
         else:
             self.__setattr__(keyName, value)
+    
+    def deleteFunctionArgument(self, argumentName:str):
+        '''
+        Removes key:val from __dict__['parameters']
+        '''
+        self.parameters.pop(argumentName, None)
+        if argumentName == 'isJump':
+            self.isJump = False
 
 if __name__ == '__main__':
     task = Task(name='Task test', isEnabled=True, executeFunction='cursorFunctions.moveToCoords', 

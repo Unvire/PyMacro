@@ -240,6 +240,14 @@ class MacroEngine():
             taskParameters = 'variableName', parameterValue
 
         self.taskList[taskID].updateParameter(isArgument=isArgument, newRecord=taskParameters)
+    
+    def deleteTaskFunctionArgument(self, taskID=0, argumentName=None):
+        '''
+        Removes key:val from taskInstance.parameters dict            
+            taskID: int -> index of item in self.taskList to be edited
+            argumentName: str -> name of the key to be deleted
+        '''
+        self.taskList[taskID].deleteFunctionArgument(argumentName)
 
     def deleteTask(self, taskID:int):
         '''
