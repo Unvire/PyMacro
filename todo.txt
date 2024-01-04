@@ -2,7 +2,6 @@
 - cursor position, variables display
 - undo edition 
 - copy from another run
-- volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - dropdown menu to select arguments
 - custom python script execution
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
@@ -21,3 +20,5 @@ DONE:
 - jump to labels instead of directly steps
 - save project
 - create new Macro from scratch
+- volatile variables after reset (delete those that were added in run time) (separate dictionary?)
+- variables should be fully working
