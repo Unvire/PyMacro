@@ -100,6 +100,21 @@ class MacroEngine():
         '''
         for subscriber in self.subscribers:
             subscriber.updateWindow(taskID=taskID, elapsedTime=elapsedTime)
+    
+    def strToNumList(self, s:str, splitChar=';'):
+        '''
+        Converts string to list split by splitChar. If it is possible items are converted to float or ints based on presence of decimal point: '.' 
+        '''
+        result = []
+        for item in s.split(splitChar):
+            try:
+                if '.' in item: # decimal point
+                    result.append(float(item))
+                else:
+                    result.append(int(item))
+            except ValueError:
+                result.append(item)
+        return result
 
     def loadMacroFile(self, filePath):
         '''
@@ -303,7 +318,8 @@ if __name__ == '__main__':
     groups = engine.findGroups([0,1,2, 7,8, 10,11,12, 20])
     print(groups)
     engine.swapTasks(groups, False)
-    
+    print(engine.strToNumList('12; 3.20 ;asd'))
+    exit()
     engine.saveMacroToFile('saveTest.json')
 
     engine.runProgram()
