@@ -9,6 +9,7 @@ class MacroEngine():
         self.taskList: list[tasks] -> list of tasks to be executed in order from 0 to last item
         self.numOfTasks: int -> length of self.taskList
         self.variables: dict -> variables dictionary for program and user
+        self.loadedVariables: dict -> deep copy of self.variables, which is saved to file (it avoids saving run time variables)
         self.modules: dict -> dictionary with dynamically imported modules when creating tasks
         self.subscribers: list => list with objects that observe this engine
         self.jumpLabels: dict -> {taskName: ID in self.taskList} used for conditional jumps
@@ -16,6 +17,7 @@ class MacroEngine():
         self.taskList = []
         self.numOfTasks = 0
         self.variables = {}
+        self.loadedVariables = {}
         self.modules = {}
         self.subscribers = []
         self.jumpLabels = {}
@@ -155,7 +157,7 @@ class MacroEngine():
         Loads variables from JSON file
         '''
         with open(filePath, 'w') as file:
-            json.dump(self.variables, file, indent=2)
+            json.dump(self.loadedVariables, file, indent=2)
     
     def loadVariablesMacro(self, dirPath:str, fileName:str):
         '''
@@ -209,6 +211,7 @@ class MacroEngine():
         Runs macro by iterating over self.taskList and executing task
         '''
         self.numOfTasksGetSet()
+        self.loadedVariables = copy.deepcopy(self.variables)
         self._updateJumpLabels()
         currentTaskID = 0
         
