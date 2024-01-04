@@ -283,19 +283,15 @@ class pyMacro(tk.Tk):
         macroFile = filedialog.asksaveasfilename(title='Save macro', initialdir=path, filetypes=(('Macro file','*.json'),))
         
         if macroFile:
-            *dirPath, projectFolder, macroName = [val for val in macroFile.split('/')]
+            *dirPath, macroName = [val for val in macroFile.split('/')]
             
             ## check if there is .json file in project folder
             dirPath = os.sep.join(item for item in dirPath)
-            filesInProjectFolder = [fileName for fileName in os.listdir(os.path.join(dirPath, projectFolder)) if fileName[-5:] != '.json']
-            if filesInProjectFolder:
-                projectFolder = os.path.join(projectFolder, 'New')
-                os.mkdir(os.path.join(dirPath, projectFolder))
 
             if macroName[-5:] != '.json':
                 macroName += '.json'
-            self.macroEngine.saveMacroToFile(os.path.join(dirPath, projectFolder, macroName))
-            self.macroEngine.saveVariablesToFile(os.path.join(dirPath, projectFolder, 'variables'))
+            self.macroEngine.saveMacroToFile(os.path.join(dirPath, macroName))
+            self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'variables'))
 
     def _updateTaskList(self):
         '''

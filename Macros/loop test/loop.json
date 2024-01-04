@@ -60,7 +60,10 @@
     "function": "logicFunctions.checkCondition",
     "parameters": {
       "evalationFunctionName": "less",
-      "vals": ["i", 10],
+      "vals": [
+        "i",
+        10
+      ],
       "resultTrue": "Label: loop",
       "resultFalse": "Label: end"
     },
