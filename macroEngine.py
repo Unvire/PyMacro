@@ -169,8 +169,16 @@ class MacroEngine():
         Replaces variables declared in run time with value from self.variables
         '''
         for parameterName in kwargs:
-            if parameterName in self.variables:
-                kwargs[parameterName] = self.variables[parameterName]
+            variable = kwargs[parameterName]
+            ## replace if value is string
+            if isinstance(variable, str) and variable in self.variables:
+                kwargs[parameterName] = self.variables[variable]
+            
+            ## replace value if it is in sequence
+            elif isinstance(variable, list):
+                for i, _ in enumerate(variable):
+                    if isinstance(variable[i], str) and variable[i] in self.variables:
+                        kwargs[parameterName][i] = self.variables[variable[i]]
         return kwargs
 
     def executeTask(self, task, taskID):
@@ -184,11 +192,10 @@ class MacroEngine():
         if task.isEnabled:
             kwargs = self.calculateKwargs(task.functionKwargs())
             result = task.executeFunction(**kwargs)
-            if task.variableName and result:
+            if task.variableName and result is not None:
                 self.variables[task.variableName] = result
             timerEnd = timer()
-            elapsedTime = timerEnd - timerStart        
-        print(self.variables)
+            elapsedTime = timerEnd - timerStart
         self.notify(taskID=taskID, elapsedTime=elapsedTime)
         return result
     
@@ -299,7 +306,14 @@ class MacroEngine():
 if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug', 'macro.json')
+    engine.variables['i'] = 0
+    print(engine.calculateKwargs({'val1':'i'}))
+    print(engine.calculateKwargs({'val1':'a'}))
+    print(engine.calculateKwargs({'val1':['i', 10]}))
     groups = engine.findGroups([0])
+
+    exit()
+    
     print(groups)
     engine.swapTasks(groups, False)
     engine.runProgram()
