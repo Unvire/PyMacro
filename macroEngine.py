@@ -151,6 +151,7 @@ class MacroEngine():
         '''
         with open(filePath, 'r') as file:
             self.variables = json.load(file)
+        self.loadedVariables = copy.deepcopy(self.variables)
     
     def saveVariablesToFile(self, filePath):
         '''
@@ -211,7 +212,6 @@ class MacroEngine():
         Runs macro by iterating over self.taskList and executing task
         '''
         self.numOfTasksGetSet()
-        self.loadedVariables = copy.deepcopy(self.variables)
         self._updateJumpLabels()
         currentTaskID = 0
         
