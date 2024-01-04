@@ -396,6 +396,7 @@ class pyMacro(tk.Tk):
             value = typeDict[value.lower()] if value.lower() in typeDict else value
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
+        self.generateParametersTable(currentItemNumber)
 
     def deleteTask(self):
         '''

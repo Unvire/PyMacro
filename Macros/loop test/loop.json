@@ -2,10 +2,10 @@
   "0": {
     "name": "Init counter",
     "isEnabled": true,
-    "function": "mathFunctions.add",
+    "function": "synchroFunctions.initVariable",
     "parameters": {
-      "val1": 0,
-      "val2": 0
+      "val": "0",
+      "valType": "int"
     },
     "saveResultToVariable": "i"
   },
