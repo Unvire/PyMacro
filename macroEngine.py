@@ -215,7 +215,7 @@ class MacroEngine():
             taskParameters:(parameterName:str, val:str, variableName:str) -> parameterName and value is a key:val pair of Task class instance, variableName is key from self.variables
             isArgument: bool -> True edits taskInstance.__dict__['parameters'], False edits taskInstance.__dict__
         '''
-        parameterName, parameterValue, parameterVariable = taskParameters
+        parameterName, parameterValue = taskParameters
         if parameterName == 'function':
             newFunction = self._dynamicImportModule(parameterValue)
             taskParameters = 'executeFunction', newFunction
