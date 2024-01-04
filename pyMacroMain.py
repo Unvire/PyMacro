@@ -461,15 +461,17 @@ class pyMacro(tk.Tk):
         if treeview != self.taskFunctionParametersTableTree:
             return
         
-        ## delete row unless it is the last one
-        lastRow = treeview.get_children()[-1]
-        if rowID != lastRow:
-            treeview.delete(rowID)
-        
-        ## remove parameter
-        currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
-        self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
-        self._updateTaskList()
+        decision = messagebox.askyesno('Confirmation', message=f"Do you want to delete {argumentName} from task's argument")
+        if decision:
+            ## delete row unless it is the last one
+            lastRow = treeview.get_children()[-1]
+            if rowID != lastRow:
+                treeview.delete(rowID)
+            
+            ## remove parameter
+            currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+            self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
+            self._updateTaskList()
          
 if __name__ == '__main__':
     app = pyMacro()
