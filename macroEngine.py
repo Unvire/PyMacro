@@ -48,21 +48,12 @@ class MacroEngine():
         variableName = taskDict['saveResultToVariable']
         taskFunction = self._dynamicImportModule(taskDict['function'])
         
-        ## check if task is a conditional jump
+        ## check if task is a conditional jump and remove it from parameters dict
         if 'checkCondition' in taskDict['function'] and 'isJump' in parameters:
             isJump = parameters['isJump']
             parameters.pop('isJump')
         else:            
             isJump = False
-
-        ## load parameters from self.variables dict. (key:(parameterValue, parameterName))
-        for parameter in parameters:
-            parameterValue = parameters[parameter]
-            parameterName = None
-            if isinstance(parameterValue, str) and parameterValue in self.variables:
-                parameterName = parameterValue
-                parameterValue = self.variables[parameterValue]
-            parameters[parameter] = parameterValue, parameterName
 
         taskInstance = task.Task(name=name, isEnabled=isEnabled, executeFunction=taskFunction, parameters=parameters, isJump=isJump, variableName=variableName)
         return taskInstance
@@ -135,7 +126,7 @@ class MacroEngine():
         taskDict = {}
         for i, task in enumerate(self.taskList):
             taskDict[str(i)] = task.convertToDict()
-        
+
         with open(filePath, 'w') as file:
             json.dump(taskDict, file, indent=2)
     
@@ -211,7 +202,7 @@ class MacroEngine():
         while currentTaskID < self.numOfTasks:
             task = self.taskList[currentTaskID]
             result = self.executeTask(task, currentTaskID)
-            
+
             if result and task.isJump:
                 currentTaskID = self.jumpLabels[result]
             else:
@@ -310,12 +301,11 @@ if __name__ == '__main__':
     print(engine.calculateKwargs({'val1':'i'}))
     print(engine.calculateKwargs({'val1':'a'}))
     print(engine.calculateKwargs({'val1':['i', 10]}))
-    groups = engine.findGroups([0])
-
-    exit()
-    
+    groups = engine.findGroups([0,1,2, 7,8, 10,11,12, 20])
     print(groups)
     engine.swapTasks(groups, False)
-    engine.runProgram()
+    
     engine.saveMacroToFile('saveTest.json')
+
+    engine.runProgram()
     engine.saveVariablesToFile('variableSaveTest')
