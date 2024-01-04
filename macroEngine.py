@@ -1,7 +1,6 @@
-import os
+import os, copy, importlib
 import json
 from timeit import default_timer as timer
-import importlib
 import task
 
 class MacroEngine():
@@ -101,7 +100,6 @@ class MacroEngine():
         '''
         for subscriber in self.subscribers:
             subscriber.updateWindow(taskID=taskID, elapsedTime=elapsedTime)
-    
 
     def loadMacroFile(self, filePath):
         '''
@@ -157,20 +155,21 @@ class MacroEngine():
     
     def calculateKwargs(self, kwargs:dict):
         '''
-        Replaces variables declared in run time with value from self.variables
+        Replaces variables declared in run time with value from self.variables. Works on copy of dictionary
         '''
-        for parameterName in kwargs:
+        kwargsCopy = copy.deepcopy(kwargs)
+        for parameterName in kwargsCopy:
             variable = kwargs[parameterName]
             ## replace if value is string
             if isinstance(variable, str) and variable in self.variables:
-                kwargs[parameterName] = self.variables[variable]
+                kwargsCopy[parameterName] = self.variables[variable]
             
             ## replace value if it is in sequence
             elif isinstance(variable, list):
-                for i, _ in enumerate(variable):
-                    if isinstance(variable[i], str) and variable[i] in self.variables:
-                        kwargs[parameterName][i] = self.variables[variable[i]]
-        return kwargs
+                for i, _ in enumerate(variable[:]):
+                    if variable[i] in self.variables:
+                        kwargsCopy[parameterName][i] = self.variables[variable[i]]
+        return kwargsCopy
 
     def executeTask(self, task, taskID):
         '''
@@ -180,7 +179,7 @@ class MacroEngine():
         timerStart = timer()
         self.notify(taskID=taskID)
         result, elapsedTime = None, -1
-        if task.isEnabled:
+        if task.isEnabled:    
             kwargs = self.calculateKwargs(task.functionKwargs())
             result = task.executeFunction(**kwargs)
             if task.variableName and result is not None:
