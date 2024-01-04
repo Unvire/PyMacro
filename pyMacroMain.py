@@ -387,12 +387,10 @@ class pyMacro(tk.Tk):
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
         
-        ## check if value can be converted to list of ints
-        try:
-            value = [int(val) for val in value.split(';')]
-            if len(value) == 1:
-                value = value[0]
-        except ValueError:
+        ## convert every single item in list to float or int (if it is possible)A
+        if ';' in value:
+            value = self.macroEngine.strToNumList(value)
+        else:
             value = typeDict[value.lower()] if value.lower() in typeDict else value
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
