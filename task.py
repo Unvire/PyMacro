@@ -55,7 +55,7 @@ class Task:
         Returns list of tuples (argument, argumentValue). If argument value is obtained from variables file then argumentValue=variableName
         Used to display function parameters(arguments) in table
         '''
-        result = []
+        result = [('isJump', True)] if self.isJump else []
         for argument in self.parameters:
             value, variableName = self.parameters[argument]
             if variableName:
@@ -80,7 +80,10 @@ class Task:
         '''
         keyName, value, variableName = newRecord
         if isArgument:
-            self.parameters[keyName] = value, variableName
+            if keyName == 'isJump':
+                self.__setattr__(keyName, value)
+            else:
+                self.parameters[keyName] = value, variableName
         else:
             self.__setattr__(keyName, value)
 
