@@ -4,12 +4,8 @@
     "isEnabled": true,
     "function": "mathFunctions.add",
     "parameters": {
-      "val1": [
-        0
-      ],
-      "val2": [
-        0
-      ]
+      "val1": 0,
+      "val2": 0
     },
     "saveResultToVariable": "i"
   },
@@ -54,11 +50,9 @@
     "function": "mathFunctions.add",
     "parameters": {
       "val1": "i",
-      "val2": [
-        1
-      ]
+      "val2": 1
     },
-    "saveResultToVariable": ""
+    "saveResultToVariable": "i"
   },
   "6": {
     "name": "counter <10?",
@@ -66,10 +60,7 @@
     "function": "logicFunctions.checkCondition",
     "parameters": {
       "evalationFunctionName": "less",
-      "val1": "i",
-      "val2": [
-        10
-      ],
+      "vals": ["i", 10],
       "resultTrue": "Label: loop",
       "resultFalse": "Label: end"
     },

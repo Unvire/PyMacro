@@ -398,6 +398,8 @@ class pyMacro(tk.Tk):
             ## check if value can be converted to list of ints
             try:
                 value = [int(val) for val in value.split(';')]
+                if len(value) == 1:
+                    value = value[0]
             except ValueError:
                 value = typeDict[value.lower()] if value.lower() in typeDict else value
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value, variableName), isArgument=isArgument)
