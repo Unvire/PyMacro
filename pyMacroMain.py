@@ -80,6 +80,9 @@ class pyMacro(tk.Tk):
         self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
         self.taskFunctionParametersTableTree.heading('Parameter name', text='Argument name')
         self.taskFunctionParametersTableTree.heading('Value', text='Value')
+        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Variable name', 'Value'), show='headings')
+        self.variablesTableTree.heading('Variable name', text='Variable name')
+        self.variablesTableTree.heading('Value', text='Value')
 
 
         ## position
@@ -119,6 +122,7 @@ class pyMacro(tk.Tk):
         # task parameters
         self.taskParametersTableTree.grid(row=0, column=0)
         self.taskFunctionParametersTableTree.grid(row=1, column=0)
+        self.variablesTableTree.grid(row=2, column=0)
 
         # frames
         # buttons inside first row
