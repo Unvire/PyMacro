@@ -32,7 +32,7 @@ def writeString(text='', interval=0):
         text - str
         interval - float -> delay between characters
     '''
-    pyautogui.write(text, int(interval))
+    pyautogui.write(str(text), int(interval))
 
 def press(key='', numOfPresses=1):
     '''
