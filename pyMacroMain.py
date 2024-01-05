@@ -2,6 +2,7 @@ import time
 import os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from datetime import datetime
 import pyautogui
 import macroEngine
 
@@ -358,7 +359,8 @@ class pyMacro(tk.Tk):
                     ## if in folder is .json file but names are different then save into new folder. Otherwise overwrite the file
                     if fileName != macroName:
                         os.mkdir(os.path.join(dirPath, 'New'))
-                        self.macroEngine.saveMacroToFile(os.path.join(dirPath, 'New', macroName))
+                        currentTime = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                        self.macroEngine.saveMacroToFile(os.path.join(dirPath, f'New {currentTime}', macroName))
                         self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'New', 'variables'))
                         return
             
