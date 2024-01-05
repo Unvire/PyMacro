@@ -272,6 +272,9 @@ class pyMacro(tk.Tk):
         self.generateParametersTable(currentItemNumber)
 
     def setVariablesFromEngine(self):
+        '''
+        Get deep copy of engine's variable dict
+        '''
         self.variables = self.macroEngine.getVariables()
 
     def handleMouseClick(self, event):
