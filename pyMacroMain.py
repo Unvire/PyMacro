@@ -249,6 +249,27 @@ class pyMacro(tk.Tk):
         Updates self.taskist
         '''
         self.tasksList = self.macroEngine.getTaskList() # copy tasklist
+    
+    def _changeTaskParameters(self, parameter:str, value:str, isArgument:bool):
+        '''
+        Helper function for changing task parameters. Task must be selected in order to get number of the row
+            parameter -> name of the parameter of the Task instance
+            value -> new value of that parameter
+            isArgument -> for true task.parameters dict will be modified, for false instance variables will be modified
+        '''
+        typeDict = {'false': False, 'true':True}
+
+        ## update Task instance, update local taskList
+        currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+        
+        ## convert every single item in list to float or int (if it is possible)
+        if ';' in value:
+            value = self.macroEngine.strToNumList(value)
+        else:
+            value = typeDict[value.lower()] if value.lower() in typeDict else value
+        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
+        self._updateTaskList()
+        self.generateParametersTable(currentItemNumber)
 
     def setVariablesFromEngine(self):
         self.variables = self.macroEngine.getVariables()
@@ -374,9 +395,8 @@ class pyMacro(tk.Tk):
         Updates task with parameters gained from Entries. 
         1. Get data from Entries
         2. Update Treeviews (update row, clear empty row in the middle, insert empty row)
-        3. Convert value to proper type/) to proper type
+        3. Convert value to proper type
         '''
-        typeDict = {'false': False, 'true':True}
         treeview, rowID = self.clickedTable
         isArgument = treeview == self.taskFunctionParametersTableTree
         parameter = self.parameterNameEntry.get()
@@ -403,17 +423,11 @@ class pyMacro(tk.Tk):
         if treeview.set(lastRow)['Parameter name']:
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
-        ## update Task instance, update local taskList
-        currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+        if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
+            self._changeTaskParameters(parameter, value, isArgument)
+        elif treeview is self.variablesTableTree:
+            print('a')
         
-        ## convert every single item in list to float or int (if it is possible)
-        if ';' in value:
-            value = self.macroEngine.strToNumList(value)
-        else:
-            value = typeDict[value.lower()] if value.lower() in typeDict else value
-        self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
-        self._updateTaskList()
-        self.generateParametersTable(currentItemNumber)
 
     def deleteTask(self):
         '''
