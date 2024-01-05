@@ -256,25 +256,13 @@ class pyMacro(tk.Tk):
             parameter -> name of the parameter of the Task instance
             value -> new value of that parameter
             isArgument -> for true task.parameters dict will be modified, for false instance variables will be modified
-        '''
-        typeDict = {'false': False, 'true':True}
-
+        ''' 
         ## update Task instance, update local taskList
         currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
-        
-        ## convert every single item in list to float or int (if it is possible)
-        if ';' in value:
-            value = self.macroEngine.strToNumList(value)
-        else:
-            if value.lower() in typeDict:
-                value = typeDict[value.lower()]
-            else:
-                value = self.macroEngine.strToNum(value)
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
         self.generateParametersTable(currentItemNumber)
         
-
     def setVariablesFromEngine(self):
         '''
         Get deep copy of engine's variable dict
@@ -436,11 +424,20 @@ class pyMacro(tk.Tk):
         if treeview.set(lastRow)['Parameter name']:
             treeview.insert('', tk.END, values=[''] * numOfKeys)
 
+        ## convert every single item in list to float or int (if it is possible)
+        if ';' in value:
+            value = self.macroEngine.strToNumList(value)
+        else:
+            typeDict = {'false': False, 'true':True}
+            if value.lower() in typeDict:
+                value = typeDict[value.lower()]
+            else:
+                value = self.macroEngine.strToNum(value)
+
         if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
             self._changeTaskParameters(parameter, value, isArgument)
         elif treeview is self.variablesTableTree:
-            print('a')
-        
+            self._modifyVariables(parameter, value)
 
     def deleteTask(self):
         '''
