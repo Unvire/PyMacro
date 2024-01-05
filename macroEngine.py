@@ -259,7 +259,7 @@ class MacroEngine():
         '''
         Appends new default task to the list
         '''
-        taskDict = {'name': 'New task', 'isEnabled': True, 'function': 'cursorFunctions.moveToCoords' , 'parameters': {}, 'saveResultToVariable': ''}
+        taskDict = {'name': 'New task', 'isEnabled': True, 'function': 'synchroFunctions.nothing' , 'parameters': {}, 'saveResultToVariable': ''}
         task = self._createTask(taskDict)
         self.taskList.append(task)
     
