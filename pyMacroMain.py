@@ -250,7 +250,7 @@ class pyMacro(tk.Tk):
         '''
         self.tasksList = self.macroEngine.getTaskList() # copy tasklist
     
-    def _changeTaskParameters(self, parameter:str, value:str, isArgument:bool):
+    def _changeTaskParameters(self, parameter:str, value:str|int|float|list, isArgument:bool):
         '''
         Helper function for changing task parameters. Task must be selected in order to get number of the row
             parameter -> name of the parameter of the Task instance
@@ -263,6 +263,7 @@ class pyMacro(tk.Tk):
         self._updateTaskList()
         self.generateParametersTable(currentItemNumber)
         
+
     def setVariablesFromEngine(self):
         '''
         Get deep copy of engine's variable dict
