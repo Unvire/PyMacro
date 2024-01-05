@@ -343,7 +343,13 @@ class pyMacro(tk.Tk):
         '''
         self._updateTaskList()
         taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
-        variableNames = [(i, variable, '') for i, variable in enumerate(self.variables.keys())]
+        variableNames = []
+        for variable in self.variables:
+            if isinstance(self.variables[variable], list):
+                row = variable, '; '.join([str(item) for item in self.variables[variable]])
+            else:
+                row = variable, str(self.variables[variable])
+            variableNames.append(row)
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
         self._clearGenerateTable(self.variablesTableTree, variableNames)
