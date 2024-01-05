@@ -71,7 +71,7 @@ class pyMacro(tk.Tk):
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
         self.parameterValueEntry = ttk.Entry(self.parameterEditFrame)
         self.updateTreeviewParametersButton = ttk.Button(self.parameterEditFrame, text='Update', command=self.updateTreeviewParameters)
-        self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete parameter', command=self.deleteArgument)
+        self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete', command=self.deleteArgument)
 
         # task parameters
         self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
