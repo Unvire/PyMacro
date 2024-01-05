@@ -351,6 +351,17 @@ class pyMacro(tk.Tk):
 
             if macroName[-5:] != '.json':
                 macroName += '.json'
+            
+            filesInDir = [fileName for fileName in os.listdir(os.path.join(dirPath)) if fileName[-5:] == '.json']
+            if filesInDir:
+                for fileName in filesInDir:
+                    ## if in folder is .json file but names are different then save into new folder. Otherwise overwrite the file
+                    if fileName != macroName:
+                        os.mkdir(os.path.join(dirPath, 'New'))
+                        self.macroEngine.saveMacroToFile(os.path.join(dirPath, 'New', macroName))
+                        self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'New', 'variables'))
+                        return
+            
             self.macroEngine.saveMacroToFile(os.path.join(dirPath, macroName))
             self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'variables'))
 
