@@ -49,7 +49,6 @@ class pyMacro(tk.Tk):
 
         # utility buttons
         self.cursorPositionButton = ttk.Button(self.utilityButtonsFrame, text='Cursor position', command=self.getCursorCoords)
-        self.variablesButton = ttk.Button(self.utilityButtonsFrame, text='Variables', command=...)
 
         # task edit buttons
         self.moveTaskUpButton = ttk.Button(self.taskEditButtonsFrame, text='Up', command=lambda: self.moveTask(moveUp=True))
@@ -98,7 +97,6 @@ class pyMacro(tk.Tk):
 
         # utility buttons
         self.cursorPositionButton.grid(row=0, column=0)
-        self.variablesButton.grid(row=0, column=1)
 
         # task edit buttons
         self.moveTaskUpButton.grid(row=0, column=0)
