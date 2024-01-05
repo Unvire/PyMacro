@@ -181,7 +181,7 @@ class pyMacro(tk.Tk):
         for row in data:
             table.insert('', tk.END, values=row)
 
-        if table is not self.tasksTableTree:
+        if table is self.taskFunctionParametersTableTree:
             rowLength = len(data[0]) if data else 2
             table.insert('', tk.END, values=[''] * rowLength) # add empty row in the end
     
