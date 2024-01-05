@@ -80,8 +80,8 @@ class pyMacro(tk.Tk):
         self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
         self.taskFunctionParametersTableTree.heading('Parameter name', text='Argument name')
         self.taskFunctionParametersTableTree.heading('Value', text='Value')
-        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Variable name', 'Value'), show='headings')
-        self.variablesTableTree.heading('Variable name', text='Variable name')
+        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.variablesTableTree.heading('Parameter name', text='Variable name')
         self.variablesTableTree.heading('Value', text='Value')
 
 
@@ -160,7 +160,7 @@ class pyMacro(tk.Tk):
             treeview -> ttk.Treeview
             focusedItem:str -> item ID returned by .focus()
         '''
-        if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
+        if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree, self.variablesTableTree):
             self.clickedTable = treeview, focusedItem
         else:
             self.clickedTable = None, None
@@ -188,7 +188,7 @@ class pyMacro(tk.Tk):
         for row in data:
             table.insert('', tk.END, values=row)
 
-        if table is self.taskFunctionParametersTableTree:
+        if table in (self.taskFunctionParametersTableTree, self.variablesTableTree):
             rowLength = len(data[0]) if data else 2
             table.insert('', tk.END, values=[''] * rowLength) # add empty row in the end
     
@@ -244,7 +244,13 @@ class pyMacro(tk.Tk):
         self.update()
         self.update_idletasks()
 
-    def setEngineVariables(self):
+    def _updateTaskList(self):
+        '''
+        Updates self.taskist
+        '''
+        self.tasksList = self.macroEngine.getTaskList() # copy tasklist
+
+    def setVariablesFromEngine(self):
         self.variables = self.macroEngine.getVariables()
 
     def handleMouseClick(self, event):
@@ -261,10 +267,8 @@ class pyMacro(tk.Tk):
                 self._updateParameterEntries() # clear entries
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
-            elif widget == self.taskParametersTableTree:
-                self._handleClickedParameterTreeview(self.taskParametersTableTree)
-            elif widget == self.taskFunctionParametersTableTree:
-                self._handleClickedParameterTreeview(self.taskFunctionParametersTableTree)
+            elif widget in (self.taskParametersTableTree, self.taskParametersTableTree, self.variablesTableTree):
+                self._handleClickedParameterTreeview(widget)
     
     def newMacro(self):
         '''
@@ -288,7 +292,7 @@ class pyMacro(tk.Tk):
             *dirPath, macroName = [val for val in macroFile.split('/')]
             dirPath = '/'.join(item for item in dirPath)
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
-            self.setEngineVariables()
+            self.setVariablesFromEngine()
             self.generateTasksTable()
     
     def saveProject(self):
@@ -309,20 +313,16 @@ class pyMacro(tk.Tk):
             self.macroEngine.saveMacroToFile(os.path.join(dirPath, macroName))
             self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'variables'))
 
-    def _updateTaskList(self):
-        '''
-        Updates self.taskist
-        '''
-        self.tasksList = self.macroEngine.getTaskList() # copy tasklist
-
     def generateTasksTable(self):
         '''
         Fills tasksTableTree with data
         '''
         self._updateTaskList()
         taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
+        variableNames = [(i, variable, '') for i, variable in enumerate(self.variables.keys())]
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
+        self._clearGenerateTable(self.variablesTableTree, variableNames)
         self.tasksTableChildren = self.tasksTableTree.get_children()
 
     def runMacro(self):
