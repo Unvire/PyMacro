@@ -103,19 +103,26 @@ class MacroEngine():
         for subscriber in self.subscribers:
             subscriber.updateWindow(taskID=taskID, elapsedTime=elapsedTime)
     
+    def strToNum(self, s:str):
+        '''
+        Converts string to float (decimal point is '.') or int. If it is bot possible returns input value.
+        '''
+        try:
+            if '.' in s: # decimal point
+                return float(s)
+            else:
+                return int(s)
+        except ValueError:
+            return s
+    
     def strToNumList(self, s:str, splitChar=';'):
         '''
-        Converts string to list split by splitChar. If it is possible items are converted to float or ints based on presence of decimal point: '.' 
+        Converts string to list split by splitChar. If it is possible items are converted to float or ints based on presence of decimal point: '.'. 
+        Calls self.strToNum for each element
         '''
         result = []
         for item in s.split(splitChar):
-            try:
-                if '.' in item: # decimal point
-                    result.append(float(item))
-                else:
-                    result.append(int(item))
-            except ValueError:
-                result.append(item)
+            result.append(self.strToNum(item))
         return result
 
     def loadMacroFile(self, filePath):
