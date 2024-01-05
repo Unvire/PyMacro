@@ -19,6 +19,7 @@ class pyMacro(tk.Tk):
         self.tasksTableChildren = []
         self.isRun = False
         self.clickedTable = None, None
+        self.totalTime = 0
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -62,6 +63,7 @@ class pyMacro(tk.Tk):
         self.tasksTableTree.heading('ID', text='ID')
         self.tasksTableTree.heading('Task name', text='Task name')
         self.tasksTableTree.heading('Time', text='Time')
+        self.infoLabel = ttk.Label(self.tasksFrame, text='')
 
         # parameter edit
         self.parameterNameLabel = ttk.Label(self.parameterEditFrame, text='Name')
@@ -103,7 +105,8 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton.grid(row=4, column=0)
 
         # tasks table
-        self.tasksTableTree.grid(row=0, column=0)
+        self.infoLabel.grid(row=0, column=0)
+        self.tasksTableTree.grid(row=1, column=0)
 
         # parameter edit
         self.parameterNameLabel.grid(row=0, column=0)
@@ -317,7 +320,9 @@ class pyMacro(tk.Tk):
         '''
         if not self.isRun:
             self._isRunSet(True)
-            self.generateTasksTable()
+            self.generateTasksTable()            
+            self.totalTime = 0            
+            self.infoLabel['text'] = '0'
             self.macroEngine.runProgram()
         self._isRunSet(False)
 
@@ -346,6 +351,9 @@ class pyMacro(tk.Tk):
 
         ## display elapsed time
         if elapsedTime:
+            if elapsedTime != -1:
+                self.totalTime += elapsedTime
+            self.infoLabel['text'] = f'{self.totalTime:5f}'
             self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=currentTaskID, columnName='Time', columnValue=f'{elapsedTime:5f}')
         
         ## refresh window
@@ -448,7 +456,7 @@ class pyMacro(tk.Tk):
         time.sleep(5)
         x, y = pyautogui.position()
         pixelColor = pyautogui.pixel(x, y)
-        print(f'coords: ({x}, {y})| RGB:{pixelColor}')
+        self.infoLabel['text'] = f'coords: ({x}, {y})| RGB:{pixelColor}'
 
     def deleteArgument(self):
         '''
