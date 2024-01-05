@@ -266,10 +266,14 @@ class pyMacro(tk.Tk):
         if ';' in value:
             value = self.macroEngine.strToNumList(value)
         else:
-            value = typeDict[value.lower()] if value.lower() in typeDict else value
+            if value.lower() in typeDict:
+                value = typeDict[value.lower()]
+            else:
+                value = self.macroEngine.strToNum(value)
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
         self.generateParametersTable(currentItemNumber)
+        
 
     def setVariablesFromEngine(self):
         '''
@@ -291,7 +295,7 @@ class pyMacro(tk.Tk):
                 self._updateParameterEntries() # clear entries
                 if currentItemNumber is not None:              
                     self.generateParametersTable(currentItemNumber)
-            elif widget in (self.taskParametersTableTree, self.taskParametersTableTree, self.variablesTableTree):
+            elif widget in (self.taskParametersTableTree, self.taskFunctionParametersTableTree, self.variablesTableTree):
                 self._handleClickedParameterTreeview(widget)
     
     def newMacro(self):
