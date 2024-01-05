@@ -237,6 +237,19 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry.insert(0, parameter)
         self.parameterValueEntry.insert(0, value)
     
+    def _variablesList(self):
+        '''
+        Converts self.variables dict to [(variableName, value), ...] list
+        '''
+        variableList = []
+        for variable in self.variables:
+            if isinstance(self.variables[variable], list):
+                row = variable, '; '.join([str(item) for item in self.variables[variable]])
+            else:
+                row = variable, str(self.variables[variable])
+            variableList.append(row)
+        return variableList
+    
     def _refreshWindow(self):
         '''
         Updates widgets
@@ -262,7 +275,17 @@ class pyMacro(tk.Tk):
         self.macroEngine.editTaskParameter(taskID=currentItemNumber, taskParameters=(parameter, value), isArgument=isArgument)
         self._updateTaskList()
         self.generateParametersTable(currentItemNumber)
-        
+    
+    def _modifyVariables(self, variable:str, value:str|int|float|list):
+        '''
+        Helper function for changing self.loadedVariables of the engine.
+            variable -> name of variable
+            value -> new value of that variable
+        '''
+        self.macroEngine.modifyVariable(variable, value)
+        self.setVariablesFromEngine()
+        variablesList = self._variablesList()
+        self._clearGenerateTable(self.variablesTableTree, variablesList)        
 
     def setVariablesFromEngine(self):
         '''
@@ -336,16 +359,10 @@ class pyMacro(tk.Tk):
         '''
         self._updateTaskList()
         taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
-        variableNames = []
-        for variable in self.variables:
-            if isinstance(self.variables[variable], list):
-                row = variable, '; '.join([str(item) for item in self.variables[variable]])
-            else:
-                row = variable, str(self.variables[variable])
-            variableNames.append(row)
+        variablesList = self._variablesList()
 
         self._clearGenerateTable(self.tasksTableTree, taskNames)
-        self._clearGenerateTable(self.variablesTableTree, variableNames)
+        self._clearGenerateTable(self.variablesTableTree, variablesList)
         self.tasksTableChildren = self.tasksTableTree.get_children()
 
     def runMacro(self):
