@@ -67,9 +67,9 @@ class MacroEngine():
     
     def getTaskList(self):
         '''
-        Getter for self.taskList. Returns shallow copy of self.taskList
+        Getter for self.taskList. Returns deep copy of self.taskList
         '''
-        return [task for task in self.taskList]
+        return copy.deepcopy(self.taskList)
 
     def clearTaskList(self):
         '''
@@ -81,7 +81,7 @@ class MacroEngine():
         '''
         Getter for self.variables. Returns shallow copy
         '''
-        return self.variables.copy()
+        return copy.deepcopy(self.loadedVariables)
     
     def numOfTasksGetSet(self):
         '''
