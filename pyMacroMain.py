@@ -233,6 +233,13 @@ class pyMacro(tk.Tk):
         self.parameterNameEntry.insert(0, parameter)
         self.parameterValueEntry.insert(0, value)
     
+    def _refreshWindow(self):
+        '''
+        Updates widgets
+        '''
+        self.update()
+        self.update_idletasks()
+
     def setEngineVariables(self):
         self.variables = self.macroEngine.getVariables()
 
@@ -355,10 +362,8 @@ class pyMacro(tk.Tk):
                 self.totalTime += elapsedTime
             self.infoLabel['text'] = f'{self.totalTime:5f}'
             self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=currentTaskID, columnName='Time', columnValue=f'{elapsedTime:5f}')
-        
-        ## refresh window
-        self.update()
-        self.update_idletasks()
+
+        self._refreshWindow()
     
     def updateTreeviewParameters(self):
         '''
@@ -452,11 +457,12 @@ class pyMacro(tk.Tk):
         '''
         Get cursor coords and pixel color
         '''
-        print('You have 5 seconds to move cursor')
+        self.infoLabel['text'] = 'You have 5 seconds to move cursor'
+        self._refreshWindow()
         time.sleep(5)
         x, y = pyautogui.position()
         pixelColor = pyautogui.pixel(x, y)
-        self.infoLabel['text'] = f'coords: ({x}, {y})| RGB:{pixelColor}'
+        self.infoLabel['text'] = f'coords: ({x}, {y}) | RGB:{pixelColor}'
 
     def deleteArgument(self):
         '''
