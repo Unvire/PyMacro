@@ -169,7 +169,10 @@ class pyMacro(tk.Tk):
         '''
         Sets value of requested cell in treeview
         '''
-        treeview.set(rowID, column=columnName, value=columnValue)
+        try:
+            treeview.set(rowID, column=columnName, value=columnValue)
+        except tk.TclError:
+            pass
 
     def _clearTable(self, table):
         ''' 
