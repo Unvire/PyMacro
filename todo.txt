@@ -1,5 +1,6 @@
-- kill macro functionality
+- kill macro functionality (threading ? ) 
 - undo edition 
+- block widgets when they shouldn't be clicked
 - TESTS
 - copy from another run
 - dropdown menu to select arguments

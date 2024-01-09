@@ -568,41 +568,51 @@ class pyMacro(tk.Tk):
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
     
-    def clearUndoStack(self, taskList:list):
+    def clearUndoStack(self, item):
         '''
-        Clears undoStack and appends current taskList.
-            taskList: list
+        Clears undoStack and appends current item.
+            item = taskList:list, variablesDict:dict
         '''
         self.undoStack = collections.deque()
-        self.undoStack.append(taskList)
+        self.undoStack.append(item)
 
-    def undoStackPush(self, taskList:list):
+    def undoStackPush(self, item):
         '''
-        Makes a deep copy of taskList and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items.
-            taskList: list
+        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items.
+            item = taskList:list, variablesDict:dict
         '''
+        taskList, variables = item
         taskListCopy = copy.deepcopy(taskList)
-        self.redoStack = collections.deque()
+        variablesCopy = copy.deepcopy(variables)
+
         if len(self.undoStack) >= 30:
             self.undoStack.popleft()
-        self.undoStack.append(taskListCopy)
+        
+        pushItem = taskListCopy, variablesCopy
+        self.undoStack.append(pushItem)
+        
+        self.redoStack = collections.deque()
     
     def undo(self):
         '''
         Pops item from undoStack and appends it to redo stack. Generates all tables
         '''
-        taskList = self.undoStack.pop()
-        self.redoStack.append(taskList)
+        item = self.undoStack.pop()
+        taskList, variables = item
+        self.redoStack.append(item)
         self.macroEngine.setTaskList(taskList)
+        self.macroEngine.setLoadedVariables(variables)
         self.generateTasksTable()
 
     def redo(self):
         '''
         Reverts changes made by undo
         '''
-        taskList = self.redoButton.pop()
-        self.undoStack.append(taskList)
+        item = self.redoButton.pop()
+        taskList, variables = item
+        self.undoStack.append(item)
         self.macroEngine.setTaskList(taskList)
+        self.macroEngine.setLoadedVariables(variables)
         self.generateTasksTable()
          
 if __name__ == '__main__':
