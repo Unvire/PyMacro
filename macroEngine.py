@@ -83,6 +83,12 @@ class MacroEngine():
         '''
         self.setTaskList([])
     
+    def setLoadedVariables(self, variables):
+        '''
+        Setter for self.loadedVariables
+        '''
+        self.loadedVariables = variables
+    
     def getVariables(self):
         '''
         Getter for self.variables. Returns shallow copy
@@ -163,7 +169,7 @@ class MacroEngine():
         Loads variables from JSON file
         '''
         with open(filePath, 'r') as file:
-            self.loadedVariables = json.load(file)
+            self.loadedVariables = self.setLoadedVariables(json.load(file))
     
     def saveVariablesToFile(self, filePath):
         '''
