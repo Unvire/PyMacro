@@ -587,15 +587,6 @@ class pyMacro(tk.Tk):
             self._updateTaskList()
 
             self.undoStackPush(self.tasksList, self.variables)
-    
-    def saveCurrentState(self, taskList, variables):
-        '''
-        Makes a copy of current taskList and variables and creates collections.deque with that copy
-        '''
-        item = self._taskListVariablesDeepCopy(taskList, variables)
-        self.redoStack = collections.deque(item)
-        
-        print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
 
     def clearUndoStack(self, item):
         '''
