@@ -496,8 +496,7 @@ class pyMacro(tk.Tk):
         elif treeview is self.variablesTableTree:
             self._modifyVariables(parameter, value)
 
-        item = self.tasksList, self.variables
-        self.redoStack = collections.deque(item)
+        self.saveCurrentState(self.tasksList, self.variables)
 
     def deleteTask(self):
         '''
@@ -510,8 +509,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.deleteTask(currentID)
         self.generateTasksTable()
 
-        item = self.tasksList, self.variables
-        self.redoStack = collections.deque(item)
+        self.saveCurrentState(self.tasksList, self.variables)
     
     def newTask(self):
         '''
@@ -527,8 +525,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.newTask(currentID + 1)
         self.generateTasksTable()
 
-        item = self.tasksList, self.variables
-        self.redoStack = collections.deque(item)
+        self.saveCurrentState(self.tasksList, self.variables)
     
     def moveTask(self, moveUp:bool):
         '''
@@ -552,8 +549,7 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
         self.tasksTableTree.selection_set(nameIDs)
 
-        item = self.tasksList, self.variables
-        self.redoStack = collections.deque(item)
+        self.saveCurrentState(self.tasksList, self.variables)
     
     def duplicateSelectedTasks(self):
         '''
@@ -566,8 +562,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.duplicateTasks(rowIDs)
         self.generateTasksTable()
 
-        item = self.tasksList, self.variables
-        self.redoStack = collections.deque(item)
+        self.saveCurrentState(self.tasksList, self.variables)
         
     def getCursorCoords(self):
         '''
@@ -614,12 +609,16 @@ class pyMacro(tk.Tk):
         '''
         item = self._taskListVariablesDeepCopy(taskList, variables)
         self.redoStack = collections.deque(item)
+        
+        print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
 
     def clearUndoStack(self, item):
         '''
         Clears undoStack and appends current item.
             item = taskList:list, variablesDict:dict
         '''
+        taskList, variables = item
+        item = self._taskListVariablesDeepCopy(taskList, variables)
         self.undoStack = collections.deque()
         self.redoStack = collections.deque(item)
 
