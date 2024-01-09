@@ -1,9 +1,7 @@
-- FIX UNDO REDO
+- copy from another run
 - kill macro functionality (threading ? ) 
-- undo edition 
 - block widgets when they shouldn't be clicked
 - TESTS
-- copy from another run
 - dropdown menu to select arguments
 - custom python script execution
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
@@ -25,3 +23,5 @@ DONE:
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - variables should be fully working
 - cursor position, variables display
+- undo edition 
+- FIX UNDO REDO
