@@ -1,6 +1,6 @@
 - kill macro functionality
-- cursor position, variables display
 - undo edition 
+- TESTS
 - copy from another run
 - dropdown menu to select arguments
 - custom python script execution
@@ -22,3 +22,4 @@ DONE:
 - create new Macro from scratch
 - volatile variables after reset (delete those that were added in run time) (separate dictionary?)
 - variables should be fully working
+- cursor position, variables display
