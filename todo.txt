@@ -1,3 +1,4 @@
+- FIX UNDO REDO
 - kill macro functionality (threading ? ) 
 - undo edition 
 - block widgets when they shouldn't be clicked
