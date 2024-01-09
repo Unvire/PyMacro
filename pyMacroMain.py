@@ -606,9 +606,15 @@ class pyMacro(tk.Tk):
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
 
-            item = self.tasksList, self.variables
-            self.redoStack = collections.deque(item)
+            self.saveCurrentState(self.tasksList, self.variables)
     
+    def saveCurrentState(self, taskList, variables):
+        '''
+        Makes a copy of current taskList and variables and creates collections.deque with that copy
+        '''
+        item = self._taskListVariablesDeepCopy(taskList, variables)
+        self.redoStack = collections.deque(item)
+
     def clearUndoStack(self, item):
         '''
         Clears undoStack and appends current item.
@@ -625,8 +631,7 @@ class pyMacro(tk.Tk):
             item = taskList:list, variablesDict:dict
         '''
         taskList, variables = item
-        taskListCopy = copy.deepcopy(taskList)
-        variablesCopy = copy.deepcopy(variables)
+        taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(taskList, variables)
 
         if len(self.undoStack) >= 30:
             self.undoStack.popleft()
@@ -659,7 +664,6 @@ class pyMacro(tk.Tk):
         self.macroEngine.setLoadedVariables(variables)
         self.generateTasksTable()
         self._refreshWindow()
-        print(self.undoStack)
         print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
          
 if __name__ == '__main__':
