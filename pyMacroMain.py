@@ -598,8 +598,6 @@ class pyMacro(tk.Tk):
         self.undoStack = collections.deque()
         self.redoStack = collections.deque(item)
 
-        print(f'undo stack: \n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
-
     def undoStackPush(self, taskList, variables):
         '''
         Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items.
@@ -612,7 +610,6 @@ class pyMacro(tk.Tk):
         pushItem = taskListCopy, variablesCopy
         self.undoStack.append(pushItem)
         self.redoStack = collections.deque()
-        print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
     
     def undo(self):
         '''
@@ -629,8 +626,7 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
-        print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
-
+        
     def redo(self):
         '''
         Reverts changes made by undo
@@ -645,7 +641,7 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
-        print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
+        #print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
          
 if __name__ == '__main__':
     app = pyMacro()
