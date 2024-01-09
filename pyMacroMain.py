@@ -626,7 +626,7 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
-        
+
     def redo(self):
         '''
         Reverts changes made by undo
@@ -641,7 +641,6 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
-        #print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
          
 if __name__ == '__main__':
     app = pyMacro()
