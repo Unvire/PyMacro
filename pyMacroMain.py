@@ -1,7 +1,5 @@
-import time
-import os
+import time, os, collections, copy
 import tkinter as tk
-import collections
 from tkinter import ttk, filedialog, messagebox
 from datetime import datetime
 import pyautogui
@@ -331,7 +329,8 @@ class pyMacro(tk.Tk):
             if not messagebox.askyesno(title='Warning', message='Do you want to create new Macro? Current Macro will be deleted'):
                 return
         self.macroEngine.clearTaskList()
-        self.newTask()
+        self.newTask()        
+        self.clearUndoStack(self.tasksList)
     
     def openMacroFile(self):
         '''
@@ -347,6 +346,7 @@ class pyMacro(tk.Tk):
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
             self.setVariablesFromEngine()
             self.generateTasksTable()
+            self.clearUndoStack(self.tasksList)
     
     def saveProject(self):
         '''
@@ -481,7 +481,8 @@ class pyMacro(tk.Tk):
         if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
             self._changeTaskParameters(parameter, value, isArgument)
         elif treeview is self.variablesTableTree:
-            self._modifyVariables(parameter, value)
+            self._modifyVariables(parameter, value)        
+        self.undoStackPush(self.tasksList)
 
     def deleteTask(self):
         '''
@@ -489,7 +490,8 @@ class pyMacro(tk.Tk):
         '''
         currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
         self.macroEngine.deleteTask(currentID)
-        self.generateTasksTable()
+        self.generateTasksTable()        
+        self.undoStackPush(self.tasksList)
     
     def newTask(self):
         '''
@@ -501,7 +503,7 @@ class pyMacro(tk.Tk):
             currentID, _ = 0, None
         self.macroEngine.newTask(currentID + 1)
         self.generateTasksTable()        
-        
+        self.undoStackPush(self.tasksList)
     
     def moveTask(self, moveUp:bool):
         '''
@@ -520,7 +522,8 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i + sign] for i in rowIDs]
         else:
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
-        self.tasksTableTree.selection_set(nameIDs)
+        self.tasksTableTree.selection_set(nameIDs)        
+        self.undoStackPush(self.tasksList)
     
     def duplicateSelectedTasks(self):
         '''
@@ -528,8 +531,9 @@ class pyMacro(tk.Tk):
         '''
         rowIDs = [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
         self.macroEngine.duplicateTasks(rowIDs)
-        self.generateTasksTable()
-
+        self.generateTasksTable()        
+        self.undoStackPush(self.tasksList)
+        
     def getCursorCoords(self):
         '''
         Get cursor coords and pixel color
@@ -563,6 +567,25 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
+    
+    def clearUndoStack(self, taskList:list):
+        '''
+        Clears undoStack and appends current taskList.
+            taskList: list
+        '''
+        self.undoStack = collections.deque()
+        self.undoStack.append(taskList)
+
+    def undoStackPush(self, taskList:list):
+        '''
+        Makes a deep copy of taskList and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items.
+            taskList: list
+        '''
+        taskListCopy = copy.deepcopy(taskList)
+        self.redoStack = collections.deque()
+        if len(self.undoStack) == 30:
+            self.undoStack.popleft()
+        self.undoStack.append(taskListCopy)
     
     def undo(self):
         pass
