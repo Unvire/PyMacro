@@ -272,7 +272,7 @@ class pyMacro(tk.Tk):
 
     def _updateTaskList(self):
         '''
-        Updates self.taskist
+        Updates self.taskist with deep copy from engine
         '''
         self.tasksList = self.macroEngine.getTaskList() # copy tasklist
     
@@ -316,7 +316,9 @@ class pyMacro(tk.Tk):
 
     def handleMouseClick(self, event):
         '''
-        Handles mouse clicked events. For Treeviews: 1. get clicked item data 2. generate tables or pass data to Entries
+        Handles mouse clicked events. For Treeviews: 
+            1. get clicked item data 
+            2. generate tables or pass data to Entries
         '''
         ## program is not running and macro exists
         if not self.isRun and self.tasksList:
@@ -333,7 +335,7 @@ class pyMacro(tk.Tk):
     
     def newMacro(self):
         '''
-        Creates new Macro - clears taskList and calls self.newTask()
+        Creates new Macro - clears taskList and calls self.newTask(). Initialize undoStack and redoStack
         '''
         if self.tasksList:
             if not messagebox.askyesno(title='Warning', message='Do you want to create new Macro? Current Macro will be deleted'):
@@ -393,7 +395,7 @@ class pyMacro(tk.Tk):
 
     def generateTasksTable(self):
         '''
-        Fills tasksTableTree with data
+        Fills tasksTableTree and variablesTableTree with data
         '''
         self._updateTaskList()
         taskNames = [(i, task.name, '') for i, task in enumerate(self.tasksList)]
@@ -418,7 +420,8 @@ class pyMacro(tk.Tk):
 
     def generateParametersTable(self, taskID=None):
         '''
-        Fills taskParametersTableTree and taskFunctionParametersTableTree with data
+        Fills taskParametersTableTree and taskFunctionParametersTableTree with data of selected task
+            taskID:num - infex of the task in self.tasksTableChildren
         '''
         try:
             task = self.tasksList[taskID]
@@ -433,6 +436,8 @@ class pyMacro(tk.Tk):
     def updateWindow(self, taskID=None, elapsedTime=None):
         '''
         Method called by engine with runtime info about current task
+            taskID:num - infex of the task in self.tasksTableChildren
+            elapsedTime:num - duration of task
         '''
         # select row 
         currentTaskID = self.tasksTableChildren[taskID]
@@ -510,7 +515,7 @@ class pyMacro(tk.Tk):
     
     def newTask(self):
         '''
-        Creates new task
+        Creates new task below selected item
         '''
         if self.tasksList:
             currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
@@ -588,9 +593,9 @@ class pyMacro(tk.Tk):
 
             self.undoStackPush(self.tasksList, self.variables)
 
-    def clearUndoStack(self, item):
+    def clearUndoStack(self, item:(list, dict)):
         '''
-        Clears undoStack and appends current item.
+        Clears undoStack and appends current item to redoStack.
             item = taskList:list, variablesDict:dict
         '''
         taskList, variables = item
@@ -598,9 +603,9 @@ class pyMacro(tk.Tk):
         self.undoStack = collections.deque()
         self.redoStack = collections.deque(item)
 
-    def undoStackPush(self, taskList, variables):
+    def undoStackPush(self, taskList:list, variables:dict):
         '''
-        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items.
+        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items. Clears redoStack
         '''
         taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(taskList, variables)
 
@@ -613,7 +618,10 @@ class pyMacro(tk.Tk):
     
     def undo(self):
         '''
-        Pops item from undoStack and appends it to redo stack. Generates all tables
+        Undo operation:
+        1. Pop item from undoStack and push it into redoStack
+        2. Set current state as undoStack[-1] -> set engine state
+        3. Refresh window
         '''
         item = self.undoStack.pop()
         self.redoStack.append(item)
@@ -629,7 +637,10 @@ class pyMacro(tk.Tk):
 
     def redo(self):
         '''
-        Reverts changes made by undo
+        Redo operation:
+        1. Pop item from redoStack and push it into undoStack
+        2. Set current state as popped item -> set engine state
+        3. Refresh window
         '''
         item = self.redoStack.pop()
         taskList, variables = item
