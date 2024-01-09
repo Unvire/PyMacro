@@ -70,12 +70,18 @@ class MacroEngine():
         Getter for self.taskList. Returns deep copy of self.taskList
         '''
         return copy.deepcopy(self.taskList)
+    
+    def setTaskList(self, taskList):
+        '''
+        Setter for self.taskList
+        '''
+        self.taskList = taskList
 
     def clearTaskList(self):
         '''
         Clears self.taskList
         '''
-        self.taskList = []
+        self.setTaskList([])
     
     def getVariables(self):
         '''
@@ -134,7 +140,7 @@ class MacroEngine():
             taskDict = json.load(file)
 
         ## convert json to task list
-        self.taskList = []
+        self.clearTaskList()
         for taskID in taskDict:
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
