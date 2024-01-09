@@ -583,15 +583,27 @@ class pyMacro(tk.Tk):
         '''
         taskListCopy = copy.deepcopy(taskList)
         self.redoStack = collections.deque()
-        if len(self.undoStack) == 30:
+        if len(self.undoStack) >= 30:
             self.undoStack.popleft()
         self.undoStack.append(taskListCopy)
     
     def undo(self):
-        pass
+        '''
+        Pops item from undoStack and appends it to redo stack. Generates all tables
+        '''
+        taskList = self.undoStack.pop()
+        self.redoStack.append(taskList)
+        self.macroEngine.setTaskList(taskList)
+        self.generateTasksTable()
 
     def redo(self):
-        pass
+        '''
+        Reverts changes made by undo
+        '''
+        taskList = self.redoButton.pop()
+        self.undoStack.append(taskList)
+        self.macroEngine.setTaskList(taskList)
+        self.generateTasksTable()
          
 if __name__ == '__main__':
     app = pyMacro()
