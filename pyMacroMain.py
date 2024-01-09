@@ -297,6 +297,14 @@ class pyMacro(tk.Tk):
         self.setVariablesFromEngine()
         variablesList = self._variablesList()
         self._clearGenerateTable(self.variablesTableTree, variablesList)
+    
+    def _taskListVariablesDeepCopy(self, taskList, variables):
+        '''
+        Creates deep copy of taskList and Variables. Returns tuple of copied items
+        '''
+        taskListCopy = copy.deepcopy(taskList)
+        variablesCopy = copy.deepcopy(variables)
+        return taskListCopy, variablesCopy
 
     def setVariablesFromEngine(self):
         '''
