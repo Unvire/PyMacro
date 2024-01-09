@@ -1,6 +1,7 @@
 import time
 import os
 import tkinter as tk
+import collections
 from tkinter import ttk, filedialog, messagebox
 from datetime import datetime
 import pyautogui
@@ -21,11 +22,14 @@ class pyMacro(tk.Tk):
         self.isRun = False
         self.clickedTable = None, None
         self.totalTime = 0
+        self.undoStack = collections.deque()
+        self.redoStack = collections.deque()
 
         ## frames
         self.mainFrame = ttk.Frame()
         self.rowOneButtonsFrame = ttk.Frame(self.mainFrame)
         self.controlButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
+        self.undoRedoButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.runButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.utilityButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.parameterEditFrame = ttk.Frame(self.mainFrame)
@@ -42,7 +46,10 @@ class pyMacro(tk.Tk):
         self.newMacroButton = ttk.Button(self.controlButtonsFrame, text='New Macro', command=self.newMacro)
         self.openMacroButton = ttk.Button(self.controlButtonsFrame, text='Open Macro', command=self.openMacroFile)
         self.saveMacroButton = ttk.Button(self.controlButtonsFrame, text='Save Macro', command=self.saveProject)
-        self.settingsButton = ttk.Button(self.controlButtonsFrame, text='Settings', command=...)
+
+        # undo redo buttons
+        self.undoButton = ttk.Button(self.undoRedoButtonsFrame, text='Undo', command=self.undo)
+        self.redoButton = ttk.Button(self.undoRedoButtonsFrame, text='Redo', command=self.redo)
 
         # run buttons
         self.runButton = ttk.Button(self.runButtonsFrame, text='Run', command=self.runMacro)
@@ -90,7 +97,10 @@ class pyMacro(tk.Tk):
         self.newMacroButton.grid(row=0, column=0)
         self.openMacroButton.grid(row=0, column=1)
         self.saveMacroButton.grid(row=0, column=2)
-        self.settingsButton.grid(row=0, column=3)
+
+        # undo redo buttons
+        self.undoButton.grid(row=0, column=0)
+        self.redoButton.grid(row=0, column=1)
 
         # run buttons
         self.runButton.grid(row=0, column=0)
@@ -126,8 +136,9 @@ class pyMacro(tk.Tk):
         # frames
         # buttons inside first row
         self.controlButtonsFrame.grid(row=0, column=0)
-        self.runButtonsFrame.grid(row=0, column=1)
-        self.utilityButtonsFrame.grid(row=0, column=2)
+        self.undoRedoButtonsFrame.grid(row=0, column=1)
+        self.runButtonsFrame.grid(row=0, column=2)
+        self.utilityButtonsFrame.grid(row=0, column=3)
         
         # main layout
         self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3)
@@ -552,6 +563,12 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
+    
+    def undo(self):
+        pass
+
+    def redo(self):
+        pass
          
 if __name__ == '__main__':
     app = pyMacro()
