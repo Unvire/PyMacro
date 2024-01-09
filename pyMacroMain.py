@@ -484,8 +484,13 @@ class pyMacro(tk.Tk):
         '''
         Creates new task
         '''
-        self.macroEngine.newTask()
-        self.generateTasksTable()
+        if self.tasksList:
+            currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
+        else:
+            currentID, _ = 0, None
+        self.macroEngine.newTask(currentID + 1)
+        self.generateTasksTable()        
+        
     
     def moveTask(self, moveUp:bool):
         '''

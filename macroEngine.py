@@ -262,13 +262,14 @@ class MacroEngine():
         '''
         self.taskList.pop(taskID)
 
-    def newTask(self):
+    def newTask(self, index:int):
         '''
-        Appends new default task to the list
+        Appends new default task to the list at given index
+            index:int
         '''
         taskDict = {'name': 'New task', 'isEnabled': True, 'function': 'synchroFunctions.nothing' , 'parameters': {}, 'saveResultToVariable': ''}
         task = self._createTask(taskDict)
-        self.taskList.append(task)
+        self.taskList.insert(index, task)
     
     def findGroups(self, rowIDs=[]) -> [[int, int]]:
         '''
