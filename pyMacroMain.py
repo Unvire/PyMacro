@@ -611,6 +611,7 @@ class pyMacro(tk.Tk):
         
         pushItem = taskListCopy, variablesCopy
         self.undoStack.append(pushItem)
+        self.redoStack = collections.deque()
         print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
     
     def undo(self):
@@ -624,6 +625,9 @@ class pyMacro(tk.Tk):
         self.macroEngine.setTaskList(undoTaskList)
         self.macroEngine.setLoadedVariables(undoVariables)
         self.generateTasksTable()
+        if self.clickedTable:
+            currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+            self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
         print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
 
@@ -636,7 +640,10 @@ class pyMacro(tk.Tk):
         self.undoStack.append(item)
         self.macroEngine.setTaskList(taskList)
         self.macroEngine.setLoadedVariables(variables)
-        self.generateTasksTable()
+        self.generateTasksTable()        
+        if self.clickedTable:
+            currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+            self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
         print(f'undo stack:\n{self.undoStack}\nredo stack: \n{self.redoStack}\n\n')
          
