@@ -329,8 +329,10 @@ class pyMacro(tk.Tk):
             if not messagebox.askyesno(title='Warning', message='Do you want to create new Macro? Current Macro will be deleted'):
                 return
         self.macroEngine.clearTaskList()
-        self.newTask()        
-        self.clearUndoStack(self.tasksList)
+        self.newTask()
+        
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
     
     def openMacroFile(self):
         '''
@@ -481,8 +483,10 @@ class pyMacro(tk.Tk):
         if treeview in (self.taskParametersTableTree, self.taskFunctionParametersTableTree):
             self._changeTaskParameters(parameter, value, isArgument)
         elif treeview is self.variablesTableTree:
-            self._modifyVariables(parameter, value)        
-        self.undoStackPush(self.tasksList)
+            self._modifyVariables(parameter, value)
+
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
 
     def deleteTask(self):
         '''
@@ -490,8 +494,10 @@ class pyMacro(tk.Tk):
         '''
         currentID, _ = self._treeviewItemNumber(self.tasksTableTree)
         self.macroEngine.deleteTask(currentID)
-        self.generateTasksTable()        
-        self.undoStackPush(self.tasksList)
+        self.generateTasksTable()
+
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
     
     def newTask(self):
         '''
@@ -502,8 +508,10 @@ class pyMacro(tk.Tk):
         else:
             currentID, _ = 0, None
         self.macroEngine.newTask(currentID + 1)
-        self.generateTasksTable()        
-        self.undoStackPush(self.tasksList)
+        self.generateTasksTable()
+
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
     
     def moveTask(self, moveUp:bool):
         '''
@@ -522,8 +530,10 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i + sign] for i in rowIDs]
         else:
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
-        self.tasksTableTree.selection_set(nameIDs)        
-        self.undoStackPush(self.tasksList)
+        self.tasksTableTree.selection_set(nameIDs)
+
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
     
     def duplicateSelectedTasks(self):
         '''
@@ -531,8 +541,10 @@ class pyMacro(tk.Tk):
         '''
         rowIDs = [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
         self.macroEngine.duplicateTasks(rowIDs)
-        self.generateTasksTable()        
-        self.undoStackPush(self.tasksList)
+        self.generateTasksTable()
+
+        item = self.tasksList, self.variables  
+        self.undoStackPush(item)
         
     def getCursorCoords(self):
         '''
@@ -567,6 +579,9 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
+
+            item = self.tasksList, self.variables  
+            self.undoStackPush(item)
     
     def clearUndoStack(self, item):
         '''
