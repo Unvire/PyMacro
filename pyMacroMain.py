@@ -233,6 +233,7 @@ class pyMacro(tk.Tk):
         self._clickedTableSet(treeview=treeview, focusedItem=currentItemID)
         parametersDict = treeview.set(currentItemID)
         try:
+            self._changeWidgetGroupState('argumentSelected')
             self._updateParameterEntries(parameter=parametersDict['Parameter name'], value=parametersDict['Value'])
         except KeyError:
             pass
@@ -337,7 +338,7 @@ class pyMacro(tk.Tk):
                      'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled')],
                      'run': [(self.allButtonsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
                      'argumentSelected': [(self.argumentSelectedGroup, 'enabled')],
-                     'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'disabled')],
+                     'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'readonly')],
                      'taskSelected': [(self.taskSelectedEnableGroup, 'enabled')]}
         
         for groupList in groupDict[widgetGroupName]:
