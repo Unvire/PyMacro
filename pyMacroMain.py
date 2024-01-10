@@ -485,7 +485,7 @@ class pyMacro(tk.Tk):
         elif treeview is self.variablesTableTree:
             self._modifyVariables(parameter, value)
 
-        self.macroEngine.undoStackPush(self.taskList, self.variables)
+        self.macroEngine.undoStackPush()
 
     def deleteTask(self):
         '''
@@ -495,7 +495,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.deleteTask(currentID)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush(self.taskList, self.variables)
+        self.macroEngine.undoStackPush()
     
     def newTask(self):
         '''
@@ -508,7 +508,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.newTask(currentID + 1)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush(self.taskList, self.variables)
+        self.macroEngine.undoStackPush()
     
     def moveTask(self, moveUp:bool):
         '''
@@ -529,7 +529,7 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
         self.tasksTableTree.selection_set(nameIDs)
 
-        self.macroEngine.undoStackPush(self.taskList, self.variables)
+        self.macroEngine.undoStackPush()
     
     def duplicateSelectedTasks(self):
         '''
@@ -539,7 +539,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.duplicateTasks(rowIDs)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush(self.taskList, self.variables)
+        self.macroEngine.undoStackPush()
         
     def getCursorCoords(self):
         '''
@@ -575,7 +575,7 @@ class pyMacro(tk.Tk):
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
 
-            self.macroEngine.undoStackPush(self.taskList, self.variables)
+            self.macroEngine.undoStackPush()
     
     def undo(self):
         '''
@@ -583,7 +583,8 @@ class pyMacro(tk.Tk):
         '''
         self.macroEngine.undo()
         self.generateTasksTable()
-        if self.clickedTable:
+        ## to be fixed   
+        if self.clickedTable[0]:
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
@@ -594,8 +595,9 @@ class pyMacro(tk.Tk):
         '''
         
         self.macroEngine.redo()
-        self.generateTasksTable()        
-        if self.clickedTable:
+        self.generateTasksTable()     
+        ## to be fixed   
+        if self.clickedTable[0]:
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
