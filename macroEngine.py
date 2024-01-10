@@ -26,7 +26,8 @@ class MacroEngine():
         self.undoStack = collections.deque()
         self.redoStack = collections.deque()        
 
-        self.undoStack.append((self.taskList, self.variables))
+        item =  [], {}
+        self.undoStack.append(item)
 
     def _dynamicImportModule(self, packageString:str):
         '''
@@ -370,11 +371,11 @@ class MacroEngine():
         self.undoStack = collections.deque()
         self.redoStack = collections.deque(item)
     
-    def undoStackPush(self, taskList:list, variables:dict):
+    def undoStackPush(self):
         '''
-        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items. Clears redoStack
+        Makes a deep copy of self.taskList, self.loadedVariables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items. Clears redoStack
         '''
-        taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(taskList, variables)
+        taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(self.taskList, self.loadedVariables)
 
         if len(self.undoStack) >= 30:
             self.undoStack.popleft()
