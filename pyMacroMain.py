@@ -94,10 +94,6 @@ class pyMacro(tk.Tk):
                                 self.updateTreeviewParametersButton, self.deleteArgumentButton]
         self.initButtonsGroup = [self.newMacroButton, self.openMacroButton]
 
-        self.disableAtRunWidgetsGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.undoButton, self.redoButton, 
-                                        self.runButton, self.cursorPositionButton, self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton,
-                                        self.copyTaskButton, self.deleteTaskButton, self.parameterNameEntry, self.parameterValueEntry, 
-                                        self.updateTreeviewParametersButton, self.deleteArgumentButton]
         self.enableAtRunWidgetsGroup = [self.killButton]
 
         self.undoRedoGroup = [self.undoButton, self.redoButton]
@@ -336,7 +332,7 @@ class pyMacro(tk.Tk):
         '''
         groupDict = {'init': [(self.allButtonsGroup, 'disabled'), (self.initButtonsGroup, 'enabled')],
                      'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled')],
-                     'run': [(self.disableAtRunWidgetsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
+                     'run': [(self.allButtonsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
                      'argumentSelected': [(self.argumentSelectedGroup, 'enabled')],
                      'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'disabled')],
                      'taskSelected': [(self.taskSelectedEnableGroup, 'enabled')]}
@@ -657,7 +653,8 @@ class pyMacro(tk.Tk):
         self._refreshWindow()
     
     def taskSelectedEvent(self, event):
-        self._changeWidgetGroupState('taskSelected')
+        if not self.isRun:
+            self._changeWidgetGroupState('taskSelected')
          
 if __name__ == '__main__':
     app = pyMacro()
