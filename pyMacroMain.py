@@ -110,20 +110,20 @@ class pyMacro(tk.Tk):
 
         ## position
         # control buttons
-        self.newMacroButton.grid(row=0, column=0)
-        self.openMacroButton.grid(row=0, column=1)
-        self.saveMacroButton.grid(row=0, column=2)
+        self.newMacroButton.grid(row=0, column=0, padx=(25, 2))
+        self.openMacroButton.grid(row=0, column=1, padx=2)
+        self.saveMacroButton.grid(row=0, column=2, padx=(2, 25))
 
         # undo redo buttons
-        self.undoButton.grid(row=0, column=0)
-        self.redoButton.grid(row=0, column=1)
+        self.undoButton.grid(row=0, column=0, padx=(25, 2))
+        self.redoButton.grid(row=0, column=1, padx=(2, 25))
 
         # run buttons
-        self.runButton.grid(row=0, column=0)
-        self.killButton.grid(row=0, column=1)
+        self.runButton.grid(row=0, column=0, padx=(25, 2))
+        self.killButton.grid(row=0, column=1, padx=(2, 25))
 
         # utility buttons
-        self.cursorPositionButton.grid(row=0, column=0)
+        self.cursorPositionButton.grid(row=0, column=0, padx=25)
 
         # task edit buttons
         self.moveTaskUpButton.grid(row=0, column=0)
@@ -137,17 +137,17 @@ class pyMacro(tk.Tk):
         self.tasksTableTree.grid(row=1, column=0)
 
         # parameter edit
-        self.parameterNameLabel.grid(row=0, column=0)
-        self.parameterNameEntry.grid(row=0, column=1)
-        self.parameterValueLabel.grid(row=0, column=2)
-        self.parameterValueEntry.grid(row=0, column=3)        
+        self.parameterNameLabel.grid(row=0, column=0, padx=2)
+        self.parameterNameEntry.grid(row=0, column=1, padx=(2, 10))
+        self.parameterValueLabel.grid(row=0, column=2, padx=(10, 2))
+        self.parameterValueEntry.grid(row=0, column=3, padx=2)        
         self.deleteArgumentButton.grid(row=1, column=0, columnspan=2)
         self.updateTreeviewParametersButton.grid(row=1, column=2, columnspan=2)
 
         # task parameters
-        self.taskParametersTableTree.grid(row=0, column=0)
-        self.taskFunctionParametersTableTree.grid(row=1, column=0)
-        self.variablesTableTree.grid(row=2, column=0)
+        self.taskParametersTableTree.grid(row=0, column=0, pady=(0, 2))
+        self.taskFunctionParametersTableTree.grid(row=1, column=0, pady=2)
+        self.variablesTableTree.grid(row=2, column=0, pady=2)
 
         # frames
         # buttons inside first row
@@ -157,10 +157,10 @@ class pyMacro(tk.Tk):
         self.utilityButtonsFrame.grid(row=0, column=3)
         
         # main layout
-        self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3)
+        self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3, pady=5)
         self.tasksFrame.grid(row=1, column=1, rowspan=2)
-        self.parameterEditFrame.grid(row=1, column=2)
-        self.taskParametersFrame.grid(row=2, column=2)
+        self.parameterEditFrame.grid(row=1, column=2, pady=5)
+        self.taskParametersFrame.grid(row=2, column=2, pady=5)
         self.taskEditButtonsFrame.grid(row=1, column=0, rowspan=2)
         
         self.mainFrame.grid(row=0, column=0)
