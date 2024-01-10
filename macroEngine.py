@@ -1,4 +1,4 @@
-import os, copy, importlib
+import os, copy, importlib, collections
 import json
 from timeit import default_timer as timer
 import task
@@ -13,6 +13,8 @@ class MacroEngine():
         self.modules: dict -> dictionary with dynamically imported modules when creating tasks
         self.subscribers: list => list with objects that observe this engine
         self.jumpLabels: dict -> {taskName: ID in self.taskList} used for conditional jumps
+        self.undoStack = collections.deque() -> stack that stores 30 previous copies of the self.testList and self.loadedVaribles 
+        self.redoStack = collections.deque() -> stack that stores items popped from self.undoStack
         '''
         self.taskList = []
         self.numOfTasks = 0
@@ -20,7 +22,11 @@ class MacroEngine():
         self.loadedVariables = {}
         self.modules = {}
         self.subscribers = []
-        self.jumpLabels = {}
+        self.jumpLabels = {}        
+        self.undoStack = collections.deque()
+        self.redoStack = collections.deque()        
+
+        self.undoStack.append((self.taskList, self.variables))
 
     def _dynamicImportModule(self, packageString:str):
         '''
@@ -64,6 +70,14 @@ class MacroEngine():
         Updates self.jumpLabels {taskName:ID in self.taskList} in place
         '''
         self.jumpLabels = {task.name:i for i, task in enumerate(self.taskList)}
+    
+    def _taskListVariablesDeepCopy(self, taskList, variables):
+        '''
+        Creates deep copy of taskList and Variables. Returns tuple of copied items
+        '''
+        taskListCopy = copy.deepcopy(taskList)
+        variablesCopy = copy.deepcopy(variables)
+        return taskListCopy, variablesCopy
     
     def getTaskList(self):
         '''
@@ -344,8 +358,54 @@ class MacroEngine():
         '''
         self.loadedVariables[variable] = value
     
+    def clearUndoStack(self, taskList:list, variables:dict):
+        '''
+        Clears undoStack and appends current item to redoStack.
+            item = taskList:list, variablesDict:dict
+        '''
+        item = self._taskListVariablesDeepCopy(taskList, variables)
+        self.undoStack = collections.deque()
+        self.redoStack = collections.deque(item)
     
+    def undoStackPush(self, taskList:list, variables:dict):
+        '''
+        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items. Clears redoStack
+        '''
+        taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(taskList, variables)
 
+        if len(self.undoStack) >= 30:
+            self.undoStack.popleft()
+        
+        pushItem = taskListCopy, variablesCopy
+        self.undoStack.append(pushItem)
+        self.redoStack = collections.deque()
+    
+    def undo(self):
+        '''
+        Undo operation:
+        1. Pop item from undoStack and push it into redoStack
+        2. Set current state as undoStack[-1] -> set engine state
+        3. Refresh window
+        '''
+        item = self.undoStack.pop()
+        self.redoStack.append(item)
+
+        undoTaskList, undoVariables = self.undoStack[-1]
+        self.setTaskList(undoTaskList)
+        self.setLoadedVariables(undoVariables)
+    
+    def redo(self):
+        '''
+        Redo operation:
+        1. Pop item from redoStack and push it into undoStack
+        2. Set current state as popped item -> set engine state
+        3. Refresh window
+        '''
+        item = self.redoStack.pop()
+        taskList, variables = item
+        self.undoStack.append(item)
+        self.setTaskList(taskList)
+        self.setLoadedVariables(variables)
 
 if __name__ == '__main__':
     engine = MacroEngine()

@@ -1,4 +1,4 @@
-import time, os, collections, copy, functools
+import time, os, copy
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from datetime import datetime
@@ -20,10 +20,6 @@ class pyMacro(tk.Tk):
         self.isRun = False
         self.clickedTable = None, None
         self.totalTime = 0
-        self.undoStack = collections.deque()
-        self.redoStack = collections.deque()
-
-        self.undoStack.append((self.taskList, self.variables))
 
         ## frames
         self.mainFrame = ttk.Frame()
@@ -299,14 +295,6 @@ class pyMacro(tk.Tk):
         self.setVariablesFromEngine()
         variablesList = self._variablesList()
         self._clearGenerateTable(self.variablesTableTree, variablesList)
-    
-    def _taskListVariablesDeepCopy(self, taskList, variables):
-        '''
-        Creates deep copy of taskList and Variables. Returns tuple of copied items
-        '''
-        taskListCopy = copy.deepcopy(taskList)
-        variablesCopy = copy.deepcopy(variables)
-        return taskListCopy, variablesCopy
 
     def setVariablesFromEngine(self):
         '''
@@ -592,29 +580,6 @@ class pyMacro(tk.Tk):
             self._updateTaskList()
 
             self.undoStackPush(self.taskList, self.variables)
-
-    def clearUndoStack(self, item:(list, dict)):
-        '''
-        Clears undoStack and appends current item to redoStack.
-            item = taskList:list, variablesDict:dict
-        '''
-        taskList, variables = item
-        item = self._taskListVariablesDeepCopy(taskList, variables)
-        self.undoStack = collections.deque()
-        self.redoStack = collections.deque(item)
-
-    def undoStackPush(self, taskList:list, variables:dict):
-        '''
-        Makes a deep copy of taskList, variables and appends it to the self.undoStack. Clears self.redoStack. Current limit is 30 items. Clears redoStack
-        '''
-        taskListCopy, variablesCopy = self._taskListVariablesDeepCopy(taskList, variables)
-
-        if len(self.undoStack) >= 30:
-            self.undoStack.popleft()
-        
-        pushItem = taskListCopy, variablesCopy
-        self.undoStack.append(pushItem)
-        self.redoStack = collections.deque()
     
     def undo(self):
         '''
