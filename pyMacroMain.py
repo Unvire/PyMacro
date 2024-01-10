@@ -237,6 +237,8 @@ class pyMacro(tk.Tk):
         except KeyError:
             pass
 
+        widgetGroupName = self._unselectOtherThan(treeview)
+
     def _clearGenerateTable(self, table, data):
         '''
         Calls self._clearTable and self._generateTable - Clears and fills ttk.Treeview with data. 
@@ -341,6 +343,20 @@ class pyMacro(tk.Tk):
             widgets, state = groupList
             for widget in widgets:
                 widget['state'] = state
+    
+    def _unselectOtherThan(self, treeview) -> str:
+
+        unselectDict = {self.taskParametersTableTree: [self.taskFunctionParametersTableTree, self.variablesTableTree],
+                        self.taskFunctionParametersTableTree: [self.taskParametersTableTree, self.variablesTableTree],
+                        self.variablesTableTree: [self.taskFunctionParametersTableTree, self.taskParametersTableTree]}
+        widgetGroupNameDict = {self.taskParametersTableTree: 'parameterSelected',
+                               self.taskFunctionParametersTableTree: 'argumentSelected',
+                               self.variablesTableTree: 'argumentSelected'}
+        
+        for widget in unselectDict[treeview]:
+            for item in widget.selection():
+                widget.selection_remove(item)
+        return widgetGroupNameDict[treeview]
 
     def setVariablesFromEngine(self):
         '''
@@ -655,7 +671,7 @@ class pyMacro(tk.Tk):
     def taskSelectedEvent(self, event):
         if not self.isRun:
             self._changeWidgetGroupState('taskSelected')
-         
+
 if __name__ == '__main__':
     app = pyMacro()
     app.mainloop()
