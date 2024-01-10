@@ -88,6 +88,12 @@ class pyMacro(tk.Tk):
         self.variablesTableTree.heading('Value', text='Value')
 
         ## widget groups for easier modifing
+        self.allButtonsGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.undoButton, self.redoButton, self.killButton,
+                                self.runButton, self.cursorPositionButton, self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton,
+                                self.copyTaskButton, self.deleteTaskButton, self.parameterNameEntry, self.parameterValueEntry, 
+                                self.updateTreeviewParametersButton, self.deleteArgumentButton]
+        self.initButtonsGroup = [self.newMacroButton, self.openMacroButton]
+
         self.disableAtRunWidgetsGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.undoButton, self.redoButton, 
                                         self.runButton, self.cursorPositionButton, self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton,
                                         self.copyTaskButton, self.deleteTaskButton, self.parameterNameEntry, self.parameterValueEntry, 
@@ -96,9 +102,9 @@ class pyMacro(tk.Tk):
 
         self.undoRedoGroup = [self.undoButton, self.redoButton]
 
-        self.enableTaskListExistGroup = [self.saveMacroButton, self.runButton, self.cursorPositionButton, self.newTaskButton]
-        self.enableTaskListNotExistGroup = [self.newMacroButton, self.openMacroButton]
-
+        self.enableTaskListExistGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.runButton, self.cursorPositionButton, 
+                                         self.newTaskButton]
+        
         self.parameterSelectedEnableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton]
         self.parameterSelectedDisableGroup = [self.parameterNameEntry, self.deleteArgumentButton]
         self.argumentSelectedGroup = [self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
@@ -165,12 +171,7 @@ class pyMacro(tk.Tk):
         ## binds
         self.bind('<ButtonRelease-1>', self.handleMouseClick)
 
-        self._changeWidgetGroupState(self.enableTaskListExistGroup, False)
-        self._changeWidgetGroupState(self.enableTaskListNotExistGroup, True)
-        self._changeWidgetGroupState(self.enableAtRunWidgetsGroup, False)
-        self._changeWidgetGroupState(self.argumentSelectedGroup, False)
-        self._changeWidgetGroupState(self.taskSelectedEnableGroup, False)
-        self._changeWidgetGroupState(self.undoRedoGroup, False)
+        self._changeWidgetGroupState('init')
 
     def _isRunSet(self, state=False):
         '''
@@ -319,15 +320,30 @@ class pyMacro(tk.Tk):
         variablesList = self._variablesList()
         self._clearGenerateTable(self.variablesTableTree, variablesList)
 
-    def _changeWidgetGroupState(self, widgetGroup:list, state:bool):
+    def _changeWidgetGroupState(self, widgetGroupName:str):
         '''
         Iterates over widgetGroup and changing state of every item
-            widgetGroup -> list of widgets declared in __init__
-            state -> desired state of the group
+            widgetGroup -> string name of group. Possibilities:
+                'init' - use when initializing program. Only newMacroButton and openMacroButton are enabled
+                'taskListExists' - all buttons in rowOneFrame, except killButton
+                'run' - macro is running. only kill button is enabled
+                'argumentSelected' - item in self.taskFunctionParametersTableTree or self.variablesTableTree is selected
+                'parameterSelected' - item in self.taskParametersTableTree is selected
+                'taskSelected' - at least one of the items in self.taskTableTree is selected
         '''
-        boolDict = {True:'enabled', False:'disabled'}
-        for widget in widgetGroup:
-            widget['state'] = boolDict[state]
+        groupDict = {'init': [(self.allButtonsGroup, 'disabled'), (self.initButtonsGroup, 'enabled')],
+                     'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled')],
+                     'run': [(self.disableAtRunWidgetsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
+                     'argumentSelected': [],
+                     'parameterSelected': [],
+                     'taskSelected': []}
+        
+        for groupList in groupDict[widgetGroupName]:
+            widgets, state = groupList
+            for widget in widgets:
+                widget['state'] = state
+        
+
 
     def setVariablesFromEngine(self):
         '''
