@@ -97,8 +97,6 @@ class MacroEngine():
         Clears self.taskList
         '''
         self.setTaskList([])
-        self.setLoadedVariables({})
-        self.clearUndoStack(self.taskList, self.variables)
     
     def setLoadedVariables(self, variables):
         '''
@@ -168,6 +166,7 @@ class MacroEngine():
             task = self._createTask(taskDict=taskDict[taskID])
             self.taskList.append(task)
             self.numOfTasksGetSet()
+        self.clearUndoStack(self.taskList, self.loadedVariables)
 
     def saveMacroToFile(self, filePath):
         '''
@@ -186,7 +185,7 @@ class MacroEngine():
         Loads variables from JSON file
         '''
         with open(filePath, 'r') as file:
-            self.loadedVariables = self.setLoadedVariables(json.load(file))
+            self.setLoadedVariables(json.load(file))
     
     def saveVariablesToFile(self, filePath):
         '''
@@ -205,7 +204,7 @@ class MacroEngine():
         self.loadVariablesFile(variablesPath)
         macroPath = os.path.join(dirPath, fileName)
         self.loadMacroFile(macroPath)
-        self.clearUndoStack(self.taskList, self.variables)
+        self.clearUndoStack(self.taskList, self.loadedVariables)
     
     def calculateKwargs(self, kwargs:dict):
         '''
@@ -415,7 +414,7 @@ class MacroEngine():
 if __name__ == '__main__':
     engine = MacroEngine()
     engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug', 'macro.json')
-    engine.variables['i'] = 0
+    print(engine.loadedVariables)
     print(engine.calculateKwargs({'val1':'i'}))
     print(engine.calculateKwargs({'val1':'a'}))
     print(engine.calculateKwargs({'val1':['i', 10]}))
