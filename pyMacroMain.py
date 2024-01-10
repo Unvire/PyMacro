@@ -182,6 +182,7 @@ class pyMacro(tk.Tk):
         else:       
             self.tasksTableTree['style'] = ''
             self._changeWidgetGroupState('taskListExists')
+            self._changeUndoRedoButtonsState()
     
     def _clickedTableSet(self, treeview=None, focusedItem=''):
         '''
@@ -345,6 +346,17 @@ class pyMacro(tk.Tk):
             widgets, state = groupList
             for widget in widgets:
                 widget['state'] = state
+    
+    def _changeUndoRedoButtonsState(self):
+        '''
+        Changes status of undo and redo buttons. Empty stack means that the button will be disabled
+        '''
+        statusDict = {True: 'enabled', False: 'disabled'}
+        
+        undoStatus = len(self.macroEngine.undoStack) > 1
+        self.undoButton['state'] = statusDict[undoStatus]
+        redoStatus = bool(self.macroEngine.redoStack)
+        self.redoButton['state'] = statusDict[redoStatus]
     
     def _unselectOtherThan(self, treeview) -> str:
         '''
@@ -556,7 +568,7 @@ class pyMacro(tk.Tk):
         elif treeview is self.variablesTableTree:
             self._modifyVariables(parameter, value)
 
-        self.macroEngine.undoStackPush()
+        self.undoRedoOperation()
 
     def deleteTask(self):
         '''
@@ -566,7 +578,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.deleteTask(currentID)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush()
+        self.undoRedoOperation()
     
     def newTask(self):
         '''
@@ -579,7 +591,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.newTask(currentID + 1)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush()
+        self.undoRedoOperation()
     
     def moveTask(self, moveUp:bool):
         '''
@@ -600,7 +612,7 @@ class pyMacro(tk.Tk):
             nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
         self.tasksTableTree.selection_set(nameIDs)
 
-        self.macroEngine.undoStackPush()
+        self.undoRedoOperation()
     
     def duplicateSelectedTasks(self):
         '''
@@ -610,7 +622,7 @@ class pyMacro(tk.Tk):
         self.macroEngine.duplicateTasks(rowIDs)
         self.generateTasksTable()
 
-        self.macroEngine.undoStackPush()
+        self.undoRedoOperation()
         
     def getCursorCoords(self):
         '''
@@ -649,7 +661,7 @@ class pyMacro(tk.Tk):
             self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
 
-            self.macroEngine.undoStackPush()
+            self.undoRedoOperation()
     
     def undo(self):
         '''
@@ -661,6 +673,7 @@ class pyMacro(tk.Tk):
         if self.clickedTable[0]:
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
+        self._changeUndoRedoButtonsState()
         self._refreshWindow()
 
     def redo(self):
@@ -672,12 +685,20 @@ class pyMacro(tk.Tk):
         ## to be fixed   
         if self.clickedTable[0]:
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
-            self.generateParametersTable(currentItemNumber)
+            self.generateParametersTable(currentItemNumber)        
+        self._changeUndoRedoButtonsState()
         self._refreshWindow()
     
     def taskSelectedEvent(self, event):
         if not self.isRun:
             self._changeWidgetGroupState('taskSelected')
+    
+    def undoRedoOperation(self):
+        '''
+        Function for handling undo and redo. Pushes current state to undoStack and updates state of the buttons
+        '''
+        self.macroEngine.undoStackPush()
+        self._changeUndoRedoButtonsState()
 
 if __name__ == '__main__':
     app = pyMacro()
