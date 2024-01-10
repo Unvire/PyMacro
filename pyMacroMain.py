@@ -94,9 +94,9 @@ class pyMacro(tk.Tk):
                                         self.updateTreeviewParametersButton, self.deleteArgumentButton]
         self.enableAtRunWidgetsGroup = [self.killButton]
 
-        self.enableTaskListExistGroup = [self.saveMacroButton, self.undoButton, self.redoButton, self.runButton, self.cursorPositionButton, 
-                                        self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton, self.copyTaskButton, self.deleteTaskButton, 
-                                        self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
+        self.undoRedoGroup = [self.undoButton, self.redoButton]
+
+        self.enableTaskListExistGroup = [self.saveMacroButton, self.runButton, self.cursorPositionButton, self.newTaskButton]
         self.enableTaskListNotExistGroup = [self.newMacroButton, self.openMacroButton]
 
         self.parameterSelectedEnableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton]
@@ -164,6 +164,13 @@ class pyMacro(tk.Tk):
 
         ## binds
         self.bind('<ButtonRelease-1>', self.handleMouseClick)
+
+        self._changeWidgetGroupState(self.enableTaskListExistGroup, False)
+        self._changeWidgetGroupState(self.enableTaskListNotExistGroup, True)
+        self._changeWidgetGroupState(self.enableAtRunWidgetsGroup, False)
+        self._changeWidgetGroupState(self.argumentSelectedGroup, False)
+        self._changeWidgetGroupState(self.taskSelectedEnableGroup, False)
+        self._changeWidgetGroupState(self.undoRedoGroup, False)
 
     def _isRunSet(self, state=False):
         '''
@@ -357,6 +364,7 @@ class pyMacro(tk.Tk):
                 return
         self.macroEngine.clearTaskList()
         self.newTask()
+        self._changeWidgetGroupState(self.enableTaskListExistGroup, True)
     
     def openMacroFile(self):
         '''
@@ -372,6 +380,7 @@ class pyMacro(tk.Tk):
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
             self.setVariablesFromEngine()
             self.generateTasksTable()
+            self._changeWidgetGroupState(self.enableTaskListExistGroup, True)
     
     def saveProject(self):
         '''
