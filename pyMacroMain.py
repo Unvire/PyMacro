@@ -181,8 +181,10 @@ class pyMacro(tk.Tk):
         self.isRun = state
         if self.isRun:
             self.tasksTableTree['style'] = 'selectionGreen.Treeview'
+            self._changeWidgetGroupState('run')
         else:       
             self.tasksTableTree['style'] = ''
+            self._changeWidgetGroupState('taskListExists')
     
     def _clickedTableSet(self, treeview=None, focusedItem=''):
         '''
@@ -342,8 +344,6 @@ class pyMacro(tk.Tk):
             widgets, state = groupList
             for widget in widgets:
                 widget['state'] = state
-        
-
 
     def setVariablesFromEngine(self):
         '''
