@@ -545,6 +545,7 @@ class pyMacro(tk.Tk):
         '''
         Get cursor coords and pixel color
         '''
+        self.cursorPositionButton['state'] = 'disabled'
         for i in range(5):
             self.infoLabel['text'] = f'You have {5 - i} seconds to move cursor'
             time.sleep(i)
@@ -552,6 +553,7 @@ class pyMacro(tk.Tk):
         x, y = pyautogui.position()
         pixelColor = pyautogui.pixel(x, y)
         self.infoLabel['text'] = f'coords: ({x}, {y}) | RGB:{pixelColor}'
+        self.cursorPositionButton['state'] = 'enabled'
 
     def deleteArgument(self):
         '''
