@@ -334,9 +334,9 @@ class pyMacro(tk.Tk):
         groupDict = {'init': [(self.allButtonsGroup, 'disabled'), (self.initButtonsGroup, 'enabled')],
                      'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled')],
                      'run': [(self.disableAtRunWidgetsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
-                     'argumentSelected': [],
-                     'parameterSelected': [],
-                     'taskSelected': []}
+                     'argumentSelected': [(self.argumentSelectedGroup, 'enabled')],
+                     'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'disabled')],
+                     'taskSelected': [(self.taskSelectedEnableGroup, 'enabled')]}
         
         for groupList in groupDict[widgetGroupName]:
             widgets, state = groupList
@@ -379,7 +379,7 @@ class pyMacro(tk.Tk):
                 return
         self.macroEngine.clearTaskList()
         self.newTask()
-        self._changeWidgetGroupState(self.enableTaskListExistGroup, True)
+        self._changeWidgetGroupState('taskListExists')
     
     def openMacroFile(self):
         '''
@@ -395,7 +395,7 @@ class pyMacro(tk.Tk):
             self.macroEngine.loadVariablesMacro(dirPath, macroName)
             self.setVariablesFromEngine()
             self.generateTasksTable()
-            self._changeWidgetGroupState(self.enableTaskListExistGroup, True)
+            self._changeWidgetGroupState('taskListExists')
     
     def saveProject(self):
         '''
