@@ -346,7 +346,10 @@ class pyMacro(tk.Tk):
                 widget['state'] = state
     
     def _unselectOtherThan(self, treeview) -> str:
-
+        '''
+        Unselects other treeviews than the one passed as the arguments. Returns widgetGroupName:str
+            treeview: ttk.Treeview
+        '''
         unselectDict = {self.taskParametersTableTree: [self.taskFunctionParametersTableTree, self.variablesTableTree],
                         self.taskFunctionParametersTableTree: [self.taskParametersTableTree, self.variablesTableTree],
                         self.variablesTableTree: [self.taskFunctionParametersTableTree, self.taskParametersTableTree]}
@@ -354,9 +357,11 @@ class pyMacro(tk.Tk):
                                self.taskFunctionParametersTableTree: 'argumentSelected',
                                self.variablesTableTree: 'argumentSelected'}
         
+        ## unselect
         for widget in unselectDict[treeview]:
             for item in widget.selection():
                 widget.selection_remove(item)
+
         return widgetGroupNameDict[treeview]
 
     def setVariablesFromEngine(self):
