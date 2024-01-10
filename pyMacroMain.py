@@ -87,6 +87,23 @@ class pyMacro(tk.Tk):
         self.variablesTableTree.heading('Parameter name', text='Variable name')
         self.variablesTableTree.heading('Value', text='Value')
 
+        ## widget groups for easier modifing
+        self.disableAtRunWidgetsGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.undoButton, self.redoButton, 
+                                        self.runButton, self.cursorPositionButton, self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton,
+                                        self.copyTaskButton, self.deleteTaskButton, self.parameterNameEntry, self.parameterValueEntry, 
+                                        self.updateTreeviewParametersButton, self.deleteArgumentButton]
+        self.enableAtRunWidgetsGroup = [self.killButton]
+
+        self.enableTaskListExistGroup = [self.saveMacroButton, self.undoButton, self.redoButton, self.runButton, self.cursorPositionButton, 
+                                        self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton, self.copyTaskButton, self.deleteTaskButton, 
+                                        self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
+        self.enableTaskListNotExistGroup = [self.newMacroButton, self.openMacroButton]
+
+        self.parameterSelectedEnableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton]
+        self.parameterSelectedDisableGroup = [self.parameterNameEntry, self.deleteArgumentButton]
+        self.argumentSelectedGroup = [self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
+
+        self.taskSelectedEnableGroup = [self.moveTaskUpButton, self.moveTaskDownButton, self.copyTaskButton, self.deleteTaskButton]
 
         ## position
         # control buttons
