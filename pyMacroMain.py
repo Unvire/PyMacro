@@ -8,6 +8,7 @@ import macroEngine
 class pyMacro(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.title('PyMacro')
 
         ## variables
         self.taskList = []
