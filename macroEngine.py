@@ -343,6 +343,8 @@ class MacroEngine():
         Updates self.loadedVariables with variable:value pair
         '''
         self.loadedVariables[variable] = value
+    
+    
 
 
 if __name__ == '__main__':
