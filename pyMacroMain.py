@@ -62,7 +62,7 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
         # tasks table
-        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings')        
+        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings', selectmode='extended')        
         self.tasksTableTree.heading('ID', text='ID')
         self.tasksTableTree.heading('Task name', text='Task name')
         self.tasksTableTree.heading('Time', text='Time')
@@ -77,13 +77,13 @@ class pyMacro(tk.Tk):
         self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete', command=self.deleteArgument)
 
         # task parameters
-        self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
         self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
         self.taskParametersTableTree.heading('Value', text='Value')
-        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
         self.taskFunctionParametersTableTree.heading('Parameter name', text='Argument name')
         self.taskFunctionParametersTableTree.heading('Value', text='Value')
-        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings')
+        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
         self.variablesTableTree.heading('Parameter name', text='Variable name')
         self.variablesTableTree.heading('Value', text='Value')
 
