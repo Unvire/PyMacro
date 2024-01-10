@@ -170,6 +170,7 @@ class pyMacro(tk.Tk):
 
         ## binds
         self.bind('<ButtonRelease-1>', self.handleMouseClick)
+        self.tasksTableTree.bind('<<TreeviewSelect>>', self.taskSelectedEvent)
 
         self._changeWidgetGroupState('init')
 
@@ -647,7 +648,6 @@ class pyMacro(tk.Tk):
         '''
         Perform redo operation and refresh the window
         '''
-        
         self.macroEngine.redo()
         self.generateTasksTable()     
         ## to be fixed   
@@ -655,6 +655,9 @@ class pyMacro(tk.Tk):
             currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
             self.generateParametersTable(currentItemNumber)
         self._refreshWindow()
+    
+    def taskSelectedEvent(self, event):
+        self._changeWidgetGroupState('taskSelected')
          
 if __name__ == '__main__':
     app = pyMacro()
