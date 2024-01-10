@@ -545,9 +545,10 @@ class pyMacro(tk.Tk):
         '''
         Get cursor coords and pixel color
         '''
-        self.infoLabel['text'] = 'You have 5 seconds to move cursor'
-        self._refreshWindow()
-        time.sleep(5)
+        for i in range(5):
+            self.infoLabel['text'] = f'You have {5 - i} seconds to move cursor'
+            time.sleep(i)
+            self._refreshWindow()
         x, y = pyautogui.position()
         pixelColor = pyautogui.pixel(x, y)
         self.infoLabel['text'] = f'coords: ({x}, {y}) | RGB:{pixelColor}'
