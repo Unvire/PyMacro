@@ -369,7 +369,8 @@ class MacroEngine():
         '''
         item = self._taskListVariablesDeepCopy(taskList, variables)
         self.undoStack = collections.deque()
-        self.redoStack = collections.deque(item)
+        self.redoStack = collections.deque()
+        self.undoStack.append(item)
     
     def undoStackPush(self):
         '''
