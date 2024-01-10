@@ -96,6 +96,8 @@ class MacroEngine():
         Clears self.taskList
         '''
         self.setTaskList([])
+        self.setLoadedVariables({})
+        self.clearUndoStack(self.taskList, self.variables)
     
     def setLoadedVariables(self, variables):
         '''
@@ -202,6 +204,7 @@ class MacroEngine():
         self.loadVariablesFile(variablesPath)
         macroPath = os.path.join(dirPath, fileName)
         self.loadMacroFile(macroPath)
+        self.clearUndoStack(self.taskList, self.variables)
     
     def calculateKwargs(self, kwargs:dict):
         '''
