@@ -1,6 +1,7 @@
 - copy from another run
-- kill macro functionality (threading ? ) 
-- block widgets when they shouldn't be clicked
+- kill macro functionality (threading ?) 
+- add shortcuts and hovertips
+- add scrollbars
 - TESTS
 - dropdown menu to select arguments
 - custom python script execution
@@ -25,3 +26,4 @@ DONE:
 - cursor position, variables display
 - undo edition 
 - FIX UNDO REDO
+- block widgets when they shouldn't be clicked
