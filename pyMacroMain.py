@@ -313,6 +313,16 @@ class pyMacro(tk.Tk):
         variablesList = self._variablesList()
         self._clearGenerateTable(self.variablesTableTree, variablesList)
 
+    def _changeWidgetGroupState(self, widgetGroup:list, state:bool):
+        '''
+        Iterates over widgetGroup and changing state of every item
+            widgetGroup -> list of widgets declared in __init__
+            state -> desired state of the group
+        '''
+        boolDict = {True:'enabled', False:'disabled'}
+        for widget in widgetGroup:
+            widget['state'] = boolDict[state]
+
     def setVariablesFromEngine(self):
         '''
         Get deep copy of engine's variable dict
