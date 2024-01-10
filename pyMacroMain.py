@@ -238,6 +238,7 @@ class pyMacro(tk.Tk):
             pass
 
         widgetGroupName = self._unselectOtherThan(treeview)
+        self._changeWidgetGroupState(widgetGroupName)
 
     def _clearGenerateTable(self, table, data):
         '''
