@@ -29,8 +29,9 @@ class pyMacro(tk.Tk):
         self.undoRedoButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.runButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
         self.utilityButtonsFrame = ttk.Frame(self.rowOneButtonsFrame)
-        self.parameterEditFrame = ttk.Frame(self.mainFrame)
+        self.taskInfoFrame = ttk.Frame(self.mainFrame)
         self.tasksFrame = ttk.Frame(self.mainFrame)
+        self.parameterEditFrame = ttk.Frame(self.mainFrame)
         self.taskParametersFrame = ttk.Frame(self.mainFrame)
         self.taskEditButtonsFrame = ttk.Frame(self.mainFrame)
 
@@ -63,28 +64,33 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
         # tasks table
-        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings', selectmode='extended')        
+        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings', selectmode='extended', height=23)        
         self.tasksTableTree.heading('ID', text='ID')
         self.tasksTableTree.heading('Task name', text='Task name')
         self.tasksTableTree.heading('Time', text='Time')
-        self.infoLabel = ttk.Label(self.tasksFrame, text='')
+        self.tasksTableTree.column('#1', width=50)
+        self.tasksTableTree.column('#2', width=200)
+        self.tasksTableTree.column('#3', width=100)
+
+        # taskInfo
+        self.infoLabel = ttk.Label(self.taskInfoFrame, text='')
 
         # parameter edit
         self.parameterNameLabel = ttk.Label(self.parameterEditFrame, text='Name')
         self.parameterNameEntry = ttk.Entry(self.parameterEditFrame)
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
-        self.parameterValueEntry = ttk.Entry(self.parameterEditFrame)
+        self.parameterValueEntry = ttk.Entry(self.parameterEditFrame, width=25)
         self.updateTreeviewParametersButton = ttk.Button(self.parameterEditFrame, text='Update', command=self.updateTreeviewParameters)
         self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete', command=self.deleteArgument)
 
         # task parameters
-        self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
+        self.taskParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse', height=4)
         self.taskParametersTableTree.heading('Parameter name', text='Parameter name')
         self.taskParametersTableTree.heading('Value', text='Value')
-        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
+        self.taskFunctionParametersTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse', height=8)
         self.taskFunctionParametersTableTree.heading('Parameter name', text='Argument name')
         self.taskFunctionParametersTableTree.heading('Value', text='Value')
-        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse')
+        self.variablesTableTree = ttk.Treeview(self.taskParametersFrame, columns=('Parameter name', 'Value'), show='headings', selectmode='browse', height=8)
         self.variablesTableTree.heading('Parameter name', text='Variable name')
         self.variablesTableTree.heading('Value', text='Value')
 
@@ -145,9 +151,9 @@ class pyMacro(tk.Tk):
         self.updateTreeviewParametersButton.grid(row=1, column=2, columnspan=2)
 
         # task parameters
-        self.taskParametersTableTree.grid(row=0, column=0, pady=(0, 2))
-        self.taskFunctionParametersTableTree.grid(row=1, column=0, pady=2)
-        self.variablesTableTree.grid(row=2, column=0, pady=2)
+        self.taskParametersTableTree.grid(row=0, column=0)
+        self.taskFunctionParametersTableTree.grid(row=1, column=0, pady=4)
+        self.variablesTableTree.grid(row=2, column=0)
 
         # frames
         # buttons inside first row
@@ -158,10 +164,11 @@ class pyMacro(tk.Tk):
         
         # main layout
         self.rowOneButtonsFrame.grid(row=0, column=0, columnspan=3, pady=5)
-        self.tasksFrame.grid(row=1, column=1, rowspan=2)
-        self.parameterEditFrame.grid(row=1, column=2, pady=5)
-        self.taskParametersFrame.grid(row=2, column=2, pady=5)
-        self.taskEditButtonsFrame.grid(row=1, column=0, rowspan=2)
+        self.taskInfoFrame.grid(row=1, column=1, padx=2)
+        self.tasksFrame.grid(row=2, column=1, padx=2)
+        self.parameterEditFrame.grid(row=1, column=2, padx=2, pady=5)
+        self.taskParametersFrame.grid(row=2, column=2, padx=(2, 5), pady=5)
+        self.taskEditButtonsFrame.grid(row=1, column=0, rowspan=2, padx=(5, 2))
         
         self.mainFrame.grid(row=0, column=0)
 
