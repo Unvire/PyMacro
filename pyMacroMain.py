@@ -713,8 +713,7 @@ class pyMacro(tk.Tk):
         Sets engine.isRun to False 
         '''
         self.macroEngine.isRun = False
-        self.generateTasksTable()
-        self._changeWidgetGroupState('taskListExists')
+        self._isRunSet(False)
 
 if __name__ == '__main__':
     app = pyMacro()
