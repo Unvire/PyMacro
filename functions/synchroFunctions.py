@@ -1,4 +1,5 @@
 import time
+import os
 
 def wait(seconds=1):
     time.sleep(int(seconds))
@@ -13,6 +14,10 @@ def initVariable(*, val, valType='int'):
         val = val.lower()
         return val == 'true'
     return typeDict[valType](val)
+
+def executeScript(*, scriptName, path):
+    absolutePath = os.path.join(path, scriptName)
+    exec(open(absolutePath).read())
 
 if __name__ == '__main__':
     wait(3)
