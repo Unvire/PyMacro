@@ -1,0 +1,12 @@
+{
+  "0": {
+    "name": "New task",
+    "isEnabled": true,
+    "function": "synchroFunctions.executeScript",
+    "parameters": {
+      "scriptName": "test.py",
+      "path": "varPath"
+    },
+    "saveResultToVariable": ""
+  }
+}
