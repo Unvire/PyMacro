@@ -51,7 +51,7 @@ class pyMacro(tk.Tk):
 
         # run buttons
         self.runButton = ttk.Button(self.runButtonsFrame, text='Run', command=self.runMacro)
-        self.killButton = ttk.Button(self.runButtonsFrame, text='Kill', command=...)
+        self.killButton = ttk.Button(self.runButtonsFrame, text='Kill', command=self.stopMacro)
 
         # utility buttons
         self.cursorPositionButton = ttk.Button(self.utilityButtonsFrame, text='Cursor position', command=self.getCursorCoords)
@@ -707,6 +707,14 @@ class pyMacro(tk.Tk):
         '''
         self.macroEngine.undoStackPush()
         self._changeUndoRedoButtonsState()
+    
+    def stopMacro(self):
+        '''
+        Sets engine.isRun to False 
+        '''
+        self.macroEngine.isRun = False
+        self.generateTasksTable()
+        self._changeWidgetGroupState('taskListExists')
 
 if __name__ == '__main__':
     app = pyMacro()

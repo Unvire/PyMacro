@@ -1,4 +1,4 @@
-import os, copy, importlib, collections
+import os, copy, importlib, collections, keyboard
 import json
 from timeit import default_timer as timer
 import task
@@ -24,7 +24,8 @@ class MacroEngine():
         self.subscribers = []
         self.jumpLabels = {}        
         self.undoStack = collections.deque()
-        self.redoStack = collections.deque()        
+        self.redoStack = collections.deque()     
+        self.isRun = True   
 
         item =  [], {}
         self.undoStack.append(item)
@@ -250,9 +251,14 @@ class MacroEngine():
         self._updateJumpLabels()
         self.variables = copy.deepcopy(self.loadedVariables)
         currentTaskID = 0
+
+        self.isRun = True   
         
         ## while loop allows to change currentTaskID programatically (loop back and forward)
-        while currentTaskID < self.numOfTasks:
+        while currentTaskID < self.numOfTasks and self.isRun:
+            if keyboard.is_pressed('ctrl+k'):
+                break
+
             task = self.taskList[currentTaskID]
             result = self.executeTask(task, currentTaskID)
 
@@ -422,8 +428,8 @@ if __name__ == '__main__':
     print(groups)
     engine.swapTasks(groups, False)
     print(engine.strToNumList('12; 3.20 ;asd'))
-    exit()
-    engine.saveMacroToFile('saveTest.json')
+    #engine.saveMacroToFile('saveTest.json')
 
-    engine.runProgram()
+    engine.runProgram()    
+    exit()
     engine.saveVariablesToFile('variableSaveTest')
