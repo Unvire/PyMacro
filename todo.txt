@@ -1,11 +1,11 @@
+- documentation / readme
+- add better kill macro functionality
 - copy from another run
-- kill macro functionality (threading ?) 
 - add shortcuts and hovertips
 - add scrollbars
 - TESTS
 - dropdown menu to select arguments
-- custom python script execution
-- make it look not like a shit
+- custom python script execution with relative path
 
 DONE:
 - highligt executed task
@@ -26,6 +26,9 @@ DONE:
 - undo edition 
 - FIX UNDO REDO
 - block widgets when they shouldn't be clicked
+- kill macro functionality (threading ?) 
+- custom python script execution
+- make it look not like a shit
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
