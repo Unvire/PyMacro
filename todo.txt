@@ -5,7 +5,6 @@
 - TESTS
 - dropdown menu to select arguments
 - custom python script execution
-- assign variables to task parameters (currenntly only function parameters can be assigned to variable)
 - make it look not like a shit
 
 DONE:
@@ -27,3 +26,6 @@ DONE:
 - undo edition 
 - FIX UNDO REDO
 - block widgets when they shouldn't be clicked
+
+REJECTED:
+- assign variables to task parameters (currenntly only function parameters can be assigned to variable)
