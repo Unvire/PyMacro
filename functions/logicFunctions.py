@@ -1,6 +1,6 @@
 import re
 
-def checkCondition(evalationFunctionName='equal', vals=[1, 2], resultTrue='2', resultFalse='0'):
+def checkCondition(evaluationFunctionName='equal', vals=[1, 2], resultTrue='2', resultFalse='0'):
     '''
     If statement that can be called as task function. Returns either resultTrue or resultFalse - based on the evaulation.
         evalationFunctionName: str -> name of the evaulation function declared in this script. Evaulation functions with arguments are listed below:
@@ -17,7 +17,7 @@ def checkCondition(evalationFunctionName='equal', vals=[1, 2], resultTrue='2', r
         vals:list -> list of arguments for evaluation function. Order is important
         resultTrue, resultFalse - retured values based on the evaluation
     '''
-    evalationFunction = globals()[evalationFunctionName]
+    evalationFunction = globals()[evaluationFunctionName]
     result = evalationFunction(*vals)
     return resultTrue if result else resultFalse
 

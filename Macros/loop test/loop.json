@@ -60,13 +60,13 @@
     "function": "logicFunctions.checkCondition",
     "parameters": {
       "isJump": true,
-      "evalationFunctionName": "less",
       "vals": [
         "i",
         10
       ],
       "resultTrue": "Label: loop",
-      "resultFalse": "Label: end"
+      "resultFalse": "Label: end",
+      "evaluationFunctionName": "less"
     },
     "saveResultToVariable": ""
   },
