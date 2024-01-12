@@ -19,6 +19,9 @@ def executeScript(*, scriptName, path):
     absolutePath = os.path.join(path, scriptName)
     exec(open(absolutePath).read())
 
+def updateVariable(val):
+    return val
+
 if __name__ == '__main__':
     wait(3)
     nothing()

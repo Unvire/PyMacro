@@ -19,6 +19,9 @@ def pow(base, exponent):
 def roundNum(val, digits=0):
     return round(val, digits)
 
+def modulo(val1, val2):
+    return val1 % val2
+
 if __name__ == '__main__':
     print(add(1, 3))
     print(substract(1, 3))

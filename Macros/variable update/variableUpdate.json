@@ -1,0 +1,91 @@
+{
+  "0": {
+    "name": "init variable",
+    "isEnabled": true,
+    "function": "synchroFunctions.initVariable",
+    "parameters": {
+      "val": "text1",
+      "valType": "str"
+    },
+    "saveResultToVariable": "placeholder"
+  },
+  "1": {
+    "name": "move mouse to notepad",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": [
+        1352,
+        335
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "2": {
+    "name": "click",
+    "isEnabled": true,
+    "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "3": {
+    "name": "copy text to clipboard",
+    "isEnabled": true,
+    "function": "clipboardFunctions.copyTextToClipboard",
+    "parameters": {
+      "text": "placeholder"
+    },
+    "saveResultToVariable": ""
+  },
+  "4": {
+    "name": "paste",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "v"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "5": {
+    "name": "update variable",
+    "isEnabled": true,
+    "function": "synchroFunctions.updateVariable",
+    "parameters": {
+      "val": "text2"
+    },
+    "saveResultToVariable": "placeholder"
+  },
+  "6": {
+    "name": "copy text to clipboard",
+    "isEnabled": true,
+    "function": "clipboardFunctions.copyTextToClipboard",
+    "parameters": {
+      "text": "placeholder"
+    },
+    "saveResultToVariable": ""
+  },
+  "7": {
+    "name": "press enter",
+    "isEnabled": true,
+    "function": "keyboardFunctions.press",
+    "parameters": {
+      "key": "enter"
+    },
+    "saveResultToVariable": ""
+  },
+  "8": {
+    "name": "paste",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "v"
+      ]
+    },
+    "saveResultToVariable": ""
+  }
+}
