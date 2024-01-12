@@ -1,0 +1,167 @@
+{
+  "0": {
+    "name": "Init counter",
+    "isEnabled": true,
+    "function": "synchroFunctions.initVariable",
+    "parameters": {
+      "val": 0,
+      "valType": "int"
+    },
+    "saveResultToVariable": "counter"
+  },
+  "1": {
+    "name": "Clear clipboard",
+    "isEnabled": true,
+    "function": "clipboardFunctions.copyTextToClipboard",
+    "parameters": {
+      "text": ""
+    },
+    "saveResultToVariable": ""
+  },
+  "2": {
+    "name": "Label: start",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "3": {
+    "name": "Move mouse to notepad 1",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": "pos1"
+    },
+    "saveResultToVariable": ""
+  },
+  "4": {
+    "name": "Click",
+    "isEnabled": true,
+    "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "5": {
+    "name": "Paste",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "v"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "6": {
+    "name": "Select all text",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "a"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "7": {
+    "name": "Cut text",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "x"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "8": {
+    "name": "Move mouse to notepad 2",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": "pos2"
+    },
+    "saveResultToVariable": ""
+  },
+  "9": {
+    "name": "Click",
+    "isEnabled": true,
+    "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "10": {
+    "name": "Paste",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "v"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "11": {
+    "name": "Select all text",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "a"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "12": {
+    "name": "Cut text",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "x"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "13": {
+    "name": "counter++",
+    "isEnabled": true,
+    "function": "mathFunctions.add",
+    "parameters": {
+      "val1": "counter",
+      "val2": 1
+    },
+    "saveResultToVariable": "counter"
+  },
+  "14": {
+    "name": "counter > 30?",
+    "isEnabled": true,
+    "function": "logicFunctions.checkCondition",
+    "parameters": {
+      "isJump": true,
+      "evaluationFunctionName": "greater",
+      "vals": [
+        "counter",
+        30
+      ],
+      "resultTrue": "Label: end",
+      "resultFalse": "Label: start"
+    },
+    "saveResultToVariable": ""
+  },
+  "15": {
+    "name": "Label: end",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": "pos1"
+    },
+    "saveResultToVariable": ""
+  }
+}
