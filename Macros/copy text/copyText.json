@@ -15,7 +15,7 @@
     "function": "synchroFunctions.initVariable",
     "parameters": {
       "val": "pos1",
-      "valType": "str"
+      "valType": "list"
     },
     "saveResultToVariable": "placeholder"
   },
@@ -98,16 +98,19 @@
     "saveResultToVariable": "moduloCounter"
   },
   "10": {
-    "name": "evaluate caounter % 2",
+    "name": "evaluate counter % 2",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {
-      "evalationFunction": "equal",
-      "vals": "resultCounter, 0",
+      "vals": [
+        "moduloCounter",
+        0
+      ],
       "resultTrue": "pos2",
-      "resultFalse": "pos1"
+      "resultFalse": "pos1",
+      "evaluationFunctionName": "equal"
     },
-    "saveResultToVariable": "resultCounter"
+    "saveResultToVariable": "placeholder"
   },
   "11": {
     "name": "counter++",
@@ -141,6 +144,18 @@
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
       "coords": "pos1"
+    },
+    "saveResultToVariable": ""
+  },
+  "14": {
+    "name": "Paste",
+    "isEnabled": true,
+    "function": "keyboardFunctions.keyCombination",
+    "parameters": {
+      "keysList": [
+        "ctrl",
+        "v"
+      ]
     },
     "saveResultToVariable": ""
   }
