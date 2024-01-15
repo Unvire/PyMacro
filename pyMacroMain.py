@@ -62,6 +62,8 @@ class pyMacro(tk.Tk):
         self.newTaskButton = ttk.Button(self.taskEditButtonsFrame, text='New', command=self.newTask)
         self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=self.duplicateSelectedTasks)
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
+        self.intendButton = ttk.Button(self.taskEditButtonsFrame, text='Intend', command=self.intend)
+        self.unintendButton = ttk.Button(self.taskEditButtonsFrame, text='Unintend', command=...)
 
         # tasks table
         self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Result variable', 'Time'), show='headings', selectmode='extended', height=23)        
@@ -100,7 +102,7 @@ class pyMacro(tk.Tk):
         self.allButtonsGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.undoButton, self.redoButton, self.killButton,
                                 self.runButton, self.cursorPositionButton, self.moveTaskUpButton, self.moveTaskDownButton, self.newTaskButton,
                                 self.copyTaskButton, self.deleteTaskButton, self.parameterNameEntry, self.parameterValueEntry, 
-                                self.updateTreeviewParametersButton, self.deleteArgumentButton]
+                                self.updateTreeviewParametersButton, self.deleteArgumentButton, self.intendButton, self.unintendButton]
         self.initButtonsGroup = [self.newMacroButton, self.openMacroButton]
 
         self.enableAtRunWidgetsGroup = [self.killButton]
@@ -114,7 +116,8 @@ class pyMacro(tk.Tk):
         self.parameterSelectedDisableGroup = [self.parameterNameEntry, self.deleteArgumentButton]
         self.argumentSelectedGroup = [self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
 
-        self.taskSelectedEnableGroup = [self.moveTaskUpButton, self.moveTaskDownButton, self.copyTaskButton, self.deleteTaskButton]
+        self.taskSelectedEnableGroup = [self.moveTaskUpButton, self.moveTaskDownButton, self.copyTaskButton, self.deleteTaskButton, self.intendButton, 
+                                        self.unintendButton]
 
         ## position
         # control buttons
@@ -139,6 +142,8 @@ class pyMacro(tk.Tk):
         self.newTaskButton.grid(row=2, column=0)
         self.copyTaskButton.grid(row=3, column=0)
         self.deleteTaskButton.grid(row=4, column=0)
+        self.intendButton.grid(row=5, column=0)
+        self.unintendButton.grid(row=6, column=0)
 
         # tasks table
         self.infoLabel.grid(row=0, column=0)
@@ -386,6 +391,12 @@ class pyMacro(tk.Tk):
                 widget.selection_remove(item)
 
         return widgetGroupNameDict[treeview]
+
+    def _getSelectedRowNumbers(self):
+        '''
+        Return list of selected row ID numbers ([0, 1, 2, 3... ])
+        '''
+        return [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
 
     def setVariablesFromEngine(self):
         '''
@@ -720,6 +731,29 @@ class pyMacro(tk.Tk):
         '''
         self.macroEngine.isRun = False
         self._isRunSet(False)
+    
+    def intend(self):
+        '''
+        Adds 2 spaces before each selected task name
+        '''
+        rowIDs = self._getSelectedRowNumbers()
+        for IDnum in rowIDs:
+            self.macroEngine.intendTask(IDnum)
+
+        self.generateTasksTable()
+        self.undoRedoOperation()
+        
+
+    def unintend(self):
+        '''
+        Removes 2 spaces before each selected task name, if it is possible
+        '''
+        rowIDs = self._getSelectedRowNumbers()
+        for IDnum in rowIDs:
+            self.macroEngine.intendTask(IDnum)
+            
+        self.generateTasksTable()
+        self.undoRedoOperation()
 
 if __name__ == '__main__':
     app = pyMacro()
