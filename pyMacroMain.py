@@ -63,7 +63,7 @@ class pyMacro(tk.Tk):
         self.copyTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Copy', command=self.duplicateSelectedTasks)
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
         self.intendButton = ttk.Button(self.taskEditButtonsFrame, text='Intend', command=self.intend)
-        self.unintendButton = ttk.Button(self.taskEditButtonsFrame, text='Unintend', command=...)
+        self.unintendButton = ttk.Button(self.taskEditButtonsFrame, text='Unintend', command=self.unintend)
 
         # tasks table
         self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Result variable', 'Time'), show='headings', selectmode='extended', height=23)        
@@ -750,7 +750,7 @@ class pyMacro(tk.Tk):
         '''
         rowIDs = self._getSelectedRowNumbers()
         for IDnum in rowIDs:
-            self.macroEngine.intendTask(IDnum)
+            self.macroEngine.unintendTask(IDnum)
             
         self.generateTasksTable()
         self.undoRedoOperation()
