@@ -17,8 +17,8 @@ def checkCondition(evaluationFunctionName='equal', vals=[1, 2], resultTrue='2', 
         vals:list -> list of arguments for evaluation function. Order is important
         resultTrue, resultFalse - retured values based on the evaluation
     '''
-    evalationFunction = globals()[evaluationFunctionName]
-    result = evalationFunction(*vals)
+    evaluationFunction = globals()[evaluationFunctionName]
+    result = evaluationFunction(*vals)
     return resultTrue if result else resultFalse
 
 def negate(val) -> bool:

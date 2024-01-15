@@ -27,7 +27,7 @@
     "function": "logicFunctions.checkCondition",
     "parameters": {
       "isJump": true,
-      "evalationFunctionName": "equal",
+      "evaluationFunctionName": "equal",
       "vals": [
         2,
         2
