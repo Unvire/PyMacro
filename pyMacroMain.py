@@ -64,13 +64,15 @@ class pyMacro(tk.Tk):
         self.deleteTaskButton = ttk.Button(self.taskEditButtonsFrame, text='Delete', command=self.deleteTask)
 
         # tasks table
-        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Time'), show='headings', selectmode='extended', height=23)        
+        self.tasksTableTree = ttk.Treeview(self.tasksFrame, columns=('ID', 'Task name', 'Result variable', 'Time'), show='headings', selectmode='extended', height=23)        
         self.tasksTableTree.heading('ID', text='ID')
         self.tasksTableTree.heading('Task name', text='Task name')
+        self.tasksTableTree.heading('Result variable', text='Result variable')
         self.tasksTableTree.heading('Time', text='Time')
-        self.tasksTableTree.column('#1', width=50)
+        self.tasksTableTree.column('#1', width=30)
         self.tasksTableTree.column('#2', width=200)
         self.tasksTableTree.column('#3', width=100)
+        self.tasksTableTree.column('#4', width=100)
 
         # taskInfo
         self.infoLabel = ttk.Label(self.taskInfoFrame, text='')
@@ -473,7 +475,7 @@ class pyMacro(tk.Tk):
         Fills tasksTableTree and variablesTableTree with data
         '''
         self._updateTaskList()
-        taskNames = [(i, task.name, '') for i, task in enumerate(self.taskList)]
+        taskNames = [(i, task.name, task.variableName, '') for i, task in enumerate(self.taskList)]
         self.setVariablesFromEngine()
         variablesList = self._variablesList()
 
@@ -547,9 +549,11 @@ class pyMacro(tk.Tk):
         ## update tables
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Parameter name', columnValue=parameter)
         self._updateTreeviewRow(treeview=treeview, rowID=rowID, columnName='Value', columnValue=value)
-        if parameter.lower() == 'name' and not isArgument:
+
+        coulmnNamesDict = {'name': 'Task name', 'saveResultToVariable': 'Result variable'}
+        if parameter in ('name', 'saveResultToVariable') and not isArgument:
             selectedTaskID = self.tasksTableTree.selection()[0]            
-            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=selectedTaskID, columnName='Task name', columnValue=value)
+            self._updateTreeviewRow(treeview=self.tasksTableTree, rowID=selectedTaskID, columnName=coulmnNamesDict[parameter], columnValue=value)
 
         ## delete empty row
         if not parameter and not value:
