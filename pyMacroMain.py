@@ -643,7 +643,7 @@ class pyMacro(tk.Tk):
         '''
         Duplicates selected tasks in place. New task will be inserted after their original
         '''
-        rowIDs = [self.tasksTableChildren.index(row) for row in list(self.tasksTableTree.selection())]
+        rowIDs = self._getSelectedRowNumbers()
         self.macroEngine.duplicateTasks(rowIDs)
         self.generateTasksTable()
 
