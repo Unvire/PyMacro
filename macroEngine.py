@@ -416,6 +416,17 @@ class MacroEngine():
         self.undoStack.append(item)
         self.setTaskList(taskList)
         self.setLoadedVariables(variables)
+    
+    def intendTask(self, IDnum:int):
+        '''
+        Intends task by adding ' ' (2 spaces) in front of current name.
+            IDNum:int -> task index in self.taskList
+        '''
+        currentTask = self.taskList[IDnum]
+        currentTaskName = currentTask.name
+        newName = '  ' + currentTaskName
+        currentTask.updateParameter(isArgument=False, newRecord=('name', newName))
+
 
 if __name__ == '__main__':
     engine = MacroEngine()
