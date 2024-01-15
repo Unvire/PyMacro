@@ -109,7 +109,6 @@ class pyMacro(tk.Tk):
 
         self.enableTaskListExistGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.runButton, self.cursorPositionButton, 
                                          self.newTaskButton]
-        self.taskListExistDisableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton, self.parameterNameEntry, self.deleteArgumentButton]
 
         self.parameterSelectedEnableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton]
         self.parameterSelectedDisableGroup = [self.parameterNameEntry, self.deleteArgumentButton]
@@ -347,11 +346,11 @@ class pyMacro(tk.Tk):
                 'taskSelected' - at least one of the items in self.taskTableTree is selected
         '''
         groupDict = {'init': [(self.allButtonsGroup, 'disabled'), (self.initButtonsGroup, 'enabled')],
-                     'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled'), (self.taskListExistDisableGroup, 'disabled')],
+                     'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled'), (self.argumentSelectedGroup, 'disabled')],
                      'run': [(self.allButtonsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
                      'argumentSelected': [(self.argumentSelectedGroup, 'enabled')],
                      'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'readonly')],
-                     'taskSelected': [(self.taskSelectedEnableGroup, 'enabled'), (self.taskListExistDisableGroup, 'disabled')]}
+                     'taskSelected': [(self.taskSelectedEnableGroup, 'enabled'), (self.argumentSelectedGroup, 'disabled')]}
         
         for groupList in groupDict[widgetGroupName]:
             widgets, state = groupList
