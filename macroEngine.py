@@ -426,6 +426,17 @@ class MacroEngine():
         currentTaskName = currentTask.name
         newName = '  ' + currentTaskName
         currentTask.updateParameter(isArgument=False, newRecord=('name', newName))
+    
+    def unintendTask(self, IDnum:int):
+        '''
+        Unitends task by removing ' ' (2 spaces) in front of current task name if it is possible (at least 2 spaces are in front).
+            IDNum:int -> task index in self.taskList
+        '''
+        currentTask = self.taskList[IDnum]
+        currentTaskName = currentTask.name
+        if currentTaskName[:2] == '  ':
+            newName = currentTaskName[2:]
+            currentTask.updateParameter(isArgument=False, newRecord=('name', newName))
 
 
 if __name__ == '__main__':
