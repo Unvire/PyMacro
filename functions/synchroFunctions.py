@@ -9,10 +9,13 @@ def nothing():
 
 def initVariable(*, val, valType='int'):
     valType = valType.lower()
-    typeDict = {'int': int, 'float':float, 'str':str, 'bool':bool}
+    typeDict = {'int': int, 'float':float, 'str':str, 'bool':bool, 'list':list}
     if valType == 'bool':
-        val = val.lower()
-        return val == 'true'
+        return  val.lower() == 'true'
+    elif valType == 'list':
+        if not isinstance(val, str):
+            val = ';'.join(str(item) for item in val) # convert list to string (standarize inputs -> list is always written with ';')
+        return val.split(';')
     return typeDict[valType](val)
 
 def executeScript(*, scriptName, path):
