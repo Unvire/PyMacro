@@ -109,7 +109,8 @@ class pyMacro(tk.Tk):
 
         self.enableTaskListExistGroup = [self.newMacroButton, self.openMacroButton, self.saveMacroButton, self.runButton, self.cursorPositionButton, 
                                          self.newTaskButton]
-        
+        self.taskListExistDisableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton, self.parameterNameEntry, self.deleteArgumentButton]
+
         self.parameterSelectedEnableGroup = [self.parameterValueEntry, self.updateTreeviewParametersButton]
         self.parameterSelectedDisableGroup = [self.parameterNameEntry, self.deleteArgumentButton]
         self.argumentSelectedGroup = [self.parameterNameEntry, self.parameterValueEntry, self.updateTreeviewParametersButton, self.deleteArgumentButton]
@@ -339,18 +340,18 @@ class pyMacro(tk.Tk):
         Iterates over widgetGroup and changing state of every item
             widgetGroup -> string name of group. Possibilities:
                 'init' - use when initializing program. Only newMacroButton and openMacroButton are enabled
-                'taskListExists' - all buttons in rowOneFrame, except killButton
+                'taskListExists' - all buttons in rowOneFrame, except killButton. Disables editing task parameters widgets
                 'run' - macro is running. only kill button is enabled
                 'argumentSelected' - item in self.taskFunctionParametersTableTree or self.variablesTableTree is selected
                 'parameterSelected' - item in self.taskParametersTableTree is selected
                 'taskSelected' - at least one of the items in self.taskTableTree is selected
         '''
         groupDict = {'init': [(self.allButtonsGroup, 'disabled'), (self.initButtonsGroup, 'enabled')],
-                     'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled')],
+                     'taskListExists': [(self.allButtonsGroup, 'disabled'), (self.enableTaskListExistGroup, 'enabled'), (self.taskListExistDisableGroup, 'disabled')],
                      'run': [(self.allButtonsGroup, 'disabled'), (self.enableAtRunWidgetsGroup, 'enabled')],
                      'argumentSelected': [(self.argumentSelectedGroup, 'enabled')],
                      'parameterSelected': [(self.parameterSelectedEnableGroup, 'enabled'), (self.parameterSelectedDisableGroup, 'readonly')],
-                     'taskSelected': [(self.taskSelectedEnableGroup, 'enabled')]}
+                     'taskSelected': [(self.taskSelectedEnableGroup, 'enabled'), (self.taskListExistDisableGroup, 'disabled')]}
         
         for groupList in groupDict[widgetGroupName]:
             widgets, state = groupList
