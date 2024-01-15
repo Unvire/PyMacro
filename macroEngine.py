@@ -209,7 +209,7 @@ class MacroEngine():
     
     def calculateKwargs(self, kwargs:dict):
         '''
-        Replaces variables declared in run time with value from self.variables. Works on copy of dictionary
+        Replaces function parameters/variables declared in run time with value from self.variables. Works on copy of dictionary
         '''
         kwargsCopy = copy.deepcopy(kwargs)
         for parameterName in kwargsCopy:
