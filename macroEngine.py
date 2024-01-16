@@ -419,23 +419,23 @@ class MacroEngine():
     
     def intendTask(self, IDnum:int):
         '''
-        Intends task by adding ' ' (2 spaces) in front of current name.
+        Intends task by adding '   ' (4 spaces) in front of current name.
             IDNum:int -> task index in self.taskList
         '''
         currentTask = self.taskList[IDnum]
         currentTaskName = currentTask.name
-        newName = '  ' + currentTaskName
+        newName = '    ' + currentTaskName
         currentTask.updateParameter(isArgument=False, newRecord=('name', newName))
     
     def unintendTask(self, IDnum:int):
         '''
-        Unitends task by removing ' ' (2 spaces) in front of current task name if it is possible (at least 2 spaces are in front).
+        Unitends task by removing '   ' (4 spaces) in front of current task name if it is possible (at least 2 spaces are in front).
             IDNum:int -> task index in self.taskList
         '''
         currentTask = self.taskList[IDnum]
         currentTaskName = currentTask.name
-        if currentTaskName[:2] == '  ':
-            newName = currentTaskName[2:]
+        if currentTaskName[:4] == '    ':
+            newName = currentTaskName[4:]
             currentTask.updateParameter(isArgument=False, newRecord=('name', newName))
 
 
