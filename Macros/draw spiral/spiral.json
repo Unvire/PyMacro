@@ -1,0 +1,160 @@
+{
+  "0": {
+    "name": "Move to paint",
+    "isEnabled": true,
+    "function": "cursorFunctions.moveToCoords",
+    "parameters": {
+      "coords": [
+        "x",
+        "y"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "1": {
+    "name": "Click on paint",
+    "isEnabled": true,
+    "function": "cursorFunctions.click",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "2": {
+    "name": "Label: Draw spiral",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "3": {
+    "name": "    calculate -delta",
+    "isEnabled": true,
+    "function": "mathFunctions.multiply",
+    "parameters": {
+      "val1": "delta",
+      "val2": -1
+    },
+    "saveResultToVariable": "minusDelta"
+  },
+  "4": {
+    "name": "    move: y + delta",
+    "isEnabled": true,
+    "function": "cursorFunctions.dragRelative",
+    "parameters": {
+      "coords": [
+        0,
+        "delta"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "5": {
+    "name": "    move: x - delta",
+    "isEnabled": true,
+    "function": "cursorFunctions.dragRelative",
+    "parameters": {
+      "coords": [
+        "delta",
+        0
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "6": {
+    "name": "    move: y - delta",
+    "isEnabled": true,
+    "function": "cursorFunctions.dragRelative",
+    "parameters": {
+      "coords": [
+        0,
+        "minusDelta"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "7": {
+    "name": "    delta -= step",
+    "isEnabled": true,
+    "function": "mathFunctions.substract",
+    "parameters": {
+      "val1": "delta",
+      "val2": "step"
+    },
+    "saveResultToVariable": "delta"
+  },
+  "8": {
+    "name": "    calculate -delta",
+    "isEnabled": true,
+    "function": "mathFunctions.multiply",
+    "parameters": {
+      "val1": "delta",
+      "val2": -1
+    },
+    "saveResultToVariable": "minusDelta"
+  },
+  "9": {
+    "name": "    move: x - delta",
+    "isEnabled": true,
+    "function": "cursorFunctions.dragRelative",
+    "parameters": {
+      "coords": [
+        "minusDelta",
+        0
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "10": {
+    "name": "    move: y + step",
+    "isEnabled": true,
+    "function": "cursorFunctions.dragRelative",
+    "parameters": {
+      "coords": [
+        0,
+        "step"
+      ]
+    },
+    "saveResultToVariable": ""
+  },
+  "11": {
+    "name": "    delta -= step",
+    "isEnabled": true,
+    "function": "mathFunctions.substract",
+    "parameters": {
+      "val1": "delta",
+      "val2": "step"
+    },
+    "saveResultToVariable": "delta"
+  },
+  "12": {
+    "name": "    delta <= 0?",
+    "isEnabled": true,
+    "function": "logicFunctions.checkCondition",
+    "parameters": {
+      "isJump": true,
+      "evaluationFunctionName": "lessEqual",
+      "vals": [
+        "delta",
+        0
+      ],
+      "resultTrue": "Label: End",
+      "resultFalse": "Label: Draw spiral"
+    },
+    "saveResultToVariable": ""
+  },
+  "13": {
+    "name": "Label: End",
+    "isEnabled": true,
+    "function": "synchroFunctions.nothing",
+    "parameters": {},
+    "saveResultToVariable": ""
+  },
+  "14": {
+    "name": "Release LMB",
+    "isEnabled": true,
+    "function": "cursorFunctions.releaseButton",
+    "parameters": {
+      "button": "left"
+    },
+    "saveResultToVariable": ""
+  }
+}
