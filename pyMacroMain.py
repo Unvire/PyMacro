@@ -434,6 +434,7 @@ class pyMacro(tk.Tk):
         self.newTask()
         self._changeWidgetGroupState('taskListExists')
         self.infoLabel['text'] = ''
+        self.title('PyMacro')
     
     def openMacroFile(self):
         '''
@@ -451,6 +452,7 @@ class pyMacro(tk.Tk):
             self.generateTasksTable()
             self._changeWidgetGroupState('taskListExists')
             self.infoLabel['text'] = ''
+            self.title('PyMacro - ' + macroName)
     
     def saveProject(self):
         '''
@@ -482,6 +484,7 @@ class pyMacro(tk.Tk):
             
             self.macroEngine.saveMacroToFile(os.path.join(dirPath, macroName))
             self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'variables'))
+            self.title('PyMacro - ' + macroName)
 
     def generateTasksTable(self):
         '''
