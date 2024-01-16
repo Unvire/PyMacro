@@ -1,12 +1,12 @@
 - documentation / readme
 - add better kill macro functionality
-- preserve selection when changing intendation
 - copy from another run
 - add shortcuts and hovertips
 - add scrollbars
 - TESTS
 - dropdown menu to select arguments
 - custom python script execution with relative path
+- error handling and displaying
 
 DONE:
 - highligt executed task
@@ -32,6 +32,8 @@ DONE:
 - make it look not like a shit
 - column for saveResultToVariable
 - intend/unintend selected steps
+- preserve selection when changing intendation
+- name of the current macro is displayed in window title
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
