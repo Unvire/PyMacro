@@ -742,6 +742,8 @@ class pyMacro(tk.Tk):
 
         self.generateTasksTable()
         self.undoRedoOperation()
+        nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
+        self.tasksTableTree.selection_set(nameIDs)
         
 
     def unintend(self):
@@ -751,9 +753,11 @@ class pyMacro(tk.Tk):
         rowIDs = self._getSelectedRowNumbers()
         for IDnum in rowIDs:
             self.macroEngine.unintendTask(IDnum)
-            
+        
         self.generateTasksTable()
         self.undoRedoOperation()
+        nameIDs = [self.tasksTableChildren[i] for i in rowIDs]
+        self.tasksTableTree.selection_set(nameIDs)
 
 if __name__ == '__main__':
     app = pyMacro()
