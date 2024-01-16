@@ -89,13 +89,13 @@ def getCoords() -> (int, int):
     x, y = pyautogui.position()
     return x, y
 
-def holdButton(self, button='left'):
+def holdButton(button='left'):
     '''
     Holds down a mouse button
     '''
     pyautogui.mouseDown(button=button)
 
-def releaseButton(self, button='left'):
+def releaseButton(button='left'):
     '''
     Releases a mouse button
     '''
