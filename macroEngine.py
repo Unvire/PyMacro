@@ -358,7 +358,7 @@ class MacroEngine():
         '''
         rowIDs = sorted(rowIDs)
         for i, rowID in enumerate(rowIDs):
-            currentTask = self.taskList[rowID + i]
+            currentTask = copy.deepcopy(self.taskList[rowID + i])
             self.taskList.insert(rowID + i, currentTask)
     
     def modifyVariable(self, variable:str, value:str|int|float|list):
