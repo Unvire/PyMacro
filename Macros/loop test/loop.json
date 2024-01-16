@@ -36,7 +36,7 @@
     "saveResultToVariable": ""
   },
   "4": {
-    "name": "write A",
+    "name": "    write A",
     "isEnabled": true,
     "function": "keyboardFunctions.writeString",
     "parameters": {
@@ -45,7 +45,7 @@
     "saveResultToVariable": ""
   },
   "5": {
-    "name": "i++",
+    "name": "    i++",
     "isEnabled": true,
     "function": "mathFunctions.add",
     "parameters": {
@@ -55,7 +55,7 @@
     "saveResultToVariable": "i"
   },
   "6": {
-    "name": "counter <10?",
+    "name": "    counter <10?",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {

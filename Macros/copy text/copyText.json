@@ -36,7 +36,7 @@
     "saveResultToVariable": ""
   },
   "4": {
-    "name": "Move mouse to notepad",
+    "name": "    Move mouse to notepad",
     "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
     "parameters": {
@@ -45,14 +45,14 @@
     "saveResultToVariable": ""
   },
   "5": {
-    "name": "Click",
+    "name": "    Click",
     "isEnabled": true,
     "function": "cursorFunctions.click",
     "parameters": {},
     "saveResultToVariable": ""
   },
   "6": {
-    "name": "Paste",
+    "name": "    Paste",
     "isEnabled": true,
     "function": "keyboardFunctions.keyCombination",
     "parameters": {
@@ -64,7 +64,7 @@
     "saveResultToVariable": ""
   },
   "7": {
-    "name": "Select all text",
+    "name": "    Select all text",
     "isEnabled": true,
     "function": "keyboardFunctions.keyCombination",
     "parameters": {
@@ -76,7 +76,7 @@
     "saveResultToVariable": ""
   },
   "8": {
-    "name": "Cut text",
+    "name": "    Cut text",
     "isEnabled": true,
     "function": "keyboardFunctions.keyCombination",
     "parameters": {
@@ -88,7 +88,7 @@
     "saveResultToVariable": ""
   },
   "9": {
-    "name": "calc: counter % 2",
+    "name": "    calc: counter % 2",
     "isEnabled": true,
     "function": "mathFunctions.modulo",
     "parameters": {
@@ -98,7 +98,7 @@
     "saveResultToVariable": "moduloCounter"
   },
   "10": {
-    "name": "evaluate counter % 2",
+    "name": "    evaluate counter % 2",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {
@@ -113,7 +113,7 @@
     "saveResultToVariable": "placeholder"
   },
   "11": {
-    "name": "counter++",
+    "name": "    counter++",
     "isEnabled": true,
     "function": "mathFunctions.add",
     "parameters": {
@@ -123,7 +123,7 @@
     "saveResultToVariable": "counter"
   },
   "12": {
-    "name": "counter > 30?",
+    "name": "    counter > 30?",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
     "parameters": {
