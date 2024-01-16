@@ -1,4 +1,6 @@
 - documentation / readme
+- delete variable
+- strip spaces
 - add better kill macro functionality
 - copy from another run
 - add shortcuts and hovertips
