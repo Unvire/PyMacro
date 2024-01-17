@@ -722,6 +722,8 @@ class pyMacro(tk.Tk):
     
     def taskSelectedEvent(self, event):
         if not self.isRun:
+            self._changeWidgetGroupState('argumentSelected')
+            self._updateParameterEntries() # clear entries
             self._changeWidgetGroupState('taskSelected')
     
     def undoRedoOperation(self):
