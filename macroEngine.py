@@ -141,6 +141,7 @@ class MacroEngine():
         '''
         Converts string to float (decimal point is '.') or int. If it is bot possible returns input value.
         '''
+        s = s.strip()
         try:
             if '.' in s: # decimal point
                 return float(s)
