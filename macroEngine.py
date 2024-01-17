@@ -110,6 +110,12 @@ class MacroEngine():
         Getter for self.variables. Returns shallow copy
         '''
         return copy.deepcopy(self.loadedVariables)
+
+    def removeLoadedVariable(self, variableName:str):
+        '''
+        Removes variableName from self.loadedVariables
+        '''
+        self.loadedVariables.pop(variableName)
     
     def numOfTasksGetSet(self):
         '''
