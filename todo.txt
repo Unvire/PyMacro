@@ -1,16 +1,16 @@
+OBLIGATORY:
 - documentation / readme
-- delete variable
-- strip spaces when checking if parameter is  avariable
-- clear entries when task not selected
 - consider -var as var * -1
+- add shortcuts and hovertips
+- error handling and displaying
+- autocomplete in entries
+
+OPTIONAL:
 - add better kill macro functionality
 - copy from another run
-- add shortcuts and hovertips
 - add scrollbars
 - TESTS
-- dropdown menu to select arguments
 - custom python script execution with relative path
-- error handling and displaying
 
 DONE:
 - highligt executed task
@@ -38,6 +38,9 @@ DONE:
 - intend/unintend selected steps
 - preserve selection when changing intendation
 - name of the current macro is displayed in window title
+- delete variable
+- strip spaces when checking if parameter is a variable
+- clear entries when task not selected
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
