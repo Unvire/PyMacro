@@ -1,4 +1,4 @@
-import os, copy, importlib, collections, keyboard, threading
+import os, copy, importlib, collections, keyboard
 import json
 from timeit import default_timer as timer
 import task
