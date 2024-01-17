@@ -674,7 +674,7 @@ class pyMacro(tk.Tk):
         treeview, rowID = self.clickedTable
 
         ## verify that clicked treeview is the one with function arguments
-        if treeview != self.taskFunctionParametersTableTree:
+        if treeview not in (self.taskFunctionParametersTableTree, self.variablesTableTree):
             return
         
         decision = messagebox.askyesno('Confirmation', message=f"Do you want to delete {argumentName} from task's argument")
@@ -684,9 +684,12 @@ class pyMacro(tk.Tk):
             if rowID != lastRow:
                 treeview.delete(rowID)
             
-            ## remove parameter
-            currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
-            self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
+            ## remove variable or parameter
+            if treeview is self.variablesTableTree:
+                self.macroEngine.removeLoadedVariable(argumentName)
+            else:
+                currentItemNumber, _ = self._treeviewItemNumber(self.tasksTableTree)
+                self.macroEngine.deleteTaskFunctionArgument(taskID=currentItemNumber, argumentName=argumentName)
             self._updateTaskList()
 
             self.undoRedoOperation()
