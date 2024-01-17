@@ -1,4 +1,4 @@
-import os, copy, importlib, collections, keyboard
+import os, copy, importlib, collections, keyboard, threading
 import json
 from timeit import default_timer as timer
 import task
@@ -251,11 +251,9 @@ class MacroEngine():
         self._updateJumpLabels()
         self.variables = copy.deepcopy(self.loadedVariables)
         currentTaskID = 0
-
-        self.isRun = True   
         
         ## while loop allows to change currentTaskID programatically (loop back and forward)
-        while currentTaskID < self.numOfTasks and self.isRun:
+        while currentTaskID < self.numOfTasks:
             if keyboard.is_pressed('ctrl+k'):
                 break
 
