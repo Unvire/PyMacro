@@ -1,9 +1,12 @@
 OBLIGATORY:
+- verifing save must be an engine's task
 - documentation / readme
-- consider -var as var * -1
+- force save when run is pressed
 - add shortcuts and hovertips
 - error handling and displaying
 - autocomplete in entries
+- debug image functions
+- make folder for images when saving
 
 OPTIONAL:
 - add better kill macro functionality
@@ -41,6 +44,7 @@ DONE:
 - delete variable
 - strip spaces when checking if parameter is a variable
 - clear entries when task not selected
+- consider -var as var * -1
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
