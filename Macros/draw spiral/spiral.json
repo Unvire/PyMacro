@@ -26,16 +26,6 @@
     "saveResultToVariable": ""
   },
   "3": {
-    "name": "    calculate -delta",
-    "isEnabled": true,
-    "function": "mathFunctions.multiply",
-    "parameters": {
-      "val1": "delta",
-      "val2": -1
-    },
-    "saveResultToVariable": "minusDelta"
-  },
-  "4": {
     "name": "    move: y + delta",
     "isEnabled": true,
     "function": "cursorFunctions.dragRelative",
@@ -47,8 +37,8 @@
     },
     "saveResultToVariable": ""
   },
-  "5": {
-    "name": "    move: x - delta",
+  "4": {
+    "name": "    move: x + delta",
     "isEnabled": true,
     "function": "cursorFunctions.dragRelative",
     "parameters": {
@@ -59,19 +49,19 @@
     },
     "saveResultToVariable": ""
   },
-  "6": {
+  "5": {
     "name": "    move: y - delta",
     "isEnabled": true,
     "function": "cursorFunctions.dragRelative",
     "parameters": {
       "coords": [
         0,
-        "minusDelta"
+        "-delta"
       ]
     },
     "saveResultToVariable": ""
   },
-  "7": {
+  "6": {
     "name": "    delta -= step",
     "isEnabled": true,
     "function": "mathFunctions.substract",
@@ -81,29 +71,19 @@
     },
     "saveResultToVariable": "delta"
   },
-  "8": {
-    "name": "    calculate -delta",
-    "isEnabled": true,
-    "function": "mathFunctions.multiply",
-    "parameters": {
-      "val1": "delta",
-      "val2": -1
-    },
-    "saveResultToVariable": "minusDelta"
-  },
-  "9": {
+  "7": {
     "name": "    move: x - delta",
     "isEnabled": true,
     "function": "cursorFunctions.dragRelative",
     "parameters": {
       "coords": [
-        "minusDelta",
+        "-delta",
         0
       ]
     },
     "saveResultToVariable": ""
   },
-  "10": {
+  "8": {
     "name": "    move: y + step",
     "isEnabled": true,
     "function": "cursorFunctions.dragRelative",
@@ -115,7 +95,7 @@
     },
     "saveResultToVariable": ""
   },
-  "11": {
+  "9": {
     "name": "    delta -= step",
     "isEnabled": true,
     "function": "mathFunctions.substract",
@@ -125,7 +105,7 @@
     },
     "saveResultToVariable": "delta"
   },
-  "12": {
+  "10": {
     "name": "    delta <= 0?",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
@@ -141,14 +121,14 @@
     },
     "saveResultToVariable": ""
   },
-  "13": {
+  "11": {
     "name": "Label: End",
     "isEnabled": true,
     "function": "synchroFunctions.nothing",
     "parameters": {},
     "saveResultToVariable": ""
   },
-  "14": {
+  "12": {
     "name": "Release LMB",
     "isEnabled": true,
     "function": "cursorFunctions.releaseButton",
