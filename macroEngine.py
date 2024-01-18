@@ -220,16 +220,27 @@ class MacroEngine():
         '''
         kwargsCopy = copy.deepcopy(kwargs)
         for parameterName in kwargsCopy:
-            variable = kwargs[parameterName]
+            variable = kwargsCopy[parameterName]
             ## replace if value is string
-            if isinstance(variable, str) and variable in self.variables:
-                kwargsCopy[parameterName] = self.variables[variable]
+            if isinstance(variable, str): 
+                # convert '-variable' to -1 * variable
+                sign = 1
+                if variable[0] == '-':
+                    sign, variable = -1, variable[1:]
+                # use value from self.variables
+                if variable in self.variables:
+                        kwargsCopy[parameterName] = self.variables[variable] * sign
             
             ## replace value if it is in sequence
             elif isinstance(variable, list):
                 for i, _ in enumerate(variable[:]):
+                    sign = 1
+                    # convert '-variable' to -1 * variable
+                    if isinstance(variable[i], str) and variable[i][0] == '-':
+                        sign, variable[i] = -1, variable[i][1:]
+                    # use value from self.variables
                     if variable[i] in self.variables:
-                        kwargsCopy[parameterName][i] = self.variables[variable[i]]
+                        kwargsCopy[parameterName][i] = self.variables[variable[i]] * sign
         return kwargsCopy
 
     def executeTask(self, task, taskID):
