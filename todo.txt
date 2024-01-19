@@ -1,7 +1,5 @@
 OBLIGATORY:
 - documentation / readme
-- error handling and displaying
-- autocomplete in entries
 - debug image functions
 
 OPTIONAL:
@@ -46,6 +44,8 @@ DONE:
 - make folder for images when saving
 - move saving logic to backend
 - add hovertips
+- error handling and displaying
+- autocomplete in entries
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
