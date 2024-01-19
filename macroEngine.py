@@ -1,6 +1,7 @@
 import os, copy, importlib, collections, keyboard
 import json
 from timeit import default_timer as timer
+from datetime import datetime
 import task
 
 class MacroEngine():
@@ -80,6 +81,18 @@ class MacroEngine():
         taskListCopy = copy.deepcopy(taskList)
         variablesCopy = copy.deepcopy(variables)
         return taskListCopy, variablesCopy
+
+    def _saveMacro(self, filePath):
+        '''
+        Saves self.taskList to file.
+            filePath - path where program will save JSON. Must inlcude file name
+        '''
+        taskDict = {}
+        for i, task in enumerate(self.taskList):
+            taskDict[str(i)] = task.convertToDict()
+        
+        with open(filePath, 'w') as file:
+            json.dump(taskDict, file, indent=2)
     
     def getTaskList(self):
         '''
@@ -176,17 +189,37 @@ class MacroEngine():
             self.numOfTasksGetSet()
         self.clearUndoStack(self.taskList, self.loadedVariables)
 
-    def saveMacroToFile(self, filePath):
+    def saveProject(self, filePath):
         '''
-        Saves self.taskList to file.
-            filePath - path where program will save JSON. Must inlcude file name
+        Saves macro project - macro.json, variables and Images. Macro steps are saved with .json extension, variable is saved without extension. The folder Images
+        is supposed to store all images used for imageFunctions. Method adds missing .json extension and checks in case of unwanted overwriting (there is a .json in filePath
+        with different name) the project is saved in subfolder "New {date of saving}"
+            filePath - path of file that will be saved (including filename)
         '''
-        taskDict = {}
-        for i, task in enumerate(self.taskList):
-            taskDict[str(i)] = task.convertToDict()
+        *dirPath, macroName = [val for val in filePath.split('/')]
+        dirPath = os.sep.join(item for item in dirPath)
+    
+        ## add extension if it is missing
+        if macroName[-5:] != '.json':
+            macroName += '.json'
 
-        with open(filePath, 'w') as file:
-            json.dump(taskDict, file, indent=2)
+        ## list all '.json' files in dir to check if there is macro already saved
+        filesInDir = [fileName for fileName in os.listdir(os.path.join(dirPath)) if fileName[-5:] == '.json']
+        if filesInDir:
+            for fileName in filesInDir:
+                ## if in folder is .json file but names are different then save into new folder. Otherwise overwrite the file
+                if fileName != macroName:
+                    currentTime = datetime.now().strftime("%d.%m.%Y %H-%M-%S")
+                    newFolderName = f'New {currentTime}'                      
+                    os.mkdir(os.path.join(dirPath, newFolderName))
+                    os.mkdir(os.path.join(dirPath, newFolderName, 'Images'))
+                    self._saveMacro(os.path.join(dirPath, newFolderName, macroName))
+                    self.saveVariablesToFile(os.path.join(dirPath, newFolderName, 'variables'))
+                    return
+                
+        self._saveMacro(os.path.join(dirPath, macroName))
+        self.saveVariablesToFile(os.path.join(dirPath, 'variables'))
+        os.mkdir(os.path.join(dirPath, 'Images'))
     
     def loadVariablesFile(self, filePath):
         '''
