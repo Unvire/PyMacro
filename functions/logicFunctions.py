@@ -21,45 +21,45 @@ def checkCondition(evaluationFunctionName='equal', vals=[1, 2], resultTrue='2', 
     result = evaluationFunction(*vals)
     return resultTrue if result else resultFalse
 
-def negate(val) -> bool:
+def negate(*, val) -> bool:
     return not bool(val)
 
-def equal(val1, val2) -> bool:
+def equal(*, val1, val2) -> bool:
     return val1 == val2
 
-def notEqual(val1, val2) -> bool:
-    return not equal(val1, val2)
+def notEqual(*, val1, val2) -> bool:
+    return not equal(val1=val1, val2=val2)
 
-def greater(val1, val2) -> bool:
+def greater(*, val1, val2) -> bool:
     return int(val1) > int(val2)
 
-def greaterEqual(val1, val2) -> bool:
+def greaterEqual(*, val1, val2) -> bool:
     return int(val1) >= int(val2)
 
-def less(val1, val2) -> bool:
+def less(*, val1, val2) -> bool:
     return int(val1) < int(val2)
 
-def lessEqual(val1, val2) -> bool:
+def lessEqual(*, val1, val2) -> bool:
     return int(val1) <= int(val2)
 
-def inRange(val, lowerLimit, upperLimit) -> bool:
+def inRange(*, val, lowerLimit, upperLimit) -> bool:
     return int(lowerLimit) <= int(val) <= int(upperLimit)
 
-def notInRange(val, lowerLimit, upperLimit) -> bool:
-    return not inRange(val, lowerLimit, upperLimit)
+def notInRange(*, val, lowerLimit, upperLimit) -> bool:
+    return not inRange(val=val, lowerLimit=lowerLimit, upperLimit=upperLimit)
 
-def regex(string='', pattern='$') -> bool:
+def regex(*, string='', pattern='$') -> bool:
     return bool(re.fullmatch(pattern, string))
 
 if __name__ == '__main__':
-    print(negate(1))
-    print(equal(1, 1), equal(2, 1))
-    print(notEqual('a', 'b'), notEqual(2, 1))
-    print(greater(1, -1), greater(0, '10'))
-    print(greaterEqual(10, 0), greaterEqual(10, 10), greaterEqual(10, 100))
-    print(less(1, -1), less(0, '10'))
-    print(lessEqual(10, 0), lessEqual(10, 10), lessEqual(10, 100))
-    print(inRange(1, 0, 5))
-    print(notInRange(-1, 0, 5))
+    print(negate(val=1))
+    print(equal(val1=1, val2=1), equal(val1=2, val2=1))
+    print(notEqual(val1='a', val2='b'), notEqual(val1=2, val2=1))
+    print(greater(val1=1, val2=-1))
+    print(greaterEqual(val1=10, val2=0), greaterEqual(val1=10, val2=10), greaterEqual(val1=10, val2=100))
+    print(less(val1=1, val2=-1))
+    print(lessEqual(val1=10, val2=0), lessEqual(val1=10, val2=10), lessEqual(val1=10, val2=100))
+    print(inRange(val=1, lowerLimit=0, upperLimit=5))
+    print(notInRange(val=-1, lowerLimit=0, upperLimit=5))
     print(regex(string='aaa', pattern='a*$'), regex(string='aaa', pattern='abc$'))
-    print(checkCondition(evalationFunctionName='regex', vals=['aaa', 'a*$'], resultTrue=2, resultFalse=-1))
+    print(checkCondition(evaluationFunctionName='regex', vals=['aaa', 'a*$'], resultTrue=2, resultFalse=-1))

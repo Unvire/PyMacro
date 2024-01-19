@@ -17,7 +17,7 @@ def _processCoords(coords=(None, None)) -> (int, int):
         y = None
     return x, y
 
-def moveToCoords(coords=(None, None), interval=0):
+def moveToCoords(*, coords=(None, None), interval=0):
     '''
     Moves cursor to absolute position x, y.
         coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
@@ -26,7 +26,7 @@ def moveToCoords(coords=(None, None), interval=0):
     x, y = _processCoords(coords=coords)
     pyautogui.moveTo(x, y, int(interval))
 
-def moveRelative(coords=(None, None), interval=0):
+def moveRelative(*, coords=(None, None), interval=0):
     '''
     Moves cursor to x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates.
         coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
@@ -35,7 +35,7 @@ def moveRelative(coords=(None, None), interval=0):
     x, y = _processCoords(coords)
     pyautogui.move(x, y, int(interval))
 
-def dragToCoords(coords=(None, None), interval=0, button='left'):
+def dragToCoords(*, coords=(None, None), interval=0, button='left'):
     '''
     Drags (clicks and holds) cursor to x, y
         coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
@@ -45,7 +45,7 @@ def dragToCoords(coords=(None, None), interval=0, button='left'):
     x, y = _processCoords(coords)
     pyautogui.dragTo(x, y, int(interval), button)
 
-def dragRelative(coords=(None, None), interval=0, button='left'):
+def dragRelative(*, coords=(None, None), interval=0, button='left'):
     '''
     Drags cursor (clicks and holds) x_m + x, y_m + y, where x_m, y_m are current Cursor coordinates
         coords = x, y - sequence of coords. Not numeric coords will be replaced with None, resulting not changing that coordinate
@@ -55,7 +55,7 @@ def dragRelative(coords=(None, None), interval=0, button='left'):
     x, y = _processCoords(coords)
     pyautogui.drag(x, y, int(interval), button)
 
-def click(button='left', numOfClicks=1, interval=0.1):
+def click(*, button='left', numOfClicks=1, interval=0.1):
     '''
     Clicks cursor button.
         button - string name of the button ('left', 'right', 'middle')
@@ -64,14 +64,14 @@ def click(button='left', numOfClicks=1, interval=0.1):
     '''
     pyautogui.click(button=button, clicks=numOfClicks, interval=int(interval))
 
-def scroll(units=10):
+def scroll(*, units=10):
     '''
     Scrolls horizontally by amount of units.
         units - int
     '''
     pyautogui.scroll(int(units))
 
-def colorUnderCursor(coords:(int, int)=()) -> (int, int, int):
+def colorUnderCursor(*, coords:(int, int)=()) -> (int, int, int):
     '''
     Returns color (R, G, B) of pixel pointed by cursor.
         coords=(x, y) -> optional tuple of coords that specify pixel. If no value is passed then cursor coords will be used
@@ -89,13 +89,13 @@ def getCoords() -> (int, int):
     x, y = pyautogui.position()
     return x, y
 
-def holdButton(button='left'):
+def holdButton(*, button='left'):
     '''
     Holds down a mouse button
     '''
     pyautogui.mouseDown(button=button)
 
-def releaseButton(button='left'):
+def releaseButton(*, button='left'):
     '''
     Releases a mouse button
     '''
@@ -105,12 +105,12 @@ if __name__ == '__main__':
     coords1 = '100', 300
     coords2 = 10, 100    
     print(getCoords())
-    moveToCoords(coords1)
-    moveRelative(coords2, interval=2)
-    dragToCoords(coords1, button='left')
-    dragRelative(coords2, button='left')
+    moveToCoords(coords=coords1)
+    moveRelative(coords=coords2, interval=2)
+    dragToCoords(coords=coords1, button='left')
+    dragRelative(coords=coords2, button='left')
     click(numOfClicks=2)
-    scroll(20)
+    scroll(units=20)
     rgb = colorUnderCursor()
     print(rgb)
-    print(colorUnderCursor((-219, 548)))
+    print(colorUnderCursor(coords=(-219, 548)))

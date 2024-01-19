@@ -1,7 +1,7 @@
 import pyautogui
 import pyperclip
 
-def copyTextToClipboard(text=''):
+def copyTextToClipboard(*, text=''):
     pyperclip.copy(text)
 
 def copySelectedTextToClipboard():
@@ -15,5 +15,5 @@ def getFromClipboard() -> str:
 if __name__ == '__main__':
     copySelectedTextToClipboard()
     print(getFromClipboard())
-    copyTextToClipboard('Hello world')    
+    copyTextToClipboard(text='Hello world')    
     print(getFromClipboard())

@@ -26,7 +26,7 @@ KEYS:
 'command', 'option', 'optionleft', 'optionright']
 '''
 
-def writeString(text='', interval=0):
+def writeString(*, text='', interval=0):
     '''
     Converts given text to keypresses, which result in emulating of writing.
         text - str
@@ -34,13 +34,13 @@ def writeString(text='', interval=0):
     '''
     pyautogui.write(str(text), int(interval))
 
-def press(key='', numOfPresses=1):
+def press(*, key='', numOfPresses=1):
     '''
     Presses and unpresses key
     '''
     pyautogui.press(key, presses=int(numOfPresses))
 
-def pressAndHold(key=''):
+def pressAndHold(*, key=''):
     '''
     Presses and holds key. DO NOT FORGET TO UNPRESS IT WITH unpress(key) method.
     NOTE: For some reason, this does not seem to cause key repeats like would
@@ -48,13 +48,13 @@ def pressAndHold(key=''):
     '''
     pyautogui.keyDown(key)
 
-def unpress(key=''):
+def unpress(*, key=''):
     '''
     Unpresses key
     '''
     pyautogui.keyUp(key)
 
-def keyCombination(keysList=[]):
+def keyCombination(*, keysList=[]):
     '''
     Presses combination of keys
         keysList - sequence of keys, for example ['ctrl', 'shift', 'esc']
@@ -62,8 +62,8 @@ def keyCombination(keysList=[]):
     pyautogui.hotkey(keysList)
 
 if __name__ == '__main__':
-    writeString('Test')
-    press('a', numOfPresses=10)
-    pressAndHold('b')
-    unpress('b')
-    keyCombination(['ctrl', 'shift', 'esc'])
+    writeString(text='Test')
+    press(key='a', numOfPresses=10)
+    pressAndHold(key='b')
+    unpress(key='b')
+    keyCombination(keysList=['ctrl', 'shift', 'esc'])
