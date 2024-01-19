@@ -31,19 +31,19 @@ def notEqual(*, val1, val2) -> bool:
     return not equal(val1=val1, val2=val2)
 
 def greater(*, val1, val2) -> bool:
-    return int(val1) > int(val2)
+    return val1 > val2
 
 def greaterEqual(*, val1, val2) -> bool:
-    return int(val1) >= int(val2)
+    return val1 >= val2
 
 def less(*, val1, val2) -> bool:
-    return int(val1) < int(val2)
+    return val1 < val2
 
 def lessEqual(*, val1, val2) -> bool:
-    return int(val1) <= int(val2)
+    return val1 <= val2
 
 def inRange(*, val, lowerLimit, upperLimit) -> bool:
-    return int(lowerLimit) <= int(val) <= int(upperLimit)
+    return lowerLimit <= val <= upperLimit
 
 def notInRange(*, val, lowerLimit, upperLimit) -> bool:
     return not inRange(val=val, lowerLimit=lowerLimit, upperLimit=upperLimit)
