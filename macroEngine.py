@@ -236,15 +236,22 @@ class MacroEngine():
         with open(filePath, 'w') as file:
             json.dump(self.loadedVariables, file, indent=2)
     
-    def loadVariablesMacro(self, dirPath:str, fileName:str):
+    def loadVariablesMacro(self, filePath:str):
         '''
         Loads variables from json and then macro. Both of the files must be in the same directory.
-            dirPath -> path to macro directory
-            fileName -> name of the macro program
+            filePath -> path to the macro .json file
         '''
+        if '\\' in filePath:
+            *dirPath, macroName = [val for val in filePath.split(os.sep)]
+        else:
+            *dirPath, macroName = [val for val in filePath.split('/')]
+            
+        dirPath = os.sep.join(item for item in dirPath)
+
         variablesPath = os.path.join(dirPath, 'variables')
         self.loadVariablesFile(variablesPath)
-        macroPath = os.path.join(dirPath, fileName)
+
+        macroPath = os.path.join(dirPath, macroName)
         self.loadMacroFile(macroPath)
         self.clearUndoStack(self.taskList, self.loadedVariables)
     
@@ -491,7 +498,7 @@ class MacroEngine():
 
 if __name__ == '__main__':
     engine = MacroEngine()
-    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug', 'macro.json')
+    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug\macro.json')
     print(engine.loadedVariables)
     print(engine.calculateKwargs({'val1':'i'}))
     print(engine.calculateKwargs({'val1':'a'}))
@@ -504,4 +511,3 @@ if __name__ == '__main__':
 
     engine.runProgram()    
     exit()
-    engine.saveVariablesToFile('variableSaveTest')
