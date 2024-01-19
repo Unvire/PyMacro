@@ -7,7 +7,7 @@
       "coords": "position1",
       "interval": 3
     },
-	"saveResultToVariable": ""
+    "saveResultToVariable": ""
   },
   "1": {
     "name": "Move mouse again",
@@ -19,31 +19,34 @@
         600
       ]
     },
-	"saveResultToVariable": ""
+    "saveResultToVariable": ""
   },
-	"2": {
+  "2": {
     "name": "Condition test",
     "isEnabled": true,
     "function": "logicFunctions.checkCondition",
-    "parameters": {      
-	    "isJump": true,
-		  "evaluationFunctionName": "equal",
-		  "vals": [2, 2],
-		  "resultTrue": "Move mouse 3",
-		  "resultFalse": "Write text"
+    "parameters": {
+      "isJump": true,
+      "evaluationFunctionName": "equal",
+      "vals": [
+        2,
+        2
+      ],
+      "resultTrue": "Move mouse 3",
+      "resultFalse": "Write text"
     },
-	"saveResultToVariable": "step"
+    "saveResultToVariable": "step"
   },
-	"3": {
+  "3": {
     "name": "Write text",
     "isEnabled": true,
     "function": "keyboardFunctions.writeString",
     "parameters": {
       "text": "Hello World"
     },
-	"saveResultToVariable": ""
+    "saveResultToVariable": ""
   },
-	"4": {
+  "4": {
     "name": "Move mouse 3",
     "isEnabled": true,
     "function": "cursorFunctions.moveToCoords",
@@ -53,6 +56,6 @@
         50
       ]
     },
-	"saveResultToVariable": ""
+    "saveResultToVariable": ""
   }
 }
