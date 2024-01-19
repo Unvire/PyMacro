@@ -196,7 +196,10 @@ class MacroEngine():
         with different name) the project is saved in subfolder "New {date of saving}"
             filePath - path of file that will be saved (including filename)
         '''
-        *dirPath, macroName = [val for val in filePath.split('/')]
+        if '\\' in filePath:
+            *dirPath, macroName = [val for val in filePath.split(os.sep)]
+        else:
+            *dirPath, macroName = [val for val in filePath.split('/')]
         dirPath = os.sep.join(item for item in dirPath)
     
         ## add extension if it is missing
@@ -245,7 +248,7 @@ class MacroEngine():
             *dirPath, macroName = [val for val in filePath.split(os.sep)]
         else:
             *dirPath, macroName = [val for val in filePath.split('/')]
-            
+
         dirPath = os.sep.join(item for item in dirPath)
 
         variablesPath = os.path.join(dirPath, 'variables')
