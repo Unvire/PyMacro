@@ -40,10 +40,6 @@ def locateImage(searchType='any', image=None, region=None, grayscale=False):
     '''
     locateFunction = {'any':pyautogui.locateOnScreen, 'all':pyautogui.locateAllOnScreen}
     return locateFunction[searchType](image=image, region=region, grayscale=grayscale)
-        
-
-    
-
 
 if __name__ == '__main__':
     screenshot(fileName='test.png', region=(700, 500, 300, 200))
