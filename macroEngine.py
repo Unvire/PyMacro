@@ -197,7 +197,7 @@ class MacroEngine():
     
     def saveVariablesToFile(self, filePath):
         '''
-        Loads variables from JSON file
+        Saves variable to JSON file (without extension)
         '''
         with open(filePath, 'w') as file:
             json.dump(self.loadedVariables, file, indent=2)
