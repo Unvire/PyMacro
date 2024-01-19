@@ -219,7 +219,8 @@ class MacroEngine():
                 
         self._saveMacro(os.path.join(dirPath, macroName))
         self.saveVariablesToFile(os.path.join(dirPath, 'variables'))
-        os.mkdir(os.path.join(dirPath, 'Images'))
+        if not os.path.exists(os.path.join(dirPath, 'Images')):
+            os.mkdir(os.path.join(dirPath, 'Images'))
     
     def loadVariablesFile(self, filePath):
         '''
