@@ -1,6 +1,7 @@
 import time, os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from idlelib.tooltip import Hovertip
 import pyautogui
 import macroEngine
 
@@ -184,6 +185,38 @@ class pyMacro(tk.Tk):
 
         self._changeWidgetGroupState('init')
 
+        ## hover tips
+        #first row buttons
+        self.newMacroButtonHovertip = Hovertip(self.newMacroButton, 'Create new macro')
+        self.openMacroButtonHovertip = Hovertip(self.openMacroButton, 'Open exisitng macro')
+        self.saveMacroButtonHovertip = Hovertip(self.saveMacroButton, 'Save project')
+        self.undoButtonHovertip = Hovertip(self.undoButton, 'Undo previous modification')
+        self.redoButtonHovertip = Hovertip(self.redoButton, 'Revert undo')
+        self.runButtonHovertip = Hovertip(self.runButton, 'Run macro')
+        self.killButtonHovertip = Hovertip(self.killButton, 'Stop macro | ctrl + k')
+        self.cursorPositionButtonHovertip = Hovertip(self.cursorPositionButton, 'Prints cursor position(x,y) and color(R, G, B) after 5 second ')
+
+        # task edit buttons
+        self.moveTaskUpButtonHovertip = Hovertip(self.moveTaskUpButton, 'Move selected tasks up the list (multi selection with ctrl)')
+        self.moveTaskDownButtonHovertip = Hovertip(self.moveTaskDownButton, 'Move selected tasks down the list (multi selection with ctrl)')
+        self.newTaskButtonHovertip = Hovertip(self.newTaskButton, 'Inserts new task below current selected item')
+        self.copyTaskButtonHovertip = Hovertip(self.copyTaskButton, 'Duplicates selected tasks (multi selection with ctrl)')
+        self.deleteTaskButtonHovertip = Hovertip(self.deleteTaskButton, 'Delete selected task')
+        self.intendButtonHovertip = Hovertip(self.intendButton, 'Adds 4 spaces in the begining of the task name')
+        self.unintendButtonHovertip = Hovertip(self.unintendButton, 'Removes 4 spaces in the begining of the task name')
+
+        # edit task parameters
+        self.parameterNameEntryHovertip = Hovertip(self.parameterNameEntry, 'Write name of the parameter')
+        self.parameterValueEntryHovertip = Hovertip(self.parameterValueEntry, 'Write value of the parameter. Items of list must be separated with ";". All numbers are converted to ints or floats')
+        self.updateTreeviewParametersButtonHovertip = Hovertip(self.updateTreeviewParametersButton, 'Confirm written values and modify selected parameter')
+        self.deleteArgumentButtonHovertip = Hovertip(self.deleteArgumentButton, 'Delete selected parameter')
+
+        # treeviews
+        self.tasksTableTreeHovertip = Hovertip(self.tasksTableTree, 'Table with list of the tasks. Run time variables and elapsed time is displayed in dedicated columns')
+        self.taskParametersTableTreeHovertip = Hovertip(self.taskParametersTableTree, 'Table with list of common parameters')
+        self.taskFunctionParametersTableTreeHovertip = Hovertip(self.taskFunctionParametersTableTree, 'Table with list of parameters dedicated to function')
+        self.variablesTableTreeHovertip = Hovertip(self.variablesTableTree, 'Table with list of the variables that will be saved to file')
+        
     def _isRunSet(self, state=False):
         '''
         Setter for self.isRun. Handles switching focus styles of self.tasksTableTree.
