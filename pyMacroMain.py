@@ -1,7 +1,6 @@
-import time, os, copy
+import time, os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-from datetime import datetime
 import pyautogui
 import macroEngine
 
@@ -462,28 +461,8 @@ class pyMacro(tk.Tk):
         macroFile = filedialog.asksaveasfilename(title='Save macro', initialdir=path, filetypes=(('Macro file','*.json'),))
         
         if macroFile:
-            *dirPath, macroName = [val for val in macroFile.split('/')]
-            
-            ## check if there is .json file in project folder
-            dirPath = os.sep.join(item for item in dirPath)
-
-            if macroName[-5:] != '.json':
-                macroName += '.json'
-            
-            filesInDir = [fileName for fileName in os.listdir(os.path.join(dirPath)) if fileName[-5:] == '.json']
-            if filesInDir:
-                for fileName in filesInDir:
-                    ## if in folder is .json file but names are different then save into new folder. Otherwise overwrite the file
-                    if fileName != macroName:
-                        currentTime = datetime.now().strftime("%d.%m.%Y %H-%M-%S")
-                        newFolderName = f'New {currentTime}'                      
-                        os.mkdir(os.path.join(dirPath, newFolderName))
-                        self.macroEngine.saveMacroToFile(os.path.join(dirPath, newFolderName, macroName))
-                        self.macroEngine.saveVariablesToFile(os.path.join(dirPath, newFolderName, 'variables'))
-                        return
-            
-            self.macroEngine.saveMacroToFile(os.path.join(dirPath, macroName))
-            self.macroEngine.saveVariablesToFile(os.path.join(dirPath, 'variables'))
+            *_, macroName = [val for val in macroFile.split('/')]
+            self.macroEngine.saveProject(macroFile)            
             self.title('PyMacro - ' + macroName)
 
     def generateTasksTable(self):
