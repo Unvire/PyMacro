@@ -574,6 +574,7 @@ class pyMacro(tk.Tk):
         elif treeview is self.variablesTableTree:
             self._modifyVariables(parameter, value)
 
+        self.generateTasksTable()
         self.undoRedoOperation()
 
     def deleteTask(self):
