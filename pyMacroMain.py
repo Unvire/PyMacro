@@ -444,13 +444,12 @@ class pyMacro(tk.Tk):
 
         if macroFile:            
             self.filePath = macroFile
-            *dirPath, macroName = [val for val in macroFile.split('/')]
-            dirPath = '/'.join(item for item in dirPath)
-            self.macroEngine.loadVariablesMacro(dirPath, macroName)
+            self.macroEngine.loadVariablesMacro(macroFile)
             self.setVariablesFromEngine()
             self.generateTasksTable()
             self._changeWidgetGroupState('taskListExists')
             self.infoLabel['text'] = ''
+            *_, macroName = [val for val in macroFile.split('/')]
             self.title('PyMacro - ' + macroName)
     
     def saveProject(self):
@@ -461,8 +460,8 @@ class pyMacro(tk.Tk):
         macroFile = filedialog.asksaveasfilename(title='Save macro', initialdir=path, filetypes=(('Macro file','*.json'),))
         
         if macroFile:
-            *_, macroName = [val for val in macroFile.split('/')]
             self.macroEngine.saveProject(macroFile)            
+            *_, macroName = [val for val in macroFile.split('/')]
             self.title('PyMacro - ' + macroName)
 
     def generateTasksTable(self):
