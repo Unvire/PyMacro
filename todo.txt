@@ -1,12 +1,8 @@
 OBLIGATORY:
-- verifing save must be an engine's task
 - documentation / readme
-- force save when run is pressed
-- add shortcuts and hovertips
 - error handling and displaying
 - autocomplete in entries
 - debug image functions
-- make folder for images when saving
 
 OPTIONAL:
 - add better kill macro functionality
@@ -14,6 +10,8 @@ OPTIONAL:
 - add scrollbars
 - TESTS
 - custom python script execution with relative path
+- force save when run is pressed
+- add shortcuts
 
 DONE:
 - highligt executed task
@@ -45,6 +43,9 @@ DONE:
 - strip spaces when checking if parameter is a variable
 - clear entries when task not selected
 - consider -var as var * -1
+- make folder for images when saving
+- move saving logic to backend
+- add hovertips
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
