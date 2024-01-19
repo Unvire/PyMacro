@@ -18,7 +18,7 @@ def getFunctionNames():
                       'numOfPresses', 'key', 'keysList', 'fileName', 'region', 'searchType', 'grayscale', 'coords', 'button', 'numOfClicks',
                       'units'
                       ]
-    return functionsList + parameterNames
+    return  parameterNames, functionsList
 
 if __name__ == '__main__':
     print(getFunctionNames())
