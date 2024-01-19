@@ -519,7 +519,10 @@ class pyMacro(tk.Tk):
             self.generateTasksTable()            
             self.totalTime = 0            
             self.infoLabel['text'] = '0'
-            self.macroEngine.runProgram()
+            try:
+                self.macroEngine.runProgram()
+            except Exception as e:
+                messagebox.showerror(title='Error', message=e)
         self._isRunSet(False)
 
     def generateParametersTable(self, taskID=None):
