@@ -21,34 +21,34 @@ def checkCondition(evaluationFunctionName='equal', vals=[1, 2], resultTrue='2', 
     result = evaluationFunction(*vals)
     return resultTrue if result else resultFalse
 
-def negate(*, val) -> bool:
+def negate(val) -> bool:
     return not bool(val)
 
-def equal(*, val1, val2) -> bool:
+def equal(val1, val2) -> bool:
     return val1 == val2
 
-def notEqual(*, val1, val2) -> bool:
+def notEqual(val1, val2) -> bool:
     return not equal(val1=val1, val2=val2)
 
-def greater(*, val1, val2) -> bool:
+def greater(val1, val2) -> bool:
     return val1 > val2
 
-def greaterEqual(*, val1, val2) -> bool:
+def greaterEqual(val1, val2) -> bool:
     return val1 >= val2
 
 def less(*, val1, val2) -> bool:
     return val1 < val2
 
-def lessEqual(*, val1, val2) -> bool:
+def lessEqual(val1, val2) -> bool:
     return val1 <= val2
 
-def inRange(*, val, lowerLimit, upperLimit) -> bool:
+def inRange(val, lowerLimit, upperLimit) -> bool:
     return lowerLimit <= val <= upperLimit
 
-def notInRange(*, val, lowerLimit, upperLimit) -> bool:
+def notInRange(val, lowerLimit, upperLimit) -> bool:
     return not inRange(val=val, lowerLimit=lowerLimit, upperLimit=upperLimit)
 
-def regex(*, string='', pattern='$') -> bool:
+def regex(string='', pattern='$') -> bool:
     return bool(re.fullmatch(pattern, string))
 
 if __name__ == '__main__':
