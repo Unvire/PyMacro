@@ -1,9 +1,11 @@
 import time, os
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from ttkwidgets.autocomplete import AutocompleteEntry
 from idlelib.tooltip import Hovertip
 import pyautogui
 import macroEngine
+import allFunctions
 
 class pyMacro(tk.Tk):
     def __init__(self):
@@ -34,6 +36,9 @@ class pyMacro(tk.Tk):
         self.parameterEditFrame = ttk.Frame(self.mainFrame)
         self.taskParametersFrame = ttk.Frame(self.mainFrame)
         self.taskEditButtonsFrame = ttk.Frame(self.mainFrame)
+
+        ## autocomplete list:
+        autocompleteParameters, autocompleteValues = allFunctions.getFunctionNames()
 
         ## custom style for selection in treeview
         self.selectionGreenStyle = ttk.Style()
@@ -81,9 +86,9 @@ class pyMacro(tk.Tk):
 
         # parameter edit
         self.parameterNameLabel = ttk.Label(self.parameterEditFrame, text='Name')
-        self.parameterNameEntry = ttk.Entry(self.parameterEditFrame)
+        self.parameterNameEntry = AutocompleteEntry(self.parameterEditFrame, completevalues=autocompleteParameters)
         self.parameterValueLabel = ttk.Label(self.parameterEditFrame, text='Value')
-        self.parameterValueEntry = ttk.Entry(self.parameterEditFrame, width=25)
+        self.parameterValueEntry = AutocompleteEntry(self.parameterEditFrame, width=25, completevalues=autocompleteValues)
         self.updateTreeviewParametersButton = ttk.Button(self.parameterEditFrame, text='Update', command=self.updateTreeviewParameters)
         self.deleteArgumentButton = ttk.Button(self.parameterEditFrame, text='Delete', command=self.deleteArgument)
 
