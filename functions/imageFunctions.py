@@ -29,17 +29,17 @@ def screenshot(fileName=None, region=None):
     region = _processCoords(coords=region)
     return pyautogui.screenshot(fileName, region)
 
-def locateImage(searchType='any', image=None, region=None, grayscale=False):
+def locateImage(searchType='any', fileName=None, region=None, grayscale=False):
     '''
     Checks if image is present in searchedImage. Returns sequence (left, top, width, height) for 'any' or generator that yields (left, top, width, height) for all
         searchType - 'any' - method will stop after first match
                         'all' - method will find all occurances of image
-        image - filename/path of image to be searched
+        fileName - filename/path of image to be searched
         region - left, top, width left - sequence of 4 ints.
         grayscale - convert image to grayscale in order to iprove search time. Can result in false matches
     '''
     locateFunction = {'any':pyautogui.locateOnScreen, 'all':pyautogui.locateAllOnScreen}
-    return locateFunction[searchType](image=image, region=region, grayscale=grayscale)
+    return locateFunction[searchType](image=fileName, region=region, grayscale=grayscale)
 
 if __name__ == '__main__':
     screenshot(fileName='test.png', region=(700, 500, 300, 200))
