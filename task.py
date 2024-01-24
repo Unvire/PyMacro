@@ -1,3 +1,5 @@
+import copy
+
 class Task:
     def __init__(self, name='', isEnabled=False, executeFunction=None, parameters=None, isJump=False, variableName=''):
         '''
@@ -68,7 +70,7 @@ class Task:
         '''
         Returns dictionary of function parameters (arguments) key:value. Returns **kwargs that are passed to the function
         '''
-        return {parameter:self.parameters[parameter] for parameter in self.parameters}
+        return copy.deepcopy(self.parameters)
 
     def updateParameter(self, isArgument=False, newRecord=('', None)):
         '''
