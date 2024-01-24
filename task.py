@@ -68,7 +68,7 @@ class Task:
     
     def functionKwargs(self):
         '''
-        Returns dictionary of function parameters (arguments) key:value. Returns **kwargs that are passed to the function
+        Returns deep copy of self.parameters
         '''
         return copy.deepcopy(self.parameters)
 
