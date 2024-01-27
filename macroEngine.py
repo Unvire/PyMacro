@@ -28,7 +28,7 @@ class MacroEngine():
         self.redoStack = collections.deque()     
         self.isRun = True   
 
-        item =  [], {}
+        item = [], {}
         self.undoStack.append(item)
 
     def _dynamicImportModule(self, packageString:str):
