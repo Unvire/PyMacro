@@ -36,12 +36,18 @@ def locateImage(fileName=None, region=None, grayscale=False):
         region - left, top, width left - sequence of 4 ints.
         grayscale - convert image to grayscale in order to improve search time. Can result in false matches
     '''    
-    left, top, *_ = pyautogui.locateOnScreen(image=fileName, region=region, grayscale=grayscale)
+    result = pyautogui.locateOnScreen(image=fileName, region=region, grayscale=grayscale)
+    if result:
+        left, top, *_ = result
+    else:
+        left, top = 'None', 'None'
     return left, top
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
+    from time import sleep
     screenshot(fileName='test.png', region=(700, 500, 300, 200))
     coords1 = locateImage(fileName='test.png', region=(0, 0, 1200, 1000))
     print(f'Coords of any matching image: {coords1}')
+    sleep(5)
     coords2 = locateImage(fileName='test.png', region=(0, 0, 1200, 1000), grayscale=True)
     print(f'Coords of any matching image: {coords2}')
