@@ -120,7 +120,7 @@ class MacroEngine():
     
     def getVariables(self):
         '''
-        Getter for self.variables. Returns shallow copy
+        Getter for self.variables. Returns deep copy
         '''
         return copy.deepcopy(self.loadedVariables)
 
