@@ -59,12 +59,35 @@ def test_str2Num(initEngine, s, expected):
 def test_strToNumList(initEngine, s, expected):
     assert initEngine.strToNumList(s) == expected
 
-def test_calculateKwargs():
-    pass
+def test_calculateKwargs(initEngine):    
+    initEngine.variables = {'varText': 'test', 'varNum': 12, 'varList':[30, 712, 'a']}
+    testKwargs = {'val1': 'varText', 'val2':13, 'val3':'varNum', 'val4':'varList', 'val5':'-varNum', 'val6':['varText', '-varNum']}
+    expected = {'val1': 'test', 'val2':13, 'val3':12, 'val4':[30, 712, 'a'], 'val5':-12, 'val6':['test', -12]}
+    assert initEngine.calculateKwargs(testKwargs) == expected
+    testKwargs['val7'] = 'newEntry'
+    assert testKwargs != expected
 
-def test_findGroups():
-    pass
+def test_findGroups(initEngine):
+    expected = [[0, 4], [12, 2], [50, 2], [69, 4], [1241, 1]]
+    assert initEngine.findGroups([1, 2, 3, 0, 12, 13, 1241, 50, 51, 69, 70, 71, 72]) == expected
 
-def test_swapTasks():
-    pass
+def test_swapTasks(initEngine):
+    initEngine.setTaskList([i for i in range(10)])
+    group1 = [[0, 3], [7, 1]]
+    group2 = [[3, 3], [8, 2]]
+    
+    ## check out of bounds
+    assert initEngine.swapTasks(group1, True) == True
+    assert initEngine.swapTasks(group2, False) == True
+
+    ## check moving up
+    assert initEngine.swapTasks(group2, True) == False
+    movedUpList = initEngine.getTaskList()
+    assert movedUpList == [0, 1, 3, 4, 5, 2, 6, 8, 9, 7]
+
+    ## check moving down
+    initEngine.setTaskList([i for i in range(10)])
+    assert initEngine.swapTasks(group1, False) == False
+    movedDownList = initEngine.getTaskList()
+    assert movedDownList == [3, 0, 1, 2, 4, 5, 6, 8, 7, 9]
 
