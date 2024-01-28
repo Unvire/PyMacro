@@ -501,16 +501,7 @@ class MacroEngine():
 
 if __name__ == '__main__':
     engine = MacroEngine()
-    engine.loadVariablesMacro(r'C:\python programy\2023_12_12 PyMacro\Macros\debug\macro.json')
-    print(engine.loadedVariables)
-    print(engine.calculateKwargs({'val1':'i'}))
-    print(engine.calculateKwargs({'val1':'a'}))
-    print(engine.calculateKwargs({'val1':['i', 10]}))
-    groups = engine.findGroups([0,1,2, 7,8, 10,11,12, 20])
-    print(groups)
-    engine.swapTasks(groups, False)
-    print(engine.strToNumList('12; 3.20 ;asd'))
+    path = os.path.join(os.getcwd(), 'Macros', 'debug', 'macro.json')
+    engine.loadVariablesMacro(path)
     #engine.saveMacroToFile('saveTest.json')
-
-    engine.runProgram()    
-    exit()
+    engine.runProgram()
