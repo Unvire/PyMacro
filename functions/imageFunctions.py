@@ -29,23 +29,19 @@ def screenshot(*, fileName=None, region=None):
     region = _processCoords(coords=region)
     pyautogui.screenshot(fileName, region)
 
-def locateImage(searchType='any', fileName=None, region=None, grayscale=False):
+def locateImage(fileName=None, region=None, grayscale=False):
     '''
-    Checks if image is present in searchedImage. Returns sequence (left, top, width, height) for 'any' or generator that yields (left, top, width, height) for all
-        searchType - 'any' - method will stop after first match
-                        'all' - method will find all occurances of image
+    Checks if image is present in searchedImage. Returns sequence left, top of first found image
         fileName - filename/path of image to be searched
         region - left, top, width left - sequence of 4 ints.
-        grayscale - convert image to grayscale in order to iprove search time. Can result in false matches
-    '''
-    locateFunction = {'any':pyautogui.locateOnScreen, 'all':pyautogui.locateAllOnScreen}
-    return locateFunction[searchType](image=fileName, region=region, grayscale=grayscale)
+        grayscale - convert image to grayscale in order to improve search time. Can result in false matches
+    '''    
+    left, top, *_ = pyautogui.locateOnScreen(image=fileName, region=region, grayscale=grayscale)
+    return left, top
 
 if __name__ == '__main__':
     screenshot(fileName='test.png', region=(700, 500, 300, 200))
-    coords1 = locateImage(searchType='any', image='test.png', region=(0, 0, 1200, 1000))
+    coords1 = locateImage(fileName='test.png', region=(0, 0, 1200, 1000))
     print(f'Coords of any matching image: {coords1}')
-    coords = locateImage(searchType='all', image='test2.png', region=(0, 0, 1200, 1000))
-    print('Coords of all matching images')
-    for c in coords:
-        print(c)
+    coords2 = locateImage(fileName='test.png', region=(0, 0, 1200, 1000), grayscale=True)
+    print(f'Coords of any matching image: {coords2}')
