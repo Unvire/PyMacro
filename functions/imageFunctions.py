@@ -20,14 +20,14 @@ def _processCoords(coords=(None, None, None, None)) -> (int, int, int, int):
     height = int(height) if str(height).isnumeric() else None
     return top, left, width, height
 
-def screenshot(fileName=None, region=None):
+def screenshot(*, fileName=None, region=None):
     '''
-    Makes a screenshot of requested area and returns it. If fileName is passed then it will save it to a file.
-        fileName - str
+    Makes a screenshot of requested area.
+        fileName: str - path to where to save screenshot
         region - left, top, width, height - sequence of 4 ints
     '''
     region = _processCoords(coords=region)
-    return pyautogui.screenshot(fileName, region)
+    pyautogui.screenshot(fileName, region)
 
 def locateImage(searchType='any', fileName=None, region=None, grayscale=False):
     '''
