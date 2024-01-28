@@ -1,12 +1,9 @@
 OBLIGATORY:
-- documentation / readme
-- debug image functions
 
 OPTIONAL:
 - add better kill macro functionality
 - copy from another run
 - add scrollbars
-- TESTS
 - custom python script execution with relative path
 - force save when run is pressed
 - add shortcuts
@@ -46,6 +43,9 @@ DONE:
 - add hovertips
 - error handling and displaying
 - autocomplete in entries
+- TESTS
+- debug image functions
+- documentation / readme
 
 REJECTED:
 - assign variables to task parameters (currenntly only function parameters can be assigned to variable)
